@@ -19,17 +19,14 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # main packaging script based on dh7 syntax
 %:
-	dh $@ 
+	dh $@ --parallel --buildsystem=cmake
 
 # debmake generated override targets
 # This is example for Cmake (See http://bugs.debian.org/641051 )
-#override_dh_auto_configure:
-#	dh_auto_configure -- \
-#	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
-override_dh_auto_link:
-	dh_link --package=libmali-rk3288-dev \
-	usr/lib/$(DEB_HOST_MULTIARCH)/libmali.so usr/lib/$(DEB_HOST_MULTIARCH)/libgbm.so.1
-	dh_link --package=libmali-rk3288-dev \
-	usr/lib/$(DEB_HOST_MULTIARCH)/libmali.so usr/lib/$(DEB_HOST_MULTIARCH)/libgbm.so
-	dh_link --package=libmali-rk3288-dev \
-	usr/lib/$(DEB_HOST_MULTIARCH)/libmali.so usr/lib/$(DEB_HOST_MULTIARCH)/libgbm.so.1.0.0
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	-DCMAKE_C_COMPILER=/usr/bin/${DEB_HOST_MULTIARCH}-gcc \
+	-DCMAKE_CXX_COMPILER=/usr/bin/${DEB_HOST_MULTIARCH}-g++ \
+	-DPKG_CONFIG_EXECUTABLE=/usr/bin/${DEB_HOST_MULTIARCH}-pkg-config \
+	-DCMAKE_LIBRARY_PATH=${DEB_HOST_MULTIARCH} \
+	-DCMAKE_LIBRARY_ARCHITECTURE=${DEB_HOST_MULTIARCH}

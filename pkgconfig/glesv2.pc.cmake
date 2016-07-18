@@ -4,7 +4,7 @@ libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
 Name: glesv2
-Description: mali GLESV2 library
+Description: Mali GLESV2 library
 Requires.private:
 Version:
 Libs: -L${libdir} -lGLESv2

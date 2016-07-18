@@ -11,9 +11,9 @@ Section: libdevel
 Architecture: any
 Depends: libmali-rk32881 (= ${binary:Version}), ${misc:Depends}
 Multi-Arch: same
-Provides: libgbm-dev
-Conflicts: libgbm-dev
-Replaces: libgbm-dev
+Provides: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
+Conflicts: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
+Replaces: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
 Description: The mali library for Rockchip RK3288.
  .
  This package provides the development environment for compiling programs
