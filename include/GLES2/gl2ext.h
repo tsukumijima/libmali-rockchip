@@ -33,14 +33,14 @@ extern "C" {
 ** used to make the header, and the header can be found at
 **   http://www.opengl.org/registry/
 **
-** Khronos $Revision: 32120 $ on $Date: 2015-10-15 04:27:13 -0700 (Thu, 15 Oct 2015) $
+** Khronos $Revision: 31642 $ on $Date: 2015-07-07 23:55:32 -0700 (Tue, 07 Jul 2015) $
 */
 
 #ifndef GL_APIENTRYP
 #define GL_APIENTRYP GL_APIENTRY*
 #endif
 
-/* Generated on date 20151015 */
+/* Generated on date 20150707 */
 
 /* Generated C header for:
  * API: gles2
@@ -224,10 +224,6 @@ GL_APICALL void GL_APIENTRY glGetnUniformuivKHR (GLuint program, GLint location,
 #ifndef GL_KHR_texture_compression_astc_ldr
 #define GL_KHR_texture_compression_astc_ldr 1
 #endif /* GL_KHR_texture_compression_astc_ldr */
-
-#ifndef GL_KHR_texture_compression_astc_sliced_3d
-#define GL_KHR_texture_compression_astc_sliced_3d 1
-#endif /* GL_KHR_texture_compression_astc_sliced_3d */
 
 #ifndef GL_OES_EGL_image
 #define GL_OES_EGL_image 1
@@ -1042,27 +1038,6 @@ GL_APICALL void GL_APIENTRY glDrawElementsInstancedBaseVertexBaseInstanceEXT (GL
 #endif
 #endif /* GL_EXT_base_instance */
 
-#ifndef GL_EXT_blend_func_extended
-#define GL_EXT_blend_func_extended 1
-#define GL_SRC1_COLOR_EXT                 0x88F9
-#define GL_SRC1_ALPHA_EXT                 0x8589
-#define GL_ONE_MINUS_SRC1_COLOR_EXT       0x88FA
-#define GL_ONE_MINUS_SRC1_ALPHA_EXT       0x88FB
-#define GL_SRC_ALPHA_SATURATE_EXT         0x0308
-#define GL_LOCATION_INDEX_EXT             0x930F
-#define GL_MAX_DUAL_SOURCE_DRAW_BUFFERS_EXT 0x88FC
-typedef void (GL_APIENTRYP PFNGLBINDFRAGDATALOCATIONINDEXEDEXTPROC) (GLuint program, GLuint colorNumber, GLuint index, const GLchar *name);
-typedef void (GL_APIENTRYP PFNGLBINDFRAGDATALOCATIONEXTPROC) (GLuint program, GLuint color, const GLchar *name);
-typedef GLint (GL_APIENTRYP PFNGLGETPROGRAMRESOURCELOCATIONINDEXEXTPROC) (GLuint program, GLenum programInterface, const GLchar *name);
-typedef GLint (GL_APIENTRYP PFNGLGETFRAGDATAINDEXEXTPROC) (GLuint program, const GLchar *name);
-#ifdef GL_GLEXT_PROTOTYPES
-GL_APICALL void GL_APIENTRY glBindFragDataLocationIndexedEXT (GLuint program, GLuint colorNumber, GLuint index, const GLchar *name);
-GL_APICALL void GL_APIENTRY glBindFragDataLocationEXT (GLuint program, GLuint color, const GLchar *name);
-GL_APICALL GLint GL_APIENTRY glGetProgramResourceLocationIndexEXT (GLuint program, GLenum programInterface, const GLchar *name);
-GL_APICALL GLint GL_APIENTRY glGetFragDataIndexEXT (GLuint program, const GLchar *name);
-#endif
-#endif /* GL_EXT_blend_func_extended */
-
 #ifndef GL_EXT_blend_minmax
 #define GL_EXT_blend_minmax 1
 #define GL_MIN_EXT                        0x8007
@@ -1085,10 +1060,6 @@ typedef void (GL_APIENTRYP PFNGLBUFFERSTORAGEEXTPROC) (GLenum target, GLsizeiptr
 GL_APICALL void GL_APIENTRY glBufferStorageEXT (GLenum target, GLsizeiptr size, const void *data, GLbitfield flags);
 #endif
 #endif /* GL_EXT_buffer_storage */
-
-#ifndef GL_EXT_color_buffer_float
-#define GL_EXT_color_buffer_float 1
-#endif /* GL_EXT_color_buffer_float */
 
 #ifndef GL_EXT_color_buffer_half_float
 #define GL_EXT_color_buffer_half_float 1
@@ -1369,12 +1340,6 @@ GL_APICALL void GL_APIENTRY glMultiDrawElementsIndirectEXT (GLenum mode, GLenum 
 #endif
 #endif /* GL_EXT_multi_draw_indirect */
 
-#ifndef GL_EXT_multisampled_compatibility
-#define GL_EXT_multisampled_compatibility 1
-#define GL_MULTISAMPLE_EXT                0x809D
-#define GL_SAMPLE_ALPHA_TO_ONE_EXT        0x809F
-#endif /* GL_EXT_multisampled_compatibility */
-
 #ifndef GL_EXT_multisampled_render_to_texture
 #define GL_EXT_multisampled_render_to_texture 1
 #define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT 0x8D6C
@@ -1650,9 +1615,9 @@ GL_APICALL void GL_APIENTRY glProgramUniformMatrix4x3fvEXT (GLuint program, GLin
 #define GL_MAX_SPARSE_3D_TEXTURE_SIZE_EXT 0x9199
 #define GL_MAX_SPARSE_ARRAY_TEXTURE_LAYERS_EXT 0x919A
 #define GL_SPARSE_TEXTURE_FULL_ARRAY_CUBE_MIPMAPS_EXT 0x91A9
-typedef void (GL_APIENTRYP PFNGLTEXPAGECOMMITMENTEXTPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit);
+typedef void (GL_APIENTRYP PFNGLTEXPAGECOMMITMENTARBPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit);
 #ifdef GL_GLEXT_PROTOTYPES
-GL_APICALL void GL_APIENTRY glTexPageCommitmentEXT (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit);
+GL_APICALL void GL_APIENTRY glTexPageCommitmentARB (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit);
 #endif
 #endif /* GL_EXT_sparse_texture */
 
@@ -1936,21 +1901,6 @@ GL_APICALL void GL_APIENTRY glFramebufferTexture2DMultisampleIMG (GLenum target,
 #define GL_COMPRESSED_RGBA_PVRTC_2BPPV2_IMG 0x9137
 #define GL_COMPRESSED_RGBA_PVRTC_4BPPV2_IMG 0x9138
 #endif /* GL_IMG_texture_compression_pvrtc2 */
-
-#ifndef GL_IMG_texture_filter_cubic
-#define GL_IMG_texture_filter_cubic 1
-#define GL_CUBIC_IMG                      0x9139
-#define GL_CUBIC_MIPMAP_NEAREST_IMG       0x913A
-#define GL_CUBIC_MIPMAP_LINEAR_IMG        0x913B
-#endif /* GL_IMG_texture_filter_cubic */
-
-#ifndef GL_INTEL_framebuffer_CMAA
-#define GL_INTEL_framebuffer_CMAA 1
-typedef void (GL_APIENTRYP PFNGLAPPLYFRAMEBUFFERATTACHMENTCMAAINTELPROC) (void);
-#ifdef GL_GLEXT_PROTOTYPES
-GL_APICALL void GL_APIENTRY glApplyFramebufferAttachmentCMAAINTEL (void);
-#endif
-#endif /* GL_INTEL_framebuffer_CMAA */
 
 #ifndef GL_INTEL_performance_query
 #define GL_INTEL_performance_query 1
@@ -2793,14 +2743,6 @@ GL_APICALL void GL_APIENTRY glFramebufferTextureMultiviewOVR (GLenum target, GLe
 #ifndef GL_OVR_multiview2
 #define GL_OVR_multiview2 1
 #endif /* GL_OVR_multiview2 */
-
-#ifndef GL_OVR_multiview_multisampled_render_to_texture
-#define GL_OVR_multiview_multisampled_render_to_texture 1
-typedef void (GL_APIENTRYP PFNGLFRAMEBUFFERTEXTUREMULTISAMPLEMULTIVIEWOVRPROC) (GLenum target, GLenum attachment, GLuint texture, GLint level, GLsizei samples, GLint baseViewIndex, GLsizei numViews);
-#ifdef GL_GLEXT_PROTOTYPES
-GL_APICALL void GL_APIENTRY glFramebufferTextureMultisampleMultiviewOVR (GLenum target, GLenum attachment, GLuint texture, GLint level, GLsizei samples, GLint baseViewIndex, GLsizei numViews);
-#endif
-#endif /* GL_OVR_multiview_multisampled_render_to_texture */
 
 #ifndef GL_QCOM_alpha_test
 #define GL_QCOM_alpha_test 1
