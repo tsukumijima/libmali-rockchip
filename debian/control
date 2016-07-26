@@ -1,4 +1,4 @@
-Source: libmali-rk3288
+Source: libmali-rk
 Priority: optional
 Maintainer: Randy Li <randy.li@rock-chips.com>
 Build-Depends: debhelper (>= 9)
@@ -6,24 +6,37 @@ Standards-Version: 3.9.5
 Section: libs
 Homepage: http://www.rock-chips.com/
 
-Package: libmali-rk3288-dev
+Package: libmali-rk-dev
 Section: libdevel
 Architecture: any
-Depends: libmali-rk32881 (= ${binary:Version}), ${misc:Depends}
+Depends: 
+ libmali-rk-midgard0 | libmali-rk-utgard0 (= ${binary:Version}), 
+ ${misc:Depends}
 Multi-Arch: same
 Provides: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
-Conflicts: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
+#Conflicts: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
 Replaces: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev
 Description: The mali library for Rockchip RK3288.
  .
  This package provides the development environment for compiling programs
  against the GBM library.
 
-Package: libmali-rk32881
-Architecture: any
+Package: libmali-rk-midgard0
+Architecture: armhf
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
-Provides: libegl1, libegl1-x11, libgles2-mesa, libgbm1
-Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+#Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Conflicts: libmali-rk-utgard0
 Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
-Description: The mali library for Rockchip RK3288.
+Description: The mali library for Rockchip RK3288 and RK3399.
+
+Package: libmali-rk-utgard0
+Architecture: armhf
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+#Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Conflicts: libmali-rk-midgard0
+Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Description: The mali library for Rockchip RK29 serial.

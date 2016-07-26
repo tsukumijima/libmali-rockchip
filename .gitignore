@@ -28,6 +28,9 @@ config.sub
 configure
 depcomp
 TAGS
+/debian/files
+/debian/*.substvars
+/debian/*.log
 /debian.upstream/changelog
 /debian.upstream/control
 /debian.upstream/libva-vdpau-driver.install

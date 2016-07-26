@@ -1,15 +1,20 @@
-libmali-rk3288 (1.4-3) unstable; urgency=low
+libmali-rk (1.4-4) unstable; urgency=low
+  * Support All Mali GPU used in Rockchip RK29 serial and future.
+
+ -- Randy Li <randy.li@rock-chips.com>  Tue, 26 Jul 2016 13:51:25 +0800
+
+libmali-rk (1.4-3) unstable; urgency=low
   * Use the header files from graphics team
 
  -- Randy Li <randy.li@rock-chips.com>  Mon, 18 Jul 2016 11:41:25 +0800
 
-libmali-rk3288 (1.4-2) unstable; urgency=low
+libmali-rk (1.4-2) unstable; urgency=low
   * New build system and multiarch support in pkgconfig file
    + The new pkgconfig would like the program directly link
      to mali against those symbol links.
 
  -- Randy Li <randy.li@rock-chips.com>  Mon, 18 Jul 2016 09:31:25 +0800
-libmali-rk3288 (1.4-1) unstable; urgency=low
+libmali-rk (1.4-1) unstable; urgency=low
 
   * The binary files comes from graphics department.
 
