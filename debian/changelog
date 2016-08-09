@@ -1,3 +1,12 @@
+libmali-rk (1.4-5) unstable; urgency=medium
+
+  * header: add opencl header
+  * mali: update library with OpenCL support for Mali midgard
+  * build: install OpenCL information
+  * debian: install OpenCL
+
+ -- Randy Li <randy.li@rock-chips.com>  Tue, 09 Aug 2016 01:33:59 +0000
+
 libmali-rk (1.4-4) unstable; urgency=low
   * Support All Mali GPU used in Rockchip RK29 serial and future.
 
