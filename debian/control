@@ -27,9 +27,9 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
 #Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
-Conflicts: libmali-rk-utgard0
+Conflicts: libmali-rk-utgard0, libmali-rk-midgard-4th0
 Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
-Description: The mali library for Rockchip RK3288 and RK3399.
+Description: The mali library for Rockchip RK3288.
 
 Package: libmali-rk-utgard0
 Architecture: armhf
@@ -37,6 +37,16 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
 #Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
-Conflicts: libmali-rk-midgard0
+Conflicts: libmali-rk-midgard0, libmali-rk-midgard-4th0
 Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
 Description: The mali library for Rockchip RK29 serial.
+
+Package: libmali-rk-midgard-4th0
+Architecture: armhf
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+#Conflicts: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Conflicts: libmali-rk-midgard0, libmali-rk-utgard0
+Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Description: The mali library for Rockchip RK3399.

@@ -1,3 +1,22 @@
+libmali-rk (1.5-1) testing; urgency=medium
+
+  * mali: update the mali library for rk3399
+
+ -- Randy Li <randy.li@rock-chips.com>  Wed, 12 Oct 2016 01:29:07 +0000
+
+libmali-rk (1.4-7) unstable; urgency=medium
+
+  * mali: add mali library used for the Mali midgard 4th gen
+
+ -- Randy Li <randy.li@rock-chips.com>  Wed, 31 Aug 2016 09:08:16 +0000
+
+libmali-rk (1.4-6) unstable; urgency=medium
+
+  * mali: upgrade Mali midgard library to t76x-r12p0
+  * debian: install link for opencl support in mali midgrade
+
+ -- Randy Li <randy.li@rock-chips.com>  Mon, 15 Aug 2016 09:30:11 +0000
+
 libmali-rk (1.4-5) unstable; urgency=medium
 
   * header: add opencl header

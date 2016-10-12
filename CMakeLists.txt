@@ -15,6 +15,7 @@ INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/mali.icd"
 DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}/OpenCL/vendors/")
 
 INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/lib/libmali-midgard.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/libmali-midgard-4th.so"
 "${CMAKE_CURRENT_SOURCE_DIR}/lib/libmali-utgard.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
