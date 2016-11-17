@@ -42,7 +42,7 @@ Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
 Description: The mali library for Rockchip RK29 serial.
 
 Package: libmali-rk-midgard-4th0
-Architecture: armhf
+Architecture: armhf arm64
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
