@@ -10,7 +10,7 @@ Package: libmali-rk-dev
 Section: libdevel
 Architecture: any
 Depends: 
- libmali-rk-midgard-4th-r9p0 | libmali-rk-utgard0 |  libmali-rk-midgard-4th0 | libmali-rk-midgard0-r1p0 (= ${binary:Version}),
+ libmali-rk-midgard-4th-r9p0 | libmali-rk-utgard0 |  libmali-rk-midgard-r12p0-r0p0 | libmali-rk-midgard-r9p0-r1p0 | libmali-rk-midgard-r9p0-r0p0 (= ${binary:Version}),
  ${misc:Depends}
 Multi-Arch: same
 Provides: libgbm-dev, libegl1-mesa-dev, libgles2-mesa-dev

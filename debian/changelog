@@ -1,3 +1,23 @@
+libmali-rk (1.5-2) testing; urgency=medium
+
+  [ Randy Li ]
+  * Revert "mali: upgrade Mali midgard library to t76x-r12p0"
+
+  [ rk ]
+  * mali: add rk3399 arm64 mali
+  * debian: correct depend for dev
+  * mali: add midgard r1p0
+
+  [ Jacob Chen ]
+  * debian: add conflicts for r1p0
+  * mali: add version info
+
+  [ Randy Li ]
+  * .gitignore: ignore more debian build files
+  * build: debian: install all mali version libraries
+
+ -- Randy Li <randy.li@rock-chips.com>  Thu, 22 Dec 2016 03:40:25 +0000
+
 libmali-rk (1.5-1) testing; urgency=medium
 
   * mali: update the mali library for rk3399
