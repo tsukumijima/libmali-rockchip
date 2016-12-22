@@ -1,0 +1,13 @@
+/*.substvars
+/files
+/tmp
+/source
+/.debhelper
+/*.debhelper.log
+/debhelper-build-stamp
+/libmali-rk-dev/
+/libmali-rk-midgard-4th-r9p0/
+/libmali-rk-midgard-r12p0-r0p0/
+/libmali-rk-midgard-r9p0-r0p0/
+/libmali-rk-midgard-r9p0-r1p0/
+/libmali-rk-utgard0/
