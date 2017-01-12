@@ -1,3 +1,9 @@
+libmali-rk (1.5-3) testing; urgency=medium
+
+  * mali: update the r13p0 mali library for rk3288
+
+ -- Jacob Chen <jacob2.chen@rock-chips.com>  Thu, 12 Jan 2017 09:29:07 +0000
+
 libmali-rk (1.5-2) testing; urgency=medium
 
   [ Randy Li ]
