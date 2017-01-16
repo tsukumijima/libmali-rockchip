@@ -1,3 +1,9 @@
+libmali-rk (1.5-4) testing; urgency=medium
+
+  * mali: add midgard r13p0 for rk3399 32bit
+
+ -- yuyz <yuyz@rock-chips.com>  Mon, 16 Jan 2017 09:59:02 +0000
+
 libmali-rk (1.5-3) testing; urgency=medium
 
   * mali: update the r13p0 mali library for rk3288
