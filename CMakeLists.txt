@@ -43,7 +43,7 @@ INSTALL(FILES
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-r6p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/egl.pc"
