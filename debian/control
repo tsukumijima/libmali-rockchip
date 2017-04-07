@@ -117,6 +117,20 @@ Conflicts: libmali-rk-utgard0-r6p0,
 Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
 Description: The mali library for Rockchip RK3288(not included RK3288W).
 
+
+Package: lib32mali-rk-utgard-2th-r7p0
+Architecture: armhf
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+Conflicts: libmali-rk-utgard0-r6p0,
+ libmali-rk-midgard-r13p0-r0p0,
+ libmali-rk-midgard-r12p0-r0p0,
+ libmali-rk-midgard-r9p0-r1p0,
+ libmali-rk-midgard-r9p0-r0p0
+Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
+Description: The mali library for Rockchip RK3328 (32bit).
+
 Package: libmali-rk-utgard0-r6p0
 Architecture: armhf
 Depends: ${misc:Depends}, ${shlibs:Depends}
