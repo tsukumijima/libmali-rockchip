@@ -49,7 +49,7 @@ INSTALL(FILES
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/aarch64-linux-gnu/libmali-midgard-4th-r13p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/aarch64-linux-gnu/libmali-midgard-4th-r13p0-wayland.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
