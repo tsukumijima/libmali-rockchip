@@ -1,3 +1,0 @@
-#! /usr/bin/dh-exec
-usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-r9p0-r1p0.so
-etc/OpenCL/vendors/mali.icd  /etc/OpenCL/vendors

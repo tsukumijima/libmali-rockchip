@@ -12,54 +12,44 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig/glesv2.pc.cmake"
 	"${CMAKE_CURRENT_BINARY_DIR}/glesv2.pc" @ONLY)
 CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig/mali.pc.cmake"
 	"${CMAKE_CURRENT_BINARY_DIR}/mali.pc" @ONLY)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig/wayland-egl.pc.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/wayland-egl.pc" @ONLY)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig/OpenCL.pc.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/OpenCL.pc" @ONLY)
 
 INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/mali.icd"
 DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}/OpenCL/vendors/")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/lib32mali-midgard-4th-r13p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t86x-r14p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/lib32mali-midgard-4th-r9p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r1p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-r13p0-r0p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r0p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-r12p0-r0p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r0p0-wayland.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-r9p0-r1p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-450-r7p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-r9p0-r0p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/aarch64-linux-gnu/libmali-midgard-4th-r9p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/lib32mali-utgard-2th-r7p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/aarch64-linux-gnu/libmali-midgard-4th-r13p0-wayland.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-r6p0.so"
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-400-r7p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/egl.pc"
 "${CMAKE_CURRENT_BINARY_DIR}/gbm.pc"
 "${CMAKE_CURRENT_BINARY_DIR}/glesv2.pc"
 "${CMAKE_CURRENT_BINARY_DIR}/mali.pc"
+"${CMAKE_CURRENT_BINARY_DIR}/wayland-egl.pc"
+"${CMAKE_CURRENT_BINARY_DIR}/OpenCL.pc"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig/")
 
 INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/gbm.h"
@@ -70,5 +60,6 @@ INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/EGL"
 "${CMAKE_CURRENT_SOURCE_DIR}/include/GLES2"
 "${CMAKE_CURRENT_SOURCE_DIR}/include/GLES3"
 "${CMAKE_CURRENT_SOURCE_DIR}/include/KHR"
+"${CMAKE_CURRENT_SOURCE_DIR}/include/CL"
 DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
 

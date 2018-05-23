@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
-DH_VERBOSE = 1
+#DH_VERBOSE = 1
 
 # see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
 DPKG_EXPORT_BUILDFLAGS = 1
@@ -25,8 +25,4 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 # This is example for Cmake (See http://bugs.debian.org/641051 )
 override_dh_auto_configure:
 	dh_auto_configure -- \
-	-DCMAKE_C_COMPILER=/usr/bin/${DEB_HOST_MULTIARCH}-gcc \
-	-DCMAKE_CXX_COMPILER=/usr/bin/${DEB_HOST_MULTIARCH}-g++ \
-	-DPKG_CONFIG_EXECUTABLE=/usr/bin/${DEB_HOST_MULTIARCH}-pkg-config \
-	-DCMAKE_LIBRARY_PATH=${DEB_HOST_MULTIARCH} \
-	-DCMAKE_LIBRARY_ARCHITECTURE=${DEB_HOST_MULTIARCH}
+	-DCMAKE_TOOLCHAIN_FILE=/etc/dpkg-cross/cmake/CMakeCross.txt

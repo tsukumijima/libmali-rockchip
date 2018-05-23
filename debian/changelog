@@ -1,3 +1,22 @@
+libmali-rk (1.6-1) testing; urgency=medium
+
+  * mali: utgard: update to r7p0
+  * debian: update utgard to r7p0
+
+ -- Jacob Chen <jacob2.chen@rock-chips.com>  Fri, 15 Dec 2017 11:06:46 +0800
+
+libmali-rk (1.5-6) testing; urgency=medium
+
+  * upgrade to r14p0 for midgard
+
+ -- Jacob Chen <jacob2.chen@rock-chips.com>  Wed, 18 Oct 2017 15:29:07 +0000
+
+libmali-rk (1.5-5) testing; urgency=medium
+
+  * mali: clean and renamed
+
+ -- Jacob Chen <jacob2.chen@rock-chips.com>  Wed, 29 Sep 2017 15:29:07 +0000
+
 libmali-rk (1.5-4) testing; urgency=medium
 
   * mali: add midgard r13p0 for rk3399 32bit

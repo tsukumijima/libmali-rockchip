@@ -1,0 +1,3 @@
+#! /usr/bin/dh-exec
+usr/lib/${DEB_HOST_MULTIARCH}/libmali-utgard-400-r7p0.so => usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
+etc/OpenCL/vendors/mali.icd  /etc/OpenCL/vendors
