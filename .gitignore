@@ -30,7 +30,6 @@ depcomp
 TAGS
 CMakeFiles
 CMakeCache.txt
-*\.so
 *\.a
 cmake_install.cmake
 install_manifest.txt
