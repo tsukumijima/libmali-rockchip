@@ -44,6 +44,10 @@ INSTALL(FILES
 "${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-400-r7p0.so"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
+INSTALL(FILES
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-bifrost-g31-rxp0-wayland-gbm.so"
+DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/egl.pc"
 "${CMAKE_CURRENT_BINARY_DIR}/gbm.pc"
 "${CMAKE_CURRENT_BINARY_DIR}/glesv2.pc"
