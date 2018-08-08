@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Start px3seBase for px3se...
+#
+
+function get_emmcblk() {
+  MMC=/dev/mmcblk2
+  for i in `seq 0 2`; do
+    TYPE=`cat /sys/bus/mmc/devices/mmc${i}*/type 2>/dev/null`
+    if [ "${TYPE}"x == "MMCx" ]; then
+      MMC=$i;
+    fi
+  done
+
+  echo /dev/mmcblk$MMC
+}
+
+case "$1" in
+  start)
+    px3seBase -i $(get_emmcblk)
+    ;;
+  stop)
+    printf "stop finished"
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
