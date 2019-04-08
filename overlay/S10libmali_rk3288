@@ -11,12 +11,8 @@ case "$1" in
 		cd /usr/lib
 		if [ "$GPU_VERSION" = 'Mali-T76x MP4 r1p0 0x0750' -o "$GPU_VERSION" = 'Mali-T76x 4 cores r1p0 0x0750' ];
 		then
-			MALI_LIB=$(ls -ld libmali.so|awk '{print $NF}')
-			if [ "$MALI_LIB" = libmali-midgard-t76x-r14p0-r0p0-wayland.so ];
-			then
-				#rk3288W, r1 version gpu chip
-				ln -fs libmali-midgard-t76x-r14p0-r1p0-wayland.so libmali.so
-			fi
+			#rk3288W, r1 version gpu chip
+			mount --bind libmali-midgard-t76x-r14p0-r1p0-wayland.so libmali.so
 		fi
 		cd -
 		;;
