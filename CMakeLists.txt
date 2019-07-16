@@ -20,32 +20,8 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig/OpenCL.pc.cmake"
 INSTALL(FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/mali.icd"
 DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}/OpenCL/vendors/")
 
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t86x-r14p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r1p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r0p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r0p0-wayland.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-450-r7p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-utgard-400-r7p0.so"
-DESTINATION "${CMAKE_INSTALL_LIBDIR}")
-
-INSTALL(FILES
-"${CMAKE_CURRENT_SOURCE_DIR}/lib/arm-linux-gnueabihf/libmali-bifrost-g31-rxp0-wayland-gbm.so"
+INSTALL(DIRECTORY
+"${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}/"
 DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/egl.pc"

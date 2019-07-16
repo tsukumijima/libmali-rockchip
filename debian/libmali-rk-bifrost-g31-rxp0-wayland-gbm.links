@@ -1,4 +1,5 @@
 #! /usr/bin/dh-exec
+usr/lib/${DEB_HOST_MULTIARCH}/libmali-bifrost-g31-rxp0-gbm.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1.0.0
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libGLESv2.so.2

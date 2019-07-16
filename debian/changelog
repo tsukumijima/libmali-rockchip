@@ -1,3 +1,23 @@
+libmali-rk (1.7-1) testing; urgency=medium
+
+  * Add build rules.
+  * Add EGL_EXT_image_dma_buf_import for x11 && wayland
+  * Fixup glPolygonOffset report error: GL_INVALID_FRAMEBUFFER_OPERATION
+
+ -- Caesar Wang <wxt@rock-chips.com>  Tue, 16 Jul 2019 09:23:05 +0800
+
+libmali-rk (1.6-2) testing; urgency=medium
+
+  * Store all binaries under original name, and always use symlinks
+  * Add -gbm.so into libmali-utgard-450-r7p0 located in /gbm/ subfolder
+  * Fix replaces to allow easy switching between regular, gbm and other variants
+  * Fix gbm variant
+  * Add gbm variant
+  * Extend Provides to include gles2 and bunch of other packages
+  * Add px30/rk3328 mali support
+
+ -- Caesar Wang <wxt@rock-chips.com>  Thu, 28 Feb 2019 19:18:46 +0800
+
 libmali-rk (1.6-1) testing; urgency=medium
 
   * mali: utgard: update to r7p0

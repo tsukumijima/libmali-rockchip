@@ -1,5 +1,5 @@
 #! /usr/bin/dh-exec
-usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-t76x-r14p0-r0p0.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
+usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-t86x-r14p0-gbm.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1.0.0

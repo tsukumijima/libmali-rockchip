@@ -1,5 +1,5 @@
 #! /usr/bin/dh-exec
-usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-t76x-r14p0-r0p0.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
+usr/lib/${DEB_HOST_MULTIARCH}/libmali-utgard-450-r7p0-wayland.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libEGL.so.1.0.0
@@ -17,3 +17,6 @@ usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libGLESv1
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libmali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libMaliOpenCL.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libOpenCL.so
+usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libwayland-egl.so
+usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libwayland-egl.so.1
+usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libwayland-egl.so.1.0.0
