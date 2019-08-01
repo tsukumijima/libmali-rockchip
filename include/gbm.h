@@ -84,6 +84,7 @@ enum gbm_bo_format {
 
 /* color index */
 #define GBM_FORMAT_C8		__gbm_fourcc_code('C', '8', ' ', ' ') /* [7:0] C */
+#define GBM_FORMAT_R8		__gbm_fourcc_code('R', '8', ' ', ' ') /* [7:0] R */
 
 /* 8 bpp RGB */
 #define GBM_FORMAT_RGB332	__gbm_fourcc_code('R', 'G', 'B', '8') /* [7:0] R:G:B 3:3:2 */
