@@ -51,6 +51,14 @@ Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
 Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1
 Description: The mali library for Rockchip RK3399.
 
+Package: libmali-rk-midgard-t86x-r14p0-wayland
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Provides: libegl1-mesa, libegl1, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+Replaces: libegl1-mesa, libegl1-x11, libgles2-mesa, libgbm1, libwayland-egl1-mesa
+Description: The mali library for Rockchip RK3399.
+
 Package: libmali-rk-midgard-t76x-r14p0-r1p0
 Architecture: armhf
 Depends: ${misc:Depends}, ${shlibs:Depends}
