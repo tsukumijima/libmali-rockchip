@@ -8,7 +8,11 @@ case "$1" in
 
 		# create libmali.so link depend on chips type in the runtime
 		GPU_VERSION=$(cat /sys/devices/platform/*gpu/gpuinfo)
+		if [ -f "/usr/lib/libmali.so" ]; then
 		cd /usr/lib
+		else
+		cd /usr/lib/arm-linux-gnueabihf
+		fi
 		if [ "$GPU_VERSION" = 'Mali-T76x MP4 r1p0 0x0750' -o "$GPU_VERSION" = 'Mali-T76x 4 cores r1p0 0x0750' ];
 		then
 			#rk3288W, r1 version gpu chip
