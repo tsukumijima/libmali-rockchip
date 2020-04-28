@@ -50,7 +50,7 @@ extern "C" {
 
 #ifndef GL_VERSION_ES_CM_1_0
 #define GL_VERSION_ES_CM_1_0 1
-#include <KHR/khrplatform.h>
+#include <KHR/mali_khrplatform.h>
 
 typedef char             GLchar;
 

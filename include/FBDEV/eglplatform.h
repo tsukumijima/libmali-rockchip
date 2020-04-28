@@ -27,14 +27,14 @@
 /* Platform-specific types and definitions for egl.h
  * $Revision: 30994 $ on $Date: 2015-04-30 13:36:48 -0700 (Thu, 30 Apr 2015) $
  *
- * Adopters may modify khrplatform.h and this file to suit their platform.
+ * Adopters may modify mali_khrplatform.h and this file to suit their platform.
  * You are encouraged to submit all modifications to the Khronos group so that
  * they can be included in future versions of this file.  Please submit changes
  * by sending them to the public Khronos Bugzilla (http://khronos.org/bugzilla)
  * by filing a bug against product "EGL" component "Registry".
  */
 
-#include <KHR/khrplatform.h>
+#include <KHR/mali_khrplatform.h>
 
 /* Macros used in EGL function prototype declarations.
  *
@@ -43,7 +43,7 @@
  * EGLAPI return-type EGLAPIENTRY eglFunction(arguments);
  * typedef return-type (EXPAPIENTRYP PFNEGLFUNCTIONPROC) (arguments);
  *
- * KHRONOS_APICALL and KHRONOS_APIENTRY are defined in KHR/khrplatform.h
+ * KHRONOS_APICALL and KHRONOS_APIENTRY are defined in KHR/mali_khrplatform.h
  */
 
 #ifndef EGLAPI

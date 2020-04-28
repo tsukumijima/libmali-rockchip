@@ -26,9 +26,9 @@
 
 /* Khronos platform-specific types and definitions.
  *
- * The master copy of khrplatform.h is maintained in the Khronos EGL
+ * The master copy of mali_khrplatform.h is maintained in the Khronos EGL
  * Registry repository at https://github.com/KhronosGroup/EGL-Registry
- * The last semantic modification to khrplatform.h was at commit ID:
+ * The last semantic modification to mali_khrplatform.h was at commit ID:
  *      67a3e0864c2d75ea5287b9f3d2eb74a745936692
  *
  * Adopters may modify this file to suit their platform. Adopters are
@@ -43,12 +43,12 @@
  *    http://www.khronos.org/registry/implementers_guide.pdf
  *
  * This file should be included as
- *        #include <KHR/khrplatform.h>
+ *        #include <KHR/mali_khrplatform.h>
  * by Khronos client API header files that use its types and defines.
  *
- * The types in khrplatform.h should only be used to define API-specific types.
+ * The types in mali_khrplatform.h should only be used to define API-specific types.
  *
- * Types defined in khrplatform.h:
+ * Types defined in mali_khrplatform.h:
  *    khronos_int8_t              signed   8  bit
  *    khronos_uint8_t             unsigned 8  bit
  *    khronos_int16_t             signed   16 bit
@@ -71,7 +71,7 @@
  *      an enum. Client APIs which use an integer or other type for
  *      booleans cannot use this as the base type for their boolean.
  *
- * Tokens defined in khrplatform.h:
+ * Tokens defined in mali_khrplatform.h:
  *
  *    KHRONOS_FALSE, KHRONOS_TRUE Enumerated boolean false/true values.
  *

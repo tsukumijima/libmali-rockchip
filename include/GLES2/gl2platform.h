@@ -19,13 +19,13 @@
 
 /* Platform-specific types and definitions for OpenGL ES 2.X  gl2.h
  *
- * Adopters may modify khrplatform.h and this file to suit their platform.
+ * Adopters may modify mali_khrplatform.h and this file to suit their platform.
  * Please contribute modifications back to Khronos as pull requests on the
  * public github repository:
  *      https://github.com/KhronosGroup/OpenGL-Registry
  */
 
-#include <KHR/khrplatform.h>
+#include <KHR/mali_khrplatform.h>
 
 #ifndef GL_APICALL
 #define GL_APICALL  KHRONOS_APICALL
