@@ -1,3 +1,9 @@
+libmali-rk (1.8-1) testing; urgency=medium
+
+  * upgrade rk3288/rk3399 to r18
+
+ -- Caesar Wang <wxt@rock-chips.com>  Thu, 18 Jun 2020 09:53:00 +0800
+
 libmali-rk (1.7-1) testing; urgency=medium
 
   * Add build rules.

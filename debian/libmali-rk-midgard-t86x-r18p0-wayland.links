@@ -1,5 +1,5 @@
 #! /usr/bin/dh-exec
-usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-t86x-r14p0-wayland.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
+usr/lib/${DEB_HOST_MULTIARCH}/libmali-midgard-t86x-r18p0-wayland.so usr/lib/${DEB_HOST_MULTIARCH}/libMali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libmali.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libMaliOpenCL.so
 usr/lib/${DEB_HOST_MULTIARCH}/libMali.so usr/lib/${DEB_HOST_MULTIARCH}/libOpenCL.so
