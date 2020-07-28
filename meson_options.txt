@@ -1,0 +1,12 @@
+option('arch', type: 'combo', choices: ['auto', 'arm', 'armv7l', 'armhf', 'arm32', 'armv8', 'arm64', 'aarch64'],
+       description: 'arch (default: auto)')
+option('gpu', type: 'string', value: 'midgard-t86x',
+       description: 'GPU name (default: midgard-t86x)')
+option('version', type: 'string', value: 'r18p0',
+       description: 'GPU version (default: r18p0)')
+option('subversion', type: 'string', value: 'none',
+       description: 'subversion (default: none)')
+option('platform', type: 'combo', choices: ['x11', 'gbm', 'wayland', 'only-cl'],
+       value: 'x11', description: 'platform (default: x11)')
+option('with-overlay', type: 'boolean', value: 'false',
+       description: 'install overlay (default: false)')
