@@ -1,0 +1,3 @@
+#!/bin/sh
+
+rm -rf /etc/ld.so.conf.d/00-mali.conf

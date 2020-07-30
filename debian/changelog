@@ -1,3 +1,11 @@
+libmali (1.9-1) unstable; urgency=medium
+
+  * Switch to meson build system
+  * Use ld.so.conf
+  * Remove -dev package
+
+ -- Jeffy Chen <jeffy.chen@rock-chips.com>  Wed, 29 Jul 2020 11:35:41 +0800
+
 libmali-rk (1.8-1) testing; urgency=medium
 
   * upgrade rk3288/rk3399 to r18

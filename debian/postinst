@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p /etc/ld.so.conf.d/
+echo "/usr/lib/mali/" > /etc/ld.so.conf.d/00-mali.conf

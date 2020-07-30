@@ -1,22 +1,36 @@
 #!/usr/bin/make -f
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
-#DH_VERBOSE = 1
+export DH_VERBOSE = 1
 
-# see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
-DPKG_EXPORT_BUILDFLAGS = 1
-include /usr/share/dpkg/default.mk
+TARGETS = $(shell cat debian/targets | grep $(DEB_BUILD_GNU_TYPE))
 
-# see FEATURE AREAS in dpkg-buildflags(1)
-#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+override_dh_clean:
+	dh_clean
+	rm -rf libmali-*
 
-# see ENVIRONMENT in dpkg-buildflags(1)
-# package maintainers to append CFLAGS
-#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
-# package maintainers to append LDFLAGS
-#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+override_dh_auto_configure:
+	for target in $(TARGETS); do \
+		export arch=$${target%%-*}; \
+		export $$(./parse_name.sh $$target); \
+		export package=$$name-$$arch; \
+		dh_auto_configure --builddirectory=$$package -- \
+			-Darch=$$arch -Dgpu=$$gpu -Dversion=$$version \
+			-Dsubversion=$$subversion -Dplatform=$$platform; \
+	done
 
-# main packaging script based on dh7 syntax
+override_dh_auto_build:
+override_dh_auto_test:
+
+override_dh_auto_install:
+	for target in $(TARGETS); do \
+		export arch=$${target%%-*}; \
+		export $$(./parse_name.sh $$target); \
+		export package=$$name-$$arch; \
+		dh_auto_install --builddirectory=$$package \
+			--destdir=debian/tmp/$$package; \
+		ln -sf mali/libmali.so.1 debian/tmp/$$package/usr/lib/; \
+	done
+
 %:
-	dh $@ --parallel --buildsystem=cmake
+	dh $@ --buildsystem=meson
