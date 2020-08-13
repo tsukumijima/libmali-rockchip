@@ -2,7 +2,7 @@ project(
   'libmali', 'c',
   version : '1.9.0',
   meson_version : '>=0.49.0',
-  default_options: ['b_asneeded=false'],
+  default_options: ['b_asneeded=false', 'b_lundef=false'],
 )
 
 pkgconfig = import('pkgconfig')
@@ -92,7 +92,7 @@ cl_headers = {
 # Package name : required symbol, wrappers, headers, package version
 map = {
   'mali' : ['', mali_wrappers, mali_headers, meson.project_version()],
-  'gbm' : ['gbm_create_device', gbm_wrappers, {'' : 'include/gbm.h'}, '10.4.0'],
+  'gbm' : ['gbm_create_device', gbm_wrappers, {'' : 'include/gbm.h'}, '20.1.5'],
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
@@ -101,14 +101,60 @@ map = {
 }
 
 # Create dummy source for building libraries
-run_command('touch', join_paths(meson.current_build_dir(), 'dummy.c'))
+dummy_source = join_paths(meson.current_build_dir(), 'dummy.c')
+run_command('touch', dummy_source)
 
 # Create a dummy library for building wrappers
 libmali = shared_library(
   'mali',
-  join_paths(meson.current_build_dir(), 'dummy.c'),
+  dummy_source,
   install : true,
   version : meson.project_version())
+
+# The gbm functions might be missing
+gbm_check_funcs = [
+  'gbm_bo_map',
+  'gbm_bo_unmap',
+  'gbm_bo_get_offset',
+  'gbm_bo_get_plane_count',
+  'gbm_device_get_format_modifier_plane_count',
+  'gbm_bo_get_handle_for_plane',
+  'gbm_bo_get_stride_for_plane',
+  'gbm_bo_get_modifier',
+  'gbm_bo_create_with_modifiers',
+  'gbm_surface_create_with_modifiers',
+  'gbm_bo_get_bpp',
+  'gbm_format_get_name',
+]
+
+# Create libgbm wrapper for missing functions
+libgbm = []
+gbm_symbol = map['gbm'][0]
+if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
+  libgbm_version = gbm_wrappers['gbm']
+  libgbm_cflags = []
+
+  libdrm_dep = dependency('libdrm', version : '>= 2.4.0')
+  if not libdrm_dep.found()
+    error('libdrm not found.')
+  endif
+
+  foreach symbol : gbm_check_funcs
+    if run_command('grep', '-q', symbol, default_lib).returncode() == 0
+      libgbm_cflags += '-DHAS_' + symbol
+    endif
+  endforeach
+
+  libgbm = shared_library(
+    'gbm',
+    'gbm_wrapper.c',
+    c_args : libgbm_cflags,
+    include_directories : include_directories('include'),
+    dependencies : libdrm_dep,
+    link_with : libmali,
+    install : true,
+    version : libgbm_version)
+endif
 
 foreach name, values : map
   symbol = values[0]
@@ -116,6 +162,7 @@ foreach name, values : map
   headers = values[2]
   pkg_version = values[3]
   mali_cflags = []
+  wrapper_ldflags = []
 
   # TODO: Use readelf -s ?
   if run_command('grep', '-q', symbol, default_lib).returncode() != 0
@@ -127,12 +174,16 @@ foreach name, values : map
   endif
 
   foreach wrapper, version : wrappers
-    shared_library(
-      wrapper,
-      join_paths(meson.current_build_dir(), 'dummy.c'),
-      link_with : libmali,
-      install : true,
-      version : version)
+    wrapper_ldflags += '-l' + wrapper
+
+    if wrapper != 'gbm'
+      shared_library(
+        wrapper,
+        dummy_source,
+        link_with : [libgbm, libmali],
+        install : true,
+        version : version)
+    endif
   endforeach
 
   foreach dir, files : headers
@@ -140,7 +191,7 @@ foreach name, values : map
   endforeach
 
   pkgconfig.generate(
-    libraries : ['-L${libdir} -lmali'],
+    libraries : ['-L${libdir} -lmali', wrapper_ldflags],
     extra_cflags : mali_cflags,
     version : pkg_version,
     name : name,

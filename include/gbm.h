@@ -28,15 +28,15 @@
 #ifndef _GBM_H_
 #define _GBM_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 #define __GBM__ 1
 
 #include <stddef.h>
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /**
  * \file gbm.h
@@ -77,6 +77,12 @@ enum gbm_bo_format {
    GBM_BO_FORMAT_ARGB8888
 };
 
+
+/**
+ * The FourCC format codes are taken from the drm_fourcc.h definition, and
+ * re-namespaced. New GBM formats must not be added, unless they are
+ * identical ports from drm_fourcc.
+ */
 #define __gbm_fourcc_code(a,b,c,d) ((uint32_t)(a) | ((uint32_t)(b) << 8) | \
 			      ((uint32_t)(c) << 16) | ((uint32_t)(d) << 24))
 
@@ -84,7 +90,12 @@ enum gbm_bo_format {
 
 /* color index */
 #define GBM_FORMAT_C8		__gbm_fourcc_code('C', '8', ' ', ' ') /* [7:0] C */
+
+/* 8 bpp Red */
 #define GBM_FORMAT_R8		__gbm_fourcc_code('R', '8', ' ', ' ') /* [7:0] R */
+
+/* 16 bpp RG */
+#define GBM_FORMAT_GR88		__gbm_fourcc_code('G', 'R', '8', '8') /* [15:0] G:R 8:8 little endian */
 
 /* 8 bpp RGB */
 #define GBM_FORMAT_RGB332	__gbm_fourcc_code('R', 'G', 'B', '8') /* [7:0] R:G:B 3:3:2 */
@@ -139,6 +150,15 @@ enum gbm_bo_format {
 #define GBM_FORMAT_RGBA1010102	__gbm_fourcc_code('R', 'A', '3', '0') /* [31:0] R:G:B:A 10:10:10:2 little endian */
 #define GBM_FORMAT_BGRA1010102	__gbm_fourcc_code('B', 'A', '3', '0') /* [31:0] B:G:R:A 10:10:10:2 little endian */
 
+/*
+ * Floating point 64bpp RGB
+ * IEEE 754-2008 binary16 half-precision float
+ * [15:0] sign:exponent:mantissa 1:5:10
+ */
+#define GBM_FORMAT_XBGR16161616F __gbm_fourcc_code('X', 'B', '4', 'H') /* [63:0] x:B:G:R 16:16:16:16 little endian */
+
+#define GBM_FORMAT_ABGR16161616F __gbm_fourcc_code('A', 'B', '4', 'H') /* [63:0] A:B:G:R 16:16:16:16 little endian */
+
 /* packed YCbCr */
 #define GBM_FORMAT_YUYV		__gbm_fourcc_code('Y', 'U', 'Y', 'V') /* [31:0] Cr0:Y1:Cb0:Y0 8:8:8:8 little endian */
 #define GBM_FORMAT_YVYU		__gbm_fourcc_code('Y', 'V', 'Y', 'U') /* [31:0] Cb0:Y1:Cr0:Y0 8:8:8:8 little endian */
@@ -179,6 +199,9 @@ enum gbm_bo_format {
 #define GBM_FORMAT_YUV444	__gbm_fourcc_code('Y', 'U', '2', '4') /* non-subsampled Cb (1) and Cr (2) planes */
 #define GBM_FORMAT_YVU444	__gbm_fourcc_code('Y', 'V', '2', '4') /* non-subsampled Cr (1) and Cb (2) planes */
 
+struct gbm_format_name_desc {
+   char name[5];
+};
 
 /**
  * Flags to indicate the intended use for the buffer - these are passed into
@@ -190,20 +213,15 @@ enum gbm_bo_format {
  */
 enum gbm_bo_flags {
    /**
-    * Mali doesn't use or support this flag
-    */
-   GBM_BO_USE_LINEAR       = (0),
-   /**
     * Buffer is going to be presented to the screen using an API such as KMS
     */
    GBM_BO_USE_SCANOUT      = (1 << 0),
-    /**
-     * Buffer is going to be used as cursor
-     */
+   /**
+    * Buffer is going to be used as cursor
+    */
    GBM_BO_USE_CURSOR       = (1 << 1),
    /**
-    * Buffer is going to be used as cursor - the dimensions for the buffer
-    * must be 64x64 if this flag is passed.
+    * Deprecated
     */
    GBM_BO_USE_CURSOR_64X64 = GBM_BO_USE_CURSOR,
    /**
@@ -213,11 +231,17 @@ enum gbm_bo_flags {
    GBM_BO_USE_RENDERING    = (1 << 2),
    /**
     * Buffer can be used for gbm_bo_write.  This is guaranteed to work
-    * with GBM_BO_USE_CURSOR_64X64. but may not work for other
-    * combinations.
+    * with GBM_BO_USE_CURSOR, but may not work for other combinations.
     */
    GBM_BO_USE_WRITE    = (1 << 3),
+   /**
+    * Buffer is linear, i.e. not tiled.
+    */
+   GBM_BO_USE_LINEAR = (1 << 4),
 };
+
+/* HACK: Mali doesn't support this flag */
+#define GBM_BO_USE_LINEAR 0
 
 int
 gbm_device_get_fd(struct gbm_device *gbm);
@@ -228,6 +252,11 @@ gbm_device_get_backend_name(struct gbm_device *gbm);
 int
 gbm_device_is_format_supported(struct gbm_device *gbm,
                                uint32_t format, uint32_t usage);
+
+int
+gbm_device_get_format_modifier_plane_count(struct gbm_device *gbm,
+                                           uint32_t format,
+                                           uint64_t modifier);
 
 void
 gbm_device_destroy(struct gbm_device *gbm);
@@ -240,9 +269,16 @@ gbm_bo_create(struct gbm_device *gbm,
               uint32_t width, uint32_t height,
               uint32_t format, uint32_t flags);
 
+struct gbm_bo *
+gbm_bo_create_with_modifiers(struct gbm_device *gbm,
+                             uint32_t width, uint32_t height,
+                             uint32_t format,
+                             const uint64_t *modifiers,
+                             const unsigned int count);
 #define GBM_BO_IMPORT_WL_BUFFER         0x5501
 #define GBM_BO_IMPORT_EGL_IMAGE         0x5502
 #define GBM_BO_IMPORT_FD                0x5503
+#define GBM_BO_IMPORT_FD_MODIFIER       0x5504
 
 struct gbm_import_fd_data {
    int fd;
@@ -252,34 +288,54 @@ struct gbm_import_fd_data {
    uint32_t format;
 };
 
+#define GBM_MAX_PLANES 4
+
+struct gbm_import_fd_modifier_data {
+   uint32_t width;
+   uint32_t height;
+   uint32_t format;
+   uint32_t num_fds;
+   int fds[GBM_MAX_PLANES];
+   int strides[GBM_MAX_PLANES];
+   int offsets[GBM_MAX_PLANES];
+   uint64_t modifier;
+};
+
 struct gbm_bo *
 gbm_bo_import(struct gbm_device *gbm, uint32_t type,
               void *buffer, uint32_t usage);
 
 /**
- * Mali doesn't support those flags
+ * Flags to indicate the type of mapping for the buffer - these are
+ * passed into gbm_bo_map(). The caller must set the union of all the
+ * flags that are appropriate.
+ *
+ * These flags are independent of the GBM_BO_USE_* creation flags. However,
+ * mapping the buffer may require copying to/from a staging buffer.
+ *
+ * See also: pipe_transfer_usage
  */
 enum gbm_bo_transfer_flags {
    /**
     * Buffer contents read back (or accessed directly) at transfer
     * create time.
     */
-   GBM_BO_TRANSFER_READ       = (0),
+   GBM_BO_TRANSFER_READ       = (1 << 0),
    /**
     * Buffer contents will be written back at unmap time
     * (or modified as a result of being accessed directly).
     */
-   GBM_BO_TRANSFER_WRITE      = (0),
+   GBM_BO_TRANSFER_WRITE      = (1 << 1),
    /**
     * Read/modify/write
     */
-   GBM_BO_TRANSFER_READ_WRITE = (0),
+   GBM_BO_TRANSFER_READ_WRITE = (GBM_BO_TRANSFER_READ | GBM_BO_TRANSFER_WRITE),
 };
 
 void *
 gbm_bo_map(struct gbm_bo *bo,
            uint32_t x, uint32_t y, uint32_t width, uint32_t height,
-           uint32_t flags, uint32_t *stride, void **mp_data);
+           uint32_t flags, uint32_t *stride, void **map_data);
 
 void
 gbm_bo_unmap(struct gbm_bo *bo, void *map_data);
@@ -294,7 +350,16 @@ uint32_t
 gbm_bo_get_stride(struct gbm_bo *bo);
 
 uint32_t
+gbm_bo_get_stride_for_plane(struct gbm_bo *bo, int plane);
+
+uint32_t
 gbm_bo_get_format(struct gbm_bo *bo);
+
+uint32_t
+gbm_bo_get_bpp(struct gbm_bo *bo);
+
+uint32_t
+gbm_bo_get_offset(struct gbm_bo *bo, int plane);
 
 struct gbm_device *
 gbm_bo_get_device(struct gbm_bo *bo);
@@ -304,6 +369,15 @@ gbm_bo_get_handle(struct gbm_bo *bo);
 
 int
 gbm_bo_get_fd(struct gbm_bo *bo);
+
+uint64_t
+gbm_bo_get_modifier(struct gbm_bo *bo);
+
+int
+gbm_bo_get_plane_count(struct gbm_bo *bo);
+
+union gbm_bo_handle
+gbm_bo_get_handle_for_plane(struct gbm_bo *bo, int plane);
 
 int
 gbm_bo_write(struct gbm_bo *bo, const void *buf, size_t count);
@@ -325,6 +399,13 @@ gbm_surface_create(struct gbm_device *gbm,
                    uint32_t width, uint32_t height,
 		   uint32_t format, uint32_t flags);
 
+struct gbm_surface *
+gbm_surface_create_with_modifiers(struct gbm_device *gbm,
+                                  uint32_t width, uint32_t height,
+                                  uint32_t format,
+                                  const uint64_t *modifiers,
+                                  const unsigned int count);
+
 int
 gbm_surface_needs_lock_front_buffer(struct gbm_surface *surface);
 
@@ -339,6 +420,9 @@ gbm_surface_has_free_buffers(struct gbm_surface *surface);
 
 void
 gbm_surface_destroy(struct gbm_surface *surface);
+
+char *
+gbm_format_get_name(uint32_t gbm_format, struct gbm_format_name_desc *desc);
 
 #ifdef __cplusplus
 }
