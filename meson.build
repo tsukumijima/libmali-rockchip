@@ -100,11 +100,6 @@ map = {
   'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
 }
 
-mali_cflags = []
-if platform != 'x11'
-  mali_cflags += '-DMESA_EGL_NO_X11_HEADERS'
-endif
-
 # Create dummy source for building libraries
 run_command('touch', join_paths(meson.current_build_dir(), 'dummy.c'))
 
@@ -120,10 +115,15 @@ foreach name, values : map
   wrappers = values[1]
   headers = values[2]
   pkg_version = values[3]
+  mali_cflags = []
 
   # TODO: Use readelf -s ?
   if run_command('grep', '-q', symbol, default_lib).returncode() != 0
     continue
+  endif
+
+  if name == 'egl' and platform != 'x11'
+    mali_cflags += '-DMESA_EGL_NO_X11_HEADERS'
   endif
 
   foreach wrapper, version : wrappers
