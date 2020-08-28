@@ -1,2 +1,3 @@
 libmali-bifrost-g31-rxp0-wayland-aarch64/usr/lib/*/* usr/lib/mali/
+libmali-bifrost-g31-rxp0-wayland-aarch64/usr/lib/libmali.so.1 /usr/lib/
 libmali-bifrost-g31-rxp0-wayland-aarch64/etc/* etc/

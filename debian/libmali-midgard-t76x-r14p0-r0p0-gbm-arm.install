@@ -1,2 +1,3 @@
 libmali-midgard-t76x-r14p0-r0p0-gbm-arm/usr/lib/*/* usr/lib/mali/
+libmali-midgard-t76x-r14p0-r0p0-gbm-arm/usr/lib/libmali.so.1 /usr/lib/
 libmali-midgard-t76x-r14p0-r0p0-gbm-arm/etc/* etc/

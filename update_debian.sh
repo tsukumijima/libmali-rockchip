@@ -23,8 +23,7 @@ for target in $TARGETS; do
 	# TODO: Remove this hack when we have real soname.
 	echo "$package/usr/lib/libmali.so.1 /usr/lib/" >> debian/$package.install
 
-	echo $gpu | grep -q utgard && continue
-	[ "$subversion" = 'without-cl' ] && continue
+	grep -q clCreateContext lib/$target || continue
 
 	echo "$package/etc/* etc/" >> debian/$package.install
 done
