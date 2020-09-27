@@ -37,7 +37,12 @@ egl_wrappers = {'EGL' : '1'}
 glesv1_wrappers = {'GLESv1_CM' : '1'}
 glesv2_wrappers = {'GLESv2' : '2'}
 wayland_wrappers = {'wayland-egl' : '1'}
-cl_wrappers = {'OpenCL' : '1', 'MaliOpenCL' : '1'}
+
+if get_option('opencl-icd')
+  cl_wrappers = {'MaliOpenCL' : '1'}
+else
+  cl_wrappers = {'OpenCL' : '1'}
+endif
 
 # Subdir : headers
 mali_headers = {
@@ -186,6 +191,19 @@ foreach name, values : map
     endif
   endforeach
 
+  if name == 'OpenCL' and get_option('opencl-icd')
+    custom_target(
+      'vendor icd',
+      output: 'mali.icd',
+      command : ['echo', 'libMaliOpenCL.so.1'],
+      capture : true,
+      install_dir : get_option('sysconfdir') / 'OpenCL' / 'vendors',
+      install: true)
+
+    # ICD package doesn't provide headers and pkgconfig
+    continue
+  endif
+
   foreach dir, files : headers
     install_headers(files, subdir : dir)
   endforeach
@@ -197,10 +215,6 @@ foreach name, values : map
     name : name,
     description : 'Mali GPU User-Space Binary Drivers'
   )
-
-  if name == 'OpenCL'
-    install_data('include/mali.icd', install_dir : get_option('sysconfdir') / 'OpenCL' / 'vendors')
-  endif
 endforeach
 
 # Install optional overlay
