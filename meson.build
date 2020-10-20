@@ -150,12 +150,13 @@ if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
     endif
   endforeach
 
+  libdl_dep = meson.get_compiler('c').find_library('dl', required : false)
   libgbm = shared_library(
     'gbm',
     'gbm_wrapper.c',
     c_args : libgbm_cflags,
     include_directories : include_directories('include'),
-    dependencies : libdrm_dep,
+    dependencies : [libdl_dep, libdrm_dep],
     link_with : libmali,
     install : true,
     version : libgbm_version)
