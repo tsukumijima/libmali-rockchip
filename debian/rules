@@ -3,7 +3,7 @@
 # output every command that modifies files on the build system.
 export DH_VERBOSE = 1
 
-TARGETS = $(shell cat debian/targets | grep $(DEB_BUILD_GNU_TYPE))
+TARGETS = $(shell cat debian/targets | grep $(DEB_HOST_GNU_TYPE))
 
 override_dh_clean:
 	dh_clean
