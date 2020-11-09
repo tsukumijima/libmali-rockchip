@@ -7,7 +7,8 @@ TARGETS = $(shell cat debian/targets | grep $(DEB_HOST_GNU_TYPE))
 
 override_dh_clean:
 	dh_clean
-	rm -rf libmali-*
+	rm -rf libmali-*/
+	rm -rf debian/libmali-*/
 
 override_dh_auto_configure:
 	for target in $(TARGETS); do \
