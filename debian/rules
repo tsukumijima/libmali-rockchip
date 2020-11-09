@@ -11,12 +11,11 @@ override_dh_clean:
 
 override_dh_auto_configure:
 	for target in $(TARGETS); do \
-		export arch=$${target%%-*}; \
 		export $$(./parse_name.sh $$target); \
-		export package=$$name-$$arch; \
-		dh_auto_configure --builddirectory=$$package -- \
-			-Darch=$$arch -Dgpu=$$gpu -Dversion=$$version \
-			-Dsubversion=$$subversion -Dplatform=$$platform; \
+		dh_auto_configure --builddirectory=$$name -- \
+			-Darch=$${target%%-*} -Dgpu=$$gpu \
+			-Dversion=$$version -Dsubversion=$$subversion \
+			-Dplatform=$$platform; \
 	done
 
 override_dh_auto_build:
@@ -24,12 +23,10 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	for target in $(TARGETS); do \
-		export arch=$${target%%-*}; \
 		export $$(./parse_name.sh $$target); \
-		export package=$$name-$$arch; \
-		dh_auto_install --builddirectory=$$package \
-			--destdir=debian/tmp/$$package; \
-		ln -sf mali/libmali.so.1 debian/tmp/$$package/usr/lib/; \
+		dh_auto_install --builddirectory=$$name \
+			--destdir=debian/tmp/$$name; \
+		ln -sf mali/libmali.so.1 debian/tmp/$$name/usr/lib/; \
 	done
 
 %:

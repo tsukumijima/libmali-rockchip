@@ -1,0 +1,3 @@
+libmali-bifrost-g31-rxp0-gbm/usr/lib/*/* usr/lib/mali/
+libmali-bifrost-g31-rxp0-gbm/usr/lib/libmali.so.1 /usr/lib/
+libmali-bifrost-g31-rxp0-gbm/etc/* etc/
