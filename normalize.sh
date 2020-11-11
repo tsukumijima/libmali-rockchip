@@ -4,7 +4,7 @@
 rm -f $(find . -name "*fbdev*.so")
 
 # Link x11 libs
-X11_LIBS=$(find . -name "*.so"|grep -vE "gbm.so|wayland.so|x11.so|only-cl.so")
+X11_LIBS=$(find . -name "*.so"|grep -vE "gbm.so|wayland.so|x11.so|only-cl.so|dummy.so")
 for lib in $X11_LIBS;do
 	mv $lib ${lib%.so}-x11.so 2>/dev/null
 done

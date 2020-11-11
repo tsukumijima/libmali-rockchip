@@ -11,7 +11,7 @@ parse_name() {
 	GPU=$(echo $1|cut -d'-' -f'2,3')
 	VERSION=$(echo $1|cut -d'-' -f4)
 
-	PLATFORM=$(echo $1 | grep -owE "gbm|wayland|x11|only-cl")
+	PLATFORM=$(echo $1 | grep -owE "gbm|wayland|x11|only-cl|dummy")
 	[ -z "$PLATFORM" ] && PLATFORM=x11
 
 	SUBVERSION=$(echo ${1%-$PLATFORM}|cut -d'-' -f'5-')
