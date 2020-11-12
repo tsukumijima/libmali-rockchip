@@ -29,6 +29,7 @@ arm-linux-gnueabihf/libmali-bifrost-g31-rxp0-gbm.so
 arm-linux-gnueabihf/libmali-midgard-t76x-r18p0-r1p0-gbm.so
 arm-linux-gnueabihf/libmali-midgard-t76x-r14p0-r0p0-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g31-rxp0-x11.so
+aarch64-linux-gnu/libmali-bifrost-g52-r25p0-x11.so
 aarch64-linux-gnu/libmali-bifrost-g52-r25p0-wayland.so
 aarch64-linux-gnu/libmali-bifrost-g52-r25p0-dummy.so
 aarch64-linux-gnu/libmali-bifrost-g31-rxp0-without-cl-wayland.so
