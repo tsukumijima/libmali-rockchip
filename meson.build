@@ -2,8 +2,7 @@ project(
   'libmali', 'c',
   version : '1.9.0',
   meson_version : '>=0.49.0',
-  default_options: ['b_asneeded=false', 'b_lundef=false'],
-)
+  default_options : ['b_asneeded=false', 'b_lundef=false'])
 
 pkgconfig = import('pkgconfig')
 
@@ -21,8 +20,8 @@ platform = get_option('platform')
 message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
 
 # Grab libraries with specified configs
-c = run_command('grabber.sh', arch, gpu, version, subversion, platform)
-libs = c.stdout().strip().split('\n')
+cmd = run_command('grabber.sh', arch, gpu, version, subversion, platform)
+libs = cmd.stdout().strip().split('\n')
 
 # Use the first one as default library
 default_lib = libs[0]
@@ -46,60 +45,31 @@ else
   cl_wrappers = {'OpenCL' : '1'}
 endif
 
-# Subdir : headers
+# Source dir : dest dir
 mali_headers = {
-  'KHR' : ['include/KHR/mali_khrplatform.h'],
+  'include/KHR' : 'include/KHR',
+}
+gbm_headers = {
+  'include/GBM' : 'include',
 }
 egl_headers = {
-  'EGL' : [
-    'include/EGL/eglplatform.h',
-    'include/EGL/eglext.h',
-    'include/EGL/egl.h',
-  ],
+  'include/EGL' : 'include/EGL',
 }
 glesv1_headers = {
-  'GLES' : [
-    'include/GLES/gl.h',
-    'include/GLES/glplatform.h',
-    'include/GLES/glext.h',
-    'include/GLES/egl.h',
-  ],
+  'include/GLES' : 'include/GLES',
 }
 glesv2_headers = {
-  'GLES2' : [
-    'include/GLES2/gl2ext.h',
-    'include/GLES2/gl2.h',
-    'include/GLES2/gl2platform.h',
-  ],
-  'GLES3' : [
-    'include/GLES3/gl3.h',
-    'include/GLES3/gl32.h',
-    'include/GLES3/gl3platform.h',
-    'include/GLES3/gl31.h',
-  ],
+  'include/GLES2' : 'include/GLES2',
+  'include/GLES3' : 'include/GLES3',
 }
 cl_headers = {
-  'CL': [
-    'include/CL/cl_gl.h',
-    'include/CL/cl.h',
-    'include/CL/cl_dx9_media_sharing_intel.h',
-    'include/CL/cl_ext_intel.h',
-    'include/CL/cl_d3d10.h',
-    'include/CL/opencl.h',
-    'include/CL/cl_d3d11.h',
-    'include/CL/cl_platform.h',
-    'include/CL/cl_ext.h',
-    'include/CL/cl_egl.h',
-    'include/CL/cl_dx9_media_sharing.h',
-    'include/CL/cl_va_api_media_sharing_intel.h',
-    'include/CL/cl_gl_ext.h',
-  ],
+  'include/CL' : 'include/CL',
 }
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
   'mali' : ['', mali_wrappers, mali_headers, meson.project_version()],
-  'gbm' : ['gbm_create_device', gbm_wrappers, {'' : 'include/gbm.h'}, '20.1.5'],
+  'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, '20.1.5'],
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
@@ -157,7 +127,7 @@ if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
     'gbm',
     'gbm_wrapper.c',
     c_args : libgbm_cflags,
-    include_directories : include_directories('include'),
+    include_directories : include_directories('include/GBM'),
     dependencies : [libdl_dep, libdrm_dep],
     link_with : libmali,
     install : true,
@@ -197,18 +167,22 @@ foreach name, values : map
   if name == 'OpenCL' and get_option('opencl-icd')
     custom_target(
       'vendor icd',
-      output: 'mali.icd',
+      output : 'mali.icd',
       command : ['echo', 'libMaliOpenCL.so.1'],
       capture : true,
       install_dir : get_option('sysconfdir') / 'OpenCL' / 'vendors',
-      install: true)
+      install : true)
 
     # ICD package doesn't provide headers and pkgconfig
     continue
   endif
 
-  foreach dir, files : headers
-    install_headers(files, subdir : dir)
+  foreach src, dst : headers
+    install_subdir(
+      src,
+      install_dir : dst,
+      install_mode : ['rw-r--r--', 'root'],
+      strip_directory : true)
   endforeach
 
   pkgconfig.generate(
@@ -216,8 +190,7 @@ foreach name, values : map
     extra_cflags : mali_cflags,
     version : pkg_version,
     name : name,
-    description : 'Mali GPU User-Space Binary Drivers'
-  )
+    description : 'Mali GPU User-Space Binary Drivers')
 endforeach
 
 # Install optional overlay

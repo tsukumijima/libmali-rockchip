@@ -72,7 +72,7 @@ union gbm_bo_handle {
 /** Format of the allocated buffer */
 enum gbm_bo_format {
    /** RGB with 8 bits per channel in a 32 bit value */
-   GBM_BO_FORMAT_XRGB8888, 
+   GBM_BO_FORMAT_XRGB8888,
    /** ARGB with 8 bits per channel in a 32 bit value */
    GBM_BO_FORMAT_ARGB8888
 };
