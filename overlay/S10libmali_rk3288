@@ -5,24 +5,24 @@
 
 case "$1" in
 	start)
+		GPUINFO=/sys/devices/platform/*gpu/gpuinfo
 
-		# create libmali.so link depend on chips type in the runtime
-		GPU_VERSION=$(cat /sys/devices/platform/*gpu/gpuinfo)
-		if [ -f "/usr/lib/libmali.so" ]; then
-		cd /usr/lib
-		else
-		cd /usr/lib/arm-linux-gnueabihf
-		fi
-		if [ "$GPU_VERSION" = 'Mali-T76x MP4 r1p0 0x0750' -o "$GPU_VERSION" = 'Mali-T76x 4 cores r1p0 0x0750' ];
-		then
-			#rk3288W, r1 version gpu chip
-			mount --bind libmali-midgard-t76x-r18p0-r1p0-wayland.so libmali.so
-		fi
-		cd -
+		# filter out non-rk3288 devices
+		grep -q "Mali-T76x.*0x0750" $GPUINFO || exit 0
+
+		LIBMALI=$(find /usr/lib -maxdepth 2 -name libmali.so)
+		cd ${LIBMALI%/*}
+
+		# find the correct libmali for the gpu chip
+		SUBVER=$(grep -o "r[01]p0" $GPUINFO)
+		LIBMALI=$(ls libmali-midgard-t76x-*-$SUBVER-*.so | head -1)
+		[ -z "$LIBMALI" ] && exit 1
+
+		# bind with the new libmali
+		echo "Using $LIBMALI"
+		mount --bind $LIBMALI libmali.so
 		;;
-	stop)
-		printf "stop finished"
-        ;;
+	stop) ;;
 	*)
         echo "Usage: $0 {start|stop}"
         exit 1
