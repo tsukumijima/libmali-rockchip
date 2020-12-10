@@ -18,6 +18,8 @@ version = get_option('version')
 subversion = get_option('subversion')
 platform = get_option('platform')
 
+message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
+
 # Grab libraries with specified configs
 c = run_command('grabber.sh', arch, gpu, version, subversion, platform)
 libs = c.stdout().strip().split('\n')
