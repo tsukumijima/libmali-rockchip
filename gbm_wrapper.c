@@ -19,6 +19,7 @@
 #include <dlfcn.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include <string.h>
 #include <xf86drm.h>
 #include <sys/mman.h>
@@ -53,16 +54,6 @@ gbm_bo_get_plane_count(struct gbm_bo *bo)
 }
 #endif
 
-#ifndef HAS_gbm_device_get_format_modifier_plane_count
-int
-gbm_device_get_format_modifier_plane_count(struct gbm_device *gbm,
-                                           uint32_t format,
-                                           uint64_t modifier)
-{
-   return 1;
-}
-#endif
-
 #ifndef HAS_gbm_bo_get_stride_for_plane
 uint32_t
 gbm_bo_get_stride_for_plane(struct gbm_bo *bo, int plane)
@@ -88,6 +79,30 @@ gbm_bo_get_handle_for_plane(struct gbm_bo *bo, int plane)
 }
 #endif
 
+static inline bool
+can_ignore_modifiers(const uint64_t *modifiers,
+                     const unsigned int count)
+{
+   for (int i = 0; i < count; i++) {
+      /* linear or invalid */
+      if (!modifiers[i] || modifiers[i] == DRM_FORMAT_MOD_INVALID) {
+         return true;
+      }
+   }
+
+   return !count;
+}
+
+#ifndef HAS_gbm_device_get_format_modifier_plane_count
+int
+gbm_device_get_format_modifier_plane_count(struct gbm_device *gbm,
+                                           uint32_t format,
+                                           uint64_t modifier)
+{
+   return can_ignore_modifiers(&modifier, 1) ? 1 : 0;
+}
+#endif
+
 #ifndef HAS_gbm_bo_create_with_modifiers
 struct gbm_bo *
 gbm_bo_create_with_modifiers(struct gbm_device *gbm,
@@ -96,6 +111,9 @@ gbm_bo_create_with_modifiers(struct gbm_device *gbm,
                              const uint64_t *modifiers,
                              const unsigned int count)
 {
+   if (!can_ignore_modifiers(modifiers, count))
+      return NULL;
+
    return gbm_bo_create(gbm, width, height, format, GBM_BO_USE_LINEAR);
 }
 #endif
@@ -108,6 +126,9 @@ gbm_surface_create_with_modifiers(struct gbm_device *gbm,
                                   const uint64_t *modifiers,
                                   const unsigned int count)
 {
+   if (!can_ignore_modifiers(modifiers, count))
+      return NULL;
+
    return gbm_surface_create(gbm, width, height, format, 0);
 }
 #endif
