@@ -201,17 +201,18 @@ gbm_surface_create(struct gbm_device *gbm,
          (struct gbm_surface *(*)()) dlsym(RTLD_NEXT, "gbm_surface_create");
 
    surface = surface_create(gbm, width, height, format, flags);
-   if (!surface)
-      surface = surface_create(gbm, width, height, format, 0);
+   if (surface)
+      return surface;
 
-   return surface;
+   return surface_create(gbm, width, height, format,
+                         flags & (GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING));
 }
 
-/* Wrappers for unsupported usage */
+/* Wrappers for unsupported flags */
 struct gbm_bo *
 gbm_bo_create(struct gbm_device *gbm,
               uint32_t width, uint32_t height,
-              uint32_t format, uint32_t usage)
+              uint32_t format, uint32_t flags)
 {
    struct gbm_bo *bo;
 
@@ -220,11 +221,13 @@ gbm_bo_create(struct gbm_device *gbm,
       bo_create =
          (struct gbm_bo *(*)()) dlsym(RTLD_NEXT, "gbm_bo_create");
 
-   bo = bo_create(gbm, width, height, format, usage);
-   if (!bo)
-      bo = bo_create(gbm, width, height, format, 0);
+   bo = bo_create(gbm, width, height, format, flags);
+   if (bo)
+      return bo;
 
-   return bo;
+   return bo_create(gbm, width, height, format,
+                    flags & (GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING |
+                             GBM_BO_USE_WRITE | GBM_BO_USE_CURSOR_64X64));
 }
 
 /* From mesa3d 20.1.5 : src/gbm/main/gbm.c */
