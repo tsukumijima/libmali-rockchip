@@ -19,6 +19,8 @@
 #include <dlfcn.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <xf86drm.h>
@@ -187,6 +189,30 @@ gbm_bo_unmap(struct gbm_bo *bo, void *map_data)
 }
 #endif
 
+static inline void *
+mali_dlsym(const char *func)
+{
+   void *handle, *symbol;
+
+   /* The libmali should be already loaded */
+   handle = dlopen(LIBMALI_SO, RTLD_LAZY | RTLD_NOLOAD);
+   if (!handle) {
+      /* Should not reach here */
+      fprintf(stderr, "FATAL: " LIBMALI_SO " not loaded\n");
+      exit(-1);
+   }
+
+   /* Clear error */
+   dlerror();
+
+   symbol = dlsym(handle, func);
+   if (!symbol)
+      fprintf(stderr, "%s\n", dlerror());
+
+   dlclose(handle);
+   return symbol;
+}
+
 /* Wrappers for unsupported flags */
 struct gbm_surface *
 gbm_surface_create(struct gbm_device *gbm,
@@ -195,10 +221,12 @@ gbm_surface_create(struct gbm_device *gbm,
 {
    struct gbm_surface *surface;
 
-   static struct gbm_surface * (*surface_create)();
-   if(!surface_create)
-      surface_create =
-         (struct gbm_surface *(*)()) dlsym(RTLD_NEXT, "gbm_surface_create");
+   static struct gbm_surface * (* surface_create) ();
+   if (!surface_create) {
+      surface_create = mali_dlsym(__func__);
+      if(!surface_create)
+         return NULL;
+   }
 
    surface = surface_create(gbm, width, height, format, flags);
    if (surface)
@@ -216,10 +244,12 @@ gbm_bo_create(struct gbm_device *gbm,
 {
    struct gbm_bo *bo;
 
-   static struct gbm_bo * (*bo_create)();
-   if(!bo_create)
-      bo_create =
-         (struct gbm_bo *(*)()) dlsym(RTLD_NEXT, "gbm_bo_create");
+   static struct gbm_bo * (* bo_create) ();
+   if (!bo_create) {
+      bo_create = mali_dlsym(__func__);
+      if(!bo_create)
+         return NULL;
+   }
 
    bo = bo_create(gbm, width, height, format, flags);
    if (bo)

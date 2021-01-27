@@ -4,6 +4,8 @@ project(
   meson_version : '>=0.49.0',
   default_options : ['b_asneeded=false', 'b_lundef=false'])
 
+mali_version = meson.project_version()
+
 pkgconfig = import('pkgconfig')
 
 if get_option('arch') != 'auto'
@@ -68,7 +70,7 @@ cl_headers = {
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
-  'mali' : ['', mali_wrappers, mali_headers, meson.project_version()],
+  'mali' : ['', mali_wrappers, mali_headers, mali_version],
   'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, '20.1.5'],
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
@@ -86,7 +88,7 @@ libmali = shared_library(
   'mali',
   dummy_source,
   install : true,
-  version : meson.project_version())
+  version : mali_version)
 
 # The gbm functions might be missing
 gbm_check_funcs = [
@@ -109,7 +111,9 @@ libgbm = []
 gbm_symbol = map['gbm'][0]
 if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
   libgbm_version = gbm_wrappers['gbm']
-  libgbm_cflags = []
+  libgbm_cflags = [
+    '-DLIBMALI_SO="libmali.so.' + mali_version.split('.')[0] + '"',
+  ]
 
   libdrm_dep = dependency('libdrm', version : '>= 2.4.0')
   if not libdrm_dep.found()
