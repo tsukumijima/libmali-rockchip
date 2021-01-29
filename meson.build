@@ -209,6 +209,15 @@ if get_option('with-overlay')
   endif
 endif
 
+# Install optional KHR header
+if get_option('khr-header')
+  install_data(
+    'include/KHR/mali_khrplatform.h',
+    install_dir : get_option('includedir') / 'KHR',
+    install_mode : ['rw-r--r--', 'root'],
+    rename : 'khrplatform.h')
+endif
+
 # Install target libraries and replace the dummy one
 install_data(libs, install_dir : get_option('libdir'))
 meson.add_install_script('postinst.sh', get_option('libdir'), default_lib)
