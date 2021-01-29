@@ -49,23 +49,23 @@ endif
 
 # Source dir : dest dir
 mali_headers = {
-  'include/KHR' : 'include/KHR',
+  'include/KHR' : 'KHR',
 }
 gbm_headers = {
-  'include/GBM' : 'include',
+  'include/GBM' : '',
 }
 egl_headers = {
-  'include/EGL' : 'include/EGL',
+  'include/EGL' : 'EGL',
 }
 glesv1_headers = {
-  'include/GLES' : 'include/GLES',
+  'include/GLES' : 'GLES',
 }
 glesv2_headers = {
-  'include/GLES2' : 'include/GLES2',
-  'include/GLES3' : 'include/GLES3',
+  'include/GLES2' : 'GLES2',
+  'include/GLES3' : 'GLES3',
 }
 cl_headers = {
-  'include/CL' : 'include/CL',
+  'include/CL' : 'CL',
 }
 
 # Package name : required symbol, wrappers, headers, package version
@@ -184,7 +184,7 @@ foreach name, values : map
   foreach src, dst : headers
     install_subdir(
       src,
-      install_dir : dst,
+      install_dir : get_option('includedir') / dst,
       install_mode : ['rw-r--r--', 'root'],
       strip_directory : true)
   endforeach
