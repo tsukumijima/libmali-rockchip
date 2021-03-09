@@ -18,6 +18,8 @@ gpu = get_option('gpu')
 version = get_option('version')
 subversion = get_option('subversion')
 platform = get_option('platform')
+opencl_icd = get_option('opencl-icd')
+vendor_package = get_option('vendor-package')
 
 message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
 
@@ -40,12 +42,7 @@ egl_wrappers = {'EGL' : '1'}
 glesv1_wrappers = {'GLESv1_CM' : '1'}
 glesv2_wrappers = {'GLESv2' : '2'}
 wayland_wrappers = {'wayland-egl' : '1'}
-
-if get_option('opencl-icd')
-  cl_wrappers = {'MaliOpenCL' : '1'}
-else
-  cl_wrappers = {'OpenCL' : '1'}
-endif
+cl_wrappers = opencl_icd ? {'MaliOpenCL' : '1'} : {'OpenCL' : '1'}
 
 # Source dir : dest dir
 mali_headers = {
@@ -70,7 +67,7 @@ cl_headers = {
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
-  'mali' : ['', mali_wrappers, mali_headers, mali_version],
+  'Mali' : ['', mali_wrappers, mali_headers, mali_version],
   'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, '20.1.5'],
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
@@ -89,6 +86,16 @@ libmali = shared_library(
   dummy_source,
   install : true,
   version : mali_version)
+
+pkgconfig.generate(
+  libmali,
+  description : 'Mali GPU User-Space Binary Driver')
+
+if vendor_package
+  wrapper_libdir = get_option('libdir') / 'mali'
+else
+  wrapper_libdir = get_option('libdir')
+endif
 
 # The gbm functions might be missing
 gbm_check_funcs = [
@@ -135,6 +142,7 @@ if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
     dependencies : [libdl_dep, libdrm_dep],
     link_with : libmali,
     install : true,
+    install_dir : wrapper_libdir,
     version : libgbm_version)
 endif
 
@@ -145,6 +153,7 @@ foreach name, values : map
   pkg_version = values[3]
   mali_cflags = []
   wrapper_ldflags = []
+  is_opencl_icd = opencl_icd and name == 'OpenCL'
 
   # TODO: Use readelf -s ?
   if run_command('grep', '-q', symbol, default_lib).returncode() != 0
@@ -164,11 +173,13 @@ foreach name, values : map
         dummy_source,
         link_with : [libgbm, libmali],
         install : true,
+        install_dir : wrapper_libdir,
         version : version)
     endif
   endforeach
 
-  if name == 'OpenCL' and get_option('opencl-icd')
+  # Install ICD OpenCL vendor config
+  if is_opencl_icd
     custom_target(
       'vendor icd',
       output : 'mali.icd',
@@ -176,8 +187,10 @@ foreach name, values : map
       capture : true,
       install_dir : get_option('sysconfdir') / 'OpenCL' / 'vendors',
       install : true)
+  endif
 
-    # ICD package doesn't provide headers and pkgconfig
+  # No {headers, pkgconfig} for {ICD OpenGL, vendor packages}
+  if is_opencl_icd or vendor_package
     continue
   endif
 
@@ -194,7 +207,7 @@ foreach name, values : map
     extra_cflags : mali_cflags,
     version : pkg_version,
     name : name,
-    description : 'Mali GPU User-Space Binary Drivers')
+    description : 'Mali GPU User-Space Binary Driver Wrappers')
 endforeach
 
 # Install optional overlay
@@ -209,8 +222,17 @@ if get_option('with-overlay')
   endif
 endif
 
-# Install optional KHR header
-if get_option('khr-header')
+if vendor_package
+  # Install vendor ld config
+  custom_target(
+    'vendor ld config',
+    output : '00-' + arch + '-mali.conf',
+    command : ['echo', get_option('prefix') / wrapper_libdir],
+    capture : true,
+    install_dir : '/etc/ld.so.conf.d',
+    install : true)
+elif get_option('khr-header')
+  # Install optional KHR header
   install_data(
     'include/KHR/mali_khrplatform.h',
     install_dir : get_option('includedir') / 'KHR',

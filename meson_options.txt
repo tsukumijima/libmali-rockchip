@@ -14,3 +14,5 @@ option('opencl-icd', type: 'boolean', value: 'true',
        description: 'OpenCL Installable Client Driver (ICD) (default: true)')
 option('khr-header', type: 'boolean', value: 'false',
        description: 'Install KHR header (default: false)')
+option('vendor-package', type: 'boolean', value: 'false',
+       description: 'Install as vendor package (default: false)')
