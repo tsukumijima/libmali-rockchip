@@ -16,7 +16,7 @@ override_dh_auto_configure:
 		dh_auto_configure --builddirectory=$$name -- \
 			-Darch=$${target%%-*} -Dgpu=$$gpu \
 			-Dversion=$$version -Dsubversion=$$subversion \
-			-Dplatform=$$platform; \
+			-Dplatform=$$platform -Dvendor-package=true; \
 	done
 
 override_dh_auto_build:
@@ -26,8 +26,7 @@ override_dh_auto_install:
 	for target in $(TARGETS); do \
 		export $$(./parse_name.sh $$target); \
 		dh_auto_install --builddirectory=$$name \
-			--destdir=debian/tmp/$$name; \
-		ln -sf mali/libmali.so.1 debian/tmp/$$name/usr/lib/; \
+			--destdir=debian/$$name; \
 	done
 
 %:
