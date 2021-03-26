@@ -22,3 +22,6 @@ done 2>/dev/null
 for lib in $(find . -name "*.so");do
        patchelf --set-soname libmali.so.1 $lib
 done
+
+# Update debian control and rules
+./update_debian.sh
