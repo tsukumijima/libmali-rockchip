@@ -20,6 +20,7 @@ subversion = get_option('subversion')
 platform = get_option('platform')
 opencl_icd = get_option('opencl-icd')
 vendor_package = get_option('vendor-package')
+wrapper_packages = get_option('wrapper-packages')
 
 message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
 
@@ -30,10 +31,27 @@ libs = cmd.stdout().strip().split('\n')
 # Use the first one as default library
 default_lib = libs[0]
 if default_lib == ''
-  error('failed to find matched library.')
+  error('Failed to find matched library')
 endif
 
-message('building for @0@'.format(libs))
+message('Source libraries: @0@'.format(libs))
+
+if wrapper_packages
+  message('Provide wrapper packages')
+else
+  # The vendor package requires soname of wrapper packages.
+  if vendor_package
+    error('Cannot provide vendor package without wrapper packages')
+  endif
+endif
+
+# Install wrapper libraries into vendor dir
+if vendor_package
+  message('Build vendor package')
+  wrapper_libdir = get_option('libdir') / 'mali'
+else
+  wrapper_libdir = get_option('libdir')
+endif
 
 # Wrap library name : version
 mali_wrappers = {'Mali' : '1'}
@@ -65,10 +83,13 @@ cl_headers = {
   'include/CL' : 'CL',
 }
 
+# Provide newer GBM version with wrapper packages
+gbm_version = wrapper_packages ? '20.1.5' : '10.4.0'
+
 # Package name : required symbol, wrappers, headers, package version
 map = {
   'Mali' : ['', mali_wrappers, mali_headers, mali_version],
-  'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, '20.1.5'],
+  'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, gbm_version],
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
@@ -90,12 +111,6 @@ libmali = shared_library(
 pkgconfig.generate(
   libmali,
   description : 'Mali GPU User-Space Binary Driver')
-
-if vendor_package
-  wrapper_libdir = get_option('libdir') / 'mali'
-else
-  wrapper_libdir = get_option('libdir')
-endif
 
 # The gbm functions might be missing
 gbm_check_funcs = [
@@ -155,7 +170,6 @@ foreach name, values : map
   wrapper_ldflags = []
   is_opencl_icd = opencl_icd and name == 'OpenCL'
 
-  # TODO: Use readelf -s ?
   if run_command('grep', '-q', symbol, default_lib).returncode() != 0
     continue
   endif
@@ -240,6 +254,13 @@ elif get_option('khr-header')
     rename : 'khrplatform.h')
 endif
 
-# Install target libraries and replace the dummy one
+# Install target libraries
 install_data(libs, install_dir : get_option('libdir'))
-meson.add_install_script('postinst.sh', get_option('libdir'), default_lib)
+
+# Fixup dummy library
+meson.add_install_script('fixup_dummy.sh', get_option('libdir'), default_lib)
+
+if not wrapper_packages
+# Fixup wrappers
+  meson.add_install_script('fixup_wrappers.sh', get_option('libdir'))
+endif
