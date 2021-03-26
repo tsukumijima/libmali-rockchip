@@ -5,13 +5,15 @@ PRINT_VERSION=false
 PRINT_SUBVERSION=false
 PRINT_PLATFORM=false
 
+PLATFORMS="gbm|wayland|x11|only-cl|dummy"
+
 parse_name() {
 	[ -z "$1" ] && return
 
 	GPU=$(echo $1|cut -d'-' -f'2,3')
 	VERSION=$(echo $1|cut -d'-' -f4)
 
-	PLATFORM=$(echo $1|grep -owE "gbm|wayland|x11|only-cl|dummy")
+	PLATFORM=$(echo $1|grep -owE "$PLATFORMS"|xargs -n 1|tail -1)
 	[ -z "$PLATFORM" ] && PLATFORM=x11
 
 	SUBVERSION=$(echo ${1%-$PLATFORM}|cut -d'-' -f'5-')
