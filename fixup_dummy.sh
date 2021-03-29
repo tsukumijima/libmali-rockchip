@@ -14,4 +14,4 @@ cp $SOURCE libmali.so
 cp -a libmali.so $SOURCE
 
 # For old DDK(e.g. utgard)
-cp -a libmali.so libMali.so.*
+cp -a libmali.so libMali.so.1
