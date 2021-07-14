@@ -20,7 +20,7 @@ subversion = get_option('subversion')
 platform = get_option('platform')
 opencl_icd = get_option('opencl-icd')
 vendor_package = get_option('vendor-package')
-wrapper_packages = get_option('wrapper-packages')
+wrappers_opts = get_option('wrappers')
 
 message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
 
@@ -36,12 +36,19 @@ endif
 
 message('Source libraries: @0@'.format(libs))
 
-if wrapper_packages
-  message('Provide wrapper packages')
+if wrappers_opts.auto() and gpu.split('-')[0] == 'utgard'
+  wrappers = false
+  warning('Wrappers are disabled for utgard by default')
 else
-  # The vendor package requires soname of wrapper packages.
+  wrappers = not wrappers_opts.disabled()
+endif
+
+if wrappers
+  message('Provide wrappers')
+else
+  # The vendor package requires soname of wrappers.
   if vendor_package
-    error('Cannot provide vendor package without wrapper packages')
+    error('Cannot provide vendor package without wrappers')
   endif
 endif
 
@@ -83,8 +90,8 @@ cl_headers = {
   'include/CL' : 'CL',
 }
 
-# Provide newer GBM version with wrapper packages
-gbm_version = wrapper_packages ? '20.1.5' : '10.4.0'
+# Provide newer GBM version with wrappers
+gbm_version = wrappers ? '20.1.5' : '10.4.0'
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
@@ -163,7 +170,7 @@ endif
 
 foreach name, values : map
   symbol = values[0]
-  wrappers = values[1]
+  wrapper_libs = values[1]
   headers = values[2]
   pkg_version = values[3]
   mali_cflags = []
@@ -178,7 +185,7 @@ foreach name, values : map
     mali_cflags += '-DMESA_EGL_NO_X11_HEADERS'
   endif
 
-  foreach wrapper, version : wrappers
+  foreach wrapper, version : wrapper_libs
     wrapper_ldflags += '-l' + wrapper
 
     if wrapper != 'gbm'
@@ -260,7 +267,7 @@ install_data(libs, install_dir : get_option('libdir'))
 # Fixup dummy library
 meson.add_install_script('fixup_dummy.sh', get_option('libdir'), default_lib)
 
-if not wrapper_packages
+if not wrappers
 # Fixup wrappers
   meson.add_install_script('fixup_wrappers.sh', get_option('libdir'))
 endif
