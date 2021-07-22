@@ -194,16 +194,11 @@ foreach name, values : map
   wrapper_libs = values[1]
   headers = values[2]
   pkg_version = values[3]
-  mali_cflags = []
   wrapper_ldflags = []
   is_opencl_icd = opencl_icd and name == 'OpenCL'
 
   if run_command('grep', '-q', symbol, default_lib).returncode() != 0
     continue
-  endif
-
-  if name == 'egl' and platform != 'x11'
-    mali_cflags += '-DMESA_EGL_NO_X11_HEADERS'
   endif
 
   foreach wrapper, version : wrapper_libs
@@ -247,7 +242,6 @@ foreach name, values : map
   pkgconfig.generate(
     libraries : ['-L${libdir} -lmali', wrapper_ldflags],
     requires : requires,
-    extra_cflags : mali_cflags,
     version : pkg_version,
     name : name,
     description : 'Mali GPU User-Space Binary Driver Wrappers')
@@ -292,4 +286,10 @@ meson.add_install_script('fixup_dummy.sh', get_option('libdir'), default_lib)
 if not wrappers
 # Fixup wrappers
   meson.add_install_script('fixup_wrappers.sh', get_option('libdir'))
+endif
+
+if platform != 'x11'
+# Fixup EGL header
+  meson.add_install_script('fixup_nox11.sh',
+    get_option('includedir') / 'EGL' / 'eglplatform.h')
 endif
