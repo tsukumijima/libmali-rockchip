@@ -36,6 +36,26 @@ endif
 
 message('Source libraries: @0@'.format(libs))
 
+# Required packages
+requires = []
+if platform == 'gbm'
+  requires = ['libdrm']
+elif platform == 'wayland'
+  requires = ['libdrm', 'wayland-client', 'wayland-server']
+
+  if gpu == 'utgard-400' and subversion == 'r3p0'
+    requires += ['libffi', 'libcrypto']
+  endif
+elif platform == 'x11'
+  requires = ['libdrm', 'x11', 'xcb']
+
+  if gpu.split('-')[0] != 'utgard'
+    requires += ['x11-xcb', 'xcb-dri2']
+  else
+    requires += ['xfixes', 'xext', 'xau', 'xdmcp', 'xdamage']
+  endif
+endif
+
 if wrappers_opts.auto() and gpu.split('-')[0] == 'utgard'
   wrappers = false
   warning('Wrappers are disabled for utgard by default')
@@ -117,6 +137,7 @@ libmali = shared_library(
 
 pkgconfig.generate(
   libmali,
+  requires : requires,
   description : 'Mali GPU User-Space Binary Driver')
 
 # The gbm functions might be missing
@@ -225,6 +246,7 @@ foreach name, values : map
 
   pkgconfig.generate(
     libraries : ['-L${libdir} -lmali', wrapper_ldflags],
+    requires : requires,
     extra_cflags : mali_cflags,
     version : pkg_version,
     name : name,
