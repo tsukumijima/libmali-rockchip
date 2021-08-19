@@ -21,11 +21,12 @@ platform = get_option('platform')
 opencl_icd = get_option('opencl-icd')
 vendor_package = get_option('vendor-package')
 wrappers_opts = get_option('wrappers')
+optimize = get_option('optimize-level')
 
-message('Building for ' + '|'.join([arch, gpu, version, subversion, platform]))
+message('Building for ' + '|'.join([arch, gpu, version, subversion, platform, optimize]))
 
 # Grab libraries with specified configs
-cmd = run_command('grabber.sh', arch, gpu, version, subversion, platform)
+cmd = run_command('grabber.sh', arch, gpu, version, subversion, platform, optimize)
 libs = cmd.stdout().strip().split('\n')
 
 # Use the first one as default library

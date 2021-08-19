@@ -18,3 +18,5 @@ option('vendor-package', type: 'boolean', value: 'false',
        description: 'Install as vendor package (default: false)')
 option('wrappers', type: 'feature', value: 'auto',
        description: 'Install with wrappers (default: auto)')
+option('optimize-level', type: 'combo', choices: ['O0', 'O1', 'O2', 'O3', 'Os', 'Ofast', 'Og'], value: 'O3',
+       description: 'Optimize level (default: O3)')
