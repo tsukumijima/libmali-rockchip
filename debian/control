@@ -21,234 +21,312 @@ Vcs-Browser: https://github.com/rockchip-linux/libmali
 
 Package: libmali-bifrost-g31-rxp0-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g31-rxp0-only-cl
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g31-rxp0-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g31-rxp0-without-cl-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g31-rxp0-x11
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-dummy
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-dummy-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-without-cl-dummy-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-g2p0-x11
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-r25p0-dummy
 Architecture: arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-r25p0-wayland
 Architecture: arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g52-r25p0-x11
 Architecture: arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r0p0-gbm
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r0p0-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r0p0-x11
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r1p0-gbm
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r1p0-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r14p0-r1p0-x11
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r0p0-gbm
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r0p0-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r0p0-x11
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r1p0-gbm
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r1p0-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r1p0-x11
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r14p0-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r14p0-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r14p0-x11
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r18p0-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r18p0-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t86x-r18p0-x11
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-400-r7p0-r1p1-gbm
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-400-r7p0-r1p1-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-400-r7p0-r1p1-x11
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-400-r7p0-r3p0-wayland
 Architecture: armhf
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-450-r7p0-gbm
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-wayland, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-450-r7p0-wayland
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-x11
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-utgard-450-r7p0-x11
 Architecture: armhf arm64
-Conflicts: libmali-bifrost-g31-rxp0-gbm, libmali-bifrost-g31-rxp0-only-cl, libmali-bifrost-g31-rxp0-wayland, libmali-bifrost-g31-rxp0-without-cl-wayland, libmali-bifrost-g31-rxp0-x11, libmali-bifrost-g52-g2p0-dummy, libmali-bifrost-g52-g2p0-dummy-gbm, libmali-bifrost-g52-g2p0-gbm, libmali-bifrost-g52-g2p0-wayland, libmali-bifrost-g52-g2p0-without-cl-dummy-gbm, libmali-bifrost-g52-g2p0-x11, libmali-bifrost-g52-r25p0-dummy, libmali-bifrost-g52-r25p0-wayland, libmali-bifrost-g52-r25p0-x11, libmali-midgard-t76x-r14p0-r0p0-gbm, libmali-midgard-t76x-r14p0-r0p0-wayland, libmali-midgard-t76x-r14p0-r0p0-x11, libmali-midgard-t76x-r14p0-r1p0-gbm, libmali-midgard-t76x-r14p0-r1p0-wayland, libmali-midgard-t76x-r14p0-r1p0-x11, libmali-midgard-t76x-r18p0-r0p0-gbm, libmali-midgard-t76x-r18p0-r0p0-wayland, libmali-midgard-t76x-r18p0-r0p0-x11, libmali-midgard-t76x-r18p0-r1p0-gbm, libmali-midgard-t76x-r18p0-r1p0-wayland, libmali-midgard-t76x-r18p0-r1p0-x11, libmali-midgard-t86x-r14p0-gbm, libmali-midgard-t86x-r14p0-wayland, libmali-midgard-t86x-r14p0-x11, libmali-midgard-t86x-r18p0-gbm, libmali-midgard-t86x-r18p0-wayland, libmali-midgard-t86x-r18p0-x11, libmali-utgard-400-r7p0-r1p1-gbm, libmali-utgard-400-r7p0-r1p1-wayland, libmali-utgard-400-r7p0-r1p1-x11, libmali-utgard-400-r7p0-r3p0-wayland, libmali-utgard-450-r7p0-gbm, libmali-utgard-450-r7p0-wayland
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers

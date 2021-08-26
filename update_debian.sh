@@ -25,13 +25,13 @@ for target in $TARGETS; do
 		continue
 	fi
 
-	# Generate control files
-	conflicts="$(echo $PACKAGES | xargs -n 1 | grep -v "$package$")"
 	cat << EOF > $control
 
 Package: $package
 Architecture: $arch
-Conflicts: $(echo $conflicts | sed "s/ /, /g")
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
 Depends: \${shlibs:Depends}, \${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 EOF
