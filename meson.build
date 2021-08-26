@@ -288,7 +288,7 @@ if not wrappers
   meson.add_install_script('fixup_wrappers.sh', get_option('libdir'))
 endif
 
-if platform != 'x11'
+if platform != 'x11' and not vendor_package
 # Fixup EGL header
   meson.add_install_script('fixup_nox11.sh',
     get_option('includedir') / 'EGL' / 'eglplatform.h')

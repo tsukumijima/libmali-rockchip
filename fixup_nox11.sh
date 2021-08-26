@@ -7,4 +7,5 @@
 
 HEADER="${MESON_INSTALL_DESTDIR_PREFIX:-/usr}/$1"
 
-sed -i 's/MESA_EGL_NO_X11_HEADERS/__unix__/g' "$HEADER"
+[ -f "$HEADER" ] && \
+	sed -i 's/MESA_EGL_NO_X11_HEADERS/__unix__/g' "$HEADER"
