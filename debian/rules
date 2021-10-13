@@ -16,7 +16,7 @@ override_dh_auto_configure:
 		dh_auto_configure --builddirectory=$$name -- \
 			-Darch=$${target%%-*} -Dgpu=$$gpu \
 			-Dversion=$$version -Dsubversion=$$subversion \
-			-Dplatform=$$platform -Dvendor-package=true; \
+			-Dplatform=$$platform -Dvendor-package=true -Dwrappers=enabled; \
 	done
 
 override_dh_auto_build:
