@@ -26,6 +26,11 @@ aarch64-linux-gnu/libmali-midgard-t86x-r18p0-x11.so
 aarch64-linux-gnu/libmali-utgard-450-r7p0-gbm.so
 aarch64-linux-gnu/libmali-utgard-450-r7p0-wayland.so
 aarch64-linux-gnu/libmali-utgard-450-r7p0-x11.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-dummy-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-dummy.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-wayland.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-only-cl.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-wayland.so
