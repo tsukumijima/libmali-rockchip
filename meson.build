@@ -26,7 +26,7 @@ optimize = get_option('optimize-level')
 message('Building for ' + '|'.join([arch, gpu, version, subversion, platform, optimize]))
 
 # Grab libraries with specified configs
-cmd = run_command('grabber.sh', arch, gpu, version, subversion, platform, optimize)
+cmd = run_command('scripts/grabber.sh', arch, gpu, version, subversion, platform, optimize)
 libs = cmd.stdout().strip().split('\n')
 
 # Use the first one as default library
@@ -180,7 +180,7 @@ if run_command('grep', '-q', gbm_symbol, default_lib).returncode() == 0
   libdl_dep = meson.get_compiler('c').find_library('dl', required : false)
   libgbm = shared_library(
     'gbm',
-    'gbm_wrapper.c',
+    'src/gbm_wrapper.c',
     c_args : libgbm_cflags,
     include_directories : include_directories('include/GBM'),
     dependencies : [libdl_dep, libdrm_dep],
@@ -281,16 +281,15 @@ endif
 # Install target libraries
 install_data(libs, install_dir : get_option('libdir'))
 
-# Fixup dummy library
-meson.add_install_script('fixup_dummy.sh', get_option('libdir'), default_lib)
+# Replace dummy libmali library
+meson.add_install_script('scripts/fixup_dummy.sh', get_option('libdir'), default_lib)
 
 if not wrappers
-# Fixup wrappers
-  meson.add_install_script('fixup_wrappers.sh', get_option('libdir'))
+# Disable wrappers
+  meson.add_install_script('scripts/fixup_nowrap.sh', get_option('libdir'))
 endif
 
 if platform != 'x11' and not vendor_package
-# Fixup EGL header
-  meson.add_install_script('fixup_nox11.sh',
-    get_option('includedir') / 'EGL' / 'eglplatform.h')
+# Disable X11 in EGL header
+  meson.add_install_script('scripts/fixup_nox11.sh', get_option('includedir'))
 endif

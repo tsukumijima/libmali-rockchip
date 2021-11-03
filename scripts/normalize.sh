@@ -23,4 +23,4 @@ for lib in $LIBS; do
 done
 
 # Update debian control and rules
-./update_debian.sh
+scripts/update_debian.sh

@@ -9,7 +9,7 @@ rm -f control.*
 
 # NOTE: Assuming multiarch packages could share debian files
 for target in $TARGETS; do
-	#export $(./parse_name.sh $target)
+	#export $(scripts/parse_name.sh $target)
 	#package=$name
 	package=$(basename ${target%.so})
 	control=control.$package

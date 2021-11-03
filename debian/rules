@@ -12,7 +12,7 @@ override_dh_clean:
 
 override_dh_auto_configure:
 	for target in $(TARGETS); do \
-		export $$(./parse_name.sh $$target); \
+		export $$(scripts/parse_name.sh $$target); \
 		dh_auto_configure --builddirectory=$$name -- \
 			-Darch=$${target%%-*} -Dgpu=$$gpu \
 			-Dversion=$$version -Dsubversion=$$subversion \
@@ -24,7 +24,7 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	for target in $(TARGETS); do \
-		export $$(./parse_name.sh $$target); \
+		export $$(scripts/parse_name.sh $$target); \
 		dh_auto_install --builddirectory=$$name \
 			--destdir=debian/$$name; \
 	done
