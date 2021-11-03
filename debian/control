@@ -19,6 +19,46 @@ Homepage: https://github.com/rockchip-linux/libmali
 Vcs-Git: https://github.com/rockchip-linux/libmali
 Vcs-Browser: https://github.com/rockchip-linux/libmali
 
+Package: libmali-bifrost-g31-g2p0-gbm
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
+Package: libmali-bifrost-g31-g2p0-only-cl
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
+Package: libmali-bifrost-g31-g2p0-wayland
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
+Package: libmali-bifrost-g31-g2p0-without-cl-wayland
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
+Package: libmali-bifrost-g31-g2p0-x11
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
 Package: libmali-bifrost-g31-rxp0-gbm
 Architecture: armhf arm64
 Provides: libmali
