@@ -9,8 +9,9 @@ rm -f control.*
 
 # NOTE: Assuming multiarch packages could share debian files
 for target in $TARGETS; do
-	export $(./parse_name.sh $target)
-	package=$name
+	#export $(./parse_name.sh $target)
+	#package=$name
+	package=$(basename ${target%.so})
 	control=control.$package
 
 	if echo $target | grep -q aarch64; then

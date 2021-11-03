@@ -1,26 +1,25 @@
 #!/bin/sh
 
-# Remove fbdev libs
-rm -f $(find . -name "*fbdev*.so")
+SONAME=libmali.so.1
+LIBS=$(find optimize_*/ -name "*.so")
 
-# Link x11 libs
-X11_LIBS=$(find . -name "*.so"|grep -vE "gbm.so|wayland.so|x11.so|only-cl.so|dummy.so")
-for lib in $X11_LIBS;do
-	mv $lib ${lib%.so}-x11.so 2>/dev/null
-done
-for lib in $(find . -name "*.so"|grep x11.so);do
-	ln -sf ${lib##*/} ${lib%-x11.so}.so
-done
+for lib in $LIBS; do
+	DEPS=$(readelf -d $lib)
 
-# Hack out-dated deps
-for file in $(find . -type f);do
-	patchelf $file --replace-needed libffi.so.6 libffi.so
-	patchelf $file --replace-needed libcrypto.so.1.0.0 libcrypto.so
-done 2>/dev/null
+	# Hack out-dated deps
+	for dep in libffi.so.6 libcrypto.so.1.0.0; do
+		echo $DEPS | grep -wq $dep &&
+			patchelf $lib --replace-needed $dep ${dep%.so*}.so
+	done
 
-# TODO: Remove this hack when we have real soname.
-for lib in $(find . -name "*.so");do
-       patchelf --set-soname libmali.so.1 $lib
+	# Set a common soname
+	echo $DEPS | grep -q "Library soname: \[$SONAME\]" ||
+		patchelf --set-soname $SONAME $lib
+
+	# Rename default libs to -x11
+	echo $lib | grep -qE "\-[rg].p.\.so" || continue
+	[ ! -L $lib ] && mv $lib ${lib%.so}-x11.so
+	rm $lib
 done
 
 # Update debian control and rules
