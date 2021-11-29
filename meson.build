@@ -112,7 +112,7 @@ cl_headers = {
 }
 
 # Provide newer GBM version with wrappers
-gbm_version = wrappers ? '20.1.5' : '10.4.0'
+gbm_version = wrappers ? '21.2.6' : '10.4.0'
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
@@ -150,6 +150,7 @@ gbm_check_funcs = [
   'gbm_device_get_format_modifier_plane_count',
   'gbm_bo_get_handle_for_plane',
   'gbm_bo_get_stride_for_plane',
+  'gbm_bo_get_fd_for_plane',
   'gbm_bo_get_modifier',
   'gbm_bo_create_with_modifiers',
   'gbm_surface_create_with_modifiers',

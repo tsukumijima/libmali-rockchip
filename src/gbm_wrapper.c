@@ -67,6 +67,17 @@ gbm_bo_get_stride_for_plane(struct gbm_bo *bo, int plane)
 }
 #endif
 
+#ifndef HAS_gbm_bo_get_fd_for_plane
+int
+gbm_bo_get_fd_for_plane(struct gbm_bo *bo, int plane)
+{
+   if (plane)
+      return -1;
+
+   return gbm_bo_get_fd(bo);
+}
+#endif
+
 #ifndef HAS_gbm_bo_get_handle_for_plane
 union gbm_bo_handle
 gbm_bo_get_handle_for_plane(struct gbm_bo *bo, int plane)
