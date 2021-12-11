@@ -261,6 +261,11 @@ if get_option('with-overlay')
   endif
 endif
 
+# Install firmwares
+if gpu == 'valhall-g610'
+  install_data('firmware/g610/mali_csffw.bin', install_dir : '/lib/firmware')
+endif
+
 if vendor_package
   # Install vendor ld config
   custom_target(
