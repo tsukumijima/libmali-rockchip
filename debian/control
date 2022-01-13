@@ -59,46 +59,6 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-rxp0-gbm
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g31-rxp0-only-cl
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g31-rxp0-wayland
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g31-rxp0-without-cl-wayland
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g31-rxp0-x11
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
 Package: libmali-bifrost-g52-g2p0-dummy
 Architecture: armhf arm64
 Provides: libmali
@@ -147,78 +107,6 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-r25p0-dummy
-Architecture: arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g52-r25p0-wayland
-Architecture: arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g52-r25p0-x11
-Architecture: arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r0p0-gbm
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r0p0-wayland
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r0p0-x11
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r1p0-gbm
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r1p0-wayland
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t76x-r14p0-r1p0-x11
-Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
 Package: libmali-midgard-t76x-r18p0-r0p0-gbm
 Architecture: armhf
 Provides: libmali
@@ -261,30 +149,6 @@ Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-midgard-t76x-r18p0-r1p0-x11
 Architecture: armhf
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t86x-r14p0-gbm
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t86x-r14p0-wayland
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-midgard-t86x-r14p0-x11
-Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
 Replaces: libmali
