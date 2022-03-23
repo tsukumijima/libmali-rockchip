@@ -10,6 +10,6 @@ DEST_DIR="${MESON_INSTALL_DESTDIR_PREFIX:-/usr}/$1"
 
 # Cleanup wrappers
 cd "$DEST_DIR"
-for f in $(cd $BUILD_DIR && find . -maxdepth 1 -type f -name "lib*"); do
-	echo $f | grep -q libmali.so || cp -a libmali.so $f
+for f in $(cd $BUILD_DIR && find . -maxdepth 1 -type f -name "lib*.so.[0-9]"); do
+	cp -a libmali.so $f
 done

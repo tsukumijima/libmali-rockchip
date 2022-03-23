@@ -12,6 +12,3 @@ SOURCE="$(basename $2)"
 cd "$DEST_DIR"
 cp $SOURCE libmali.so
 cp -a libmali.so $SOURCE
-
-# For old DDK(e.g. utgard)
-cp -a libmali.so libMali.so.1

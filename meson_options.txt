@@ -9,13 +9,15 @@ option('subversion', type: 'string', value: 'none',
 option('platform', type: 'combo', choices: ['x11', 'gbm', 'wayland', 'only-cl', 'dummy'],
        value: 'x11', description: 'platform (default: x11)')
 option('with-overlay', type: 'boolean', value: 'false',
-       description: 'install overlay (default: false)')
+       description: 'Install overlay (default: false)')
 option('opencl-icd', type: 'boolean', value: 'true',
        description: 'OpenCL Installable Client Driver (ICD) (default: true)')
 option('khr-header', type: 'boolean', value: 'false',
        description: 'Install KHR header (default: false)')
 option('vendor-package', type: 'boolean', value: 'false',
        description: 'Install as vendor package (default: false)')
+option('hooks', type: 'boolean', value: 'true',
+       description: 'Enable hook library (default: true)')
 option('wrappers', type: 'feature', value: 'auto',
        description: 'Install with wrappers (default: auto)')
 option('optimize-level', type: 'combo', choices: ['O0', 'O1', 'O2', 'O3', 'Os', 'Ofast', 'Og'], value: 'O3',
