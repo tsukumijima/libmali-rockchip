@@ -236,7 +236,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-valhall-g610-g6p0-dummy
-Architecture: arm64
+Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
 Replaces: libmali
@@ -244,7 +244,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-valhall-g610-g6p0-gbm
-Architecture: arm64
+Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
 Replaces: libmali
@@ -252,7 +252,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-valhall-g610-g6p0-wayland
-Architecture: arm64
+Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
 Replaces: libmali
@@ -260,7 +260,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-valhall-g610-g6p0-x11
-Architecture: arm64
+Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
 Replaces: libmali
