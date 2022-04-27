@@ -170,7 +170,8 @@ if is_utgard
   custom_target(
     'libMali',
     output : 'libMali.so',
-    command : ['ln', '-sf', 'libmali.so', '@OUTPUT@'],
+    command : ['echo'],
+    capture : true,
     install_dir : get_option('libdir'),
     install : true)
 endif
