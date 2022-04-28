@@ -26,3 +26,5 @@ case ${OPTIMIZE} in
 esac
 
 find ${DIR}/${ARCH}* -name ${LIB}
+
+exit 0

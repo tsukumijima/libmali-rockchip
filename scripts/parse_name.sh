@@ -57,3 +57,5 @@ esac
 for lib in "$@";do
 	parse_name $(echo $lib|grep -o "libmali-[^\.]*")
 done
+
+exit 0

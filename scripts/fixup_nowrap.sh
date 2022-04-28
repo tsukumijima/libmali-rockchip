@@ -13,3 +13,5 @@ cd "$DEST_DIR"
 for f in $(cd $BUILD_DIR && find . -maxdepth 1 -type f -name "lib*.so.[0-9]"); do
 	cp -a libmali.so $f
 done
+
+exit 0
