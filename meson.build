@@ -23,6 +23,7 @@ subversion = get_option('subversion')
 platform = get_option('platform')
 opencl_icd = get_option('opencl-icd')
 vendor_package = get_option('vendor-package')
+hooks_opts = get_option('hooks')
 wrappers_opts = get_option('wrappers')
 optimize = get_option('optimize-level')
 
@@ -120,7 +121,7 @@ cl_headers = {
 }
 
 # Provide newer GBM version with hook library
-gbm_version = get_option('hooks') ? '21.2.6' : '10.4.0'
+gbm_version = hooks_opts ? '21.2.6' : '10.4.0'
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
@@ -136,7 +137,8 @@ map = {
 mali = cc.find_library(fs.stem(default_lib),
   dirs : meson.current_source_dir() / fs.parent(default_lib))
 
-if get_option('hooks')
+libhook = []
+if hooks_opts
   # Build hook library
   subdir('hook')
 
