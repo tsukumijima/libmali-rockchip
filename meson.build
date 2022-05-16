@@ -120,8 +120,20 @@ cl_headers = {
   'include/CL' : 'CL',
 }
 
+# Load original mali library for later function checks and linking
+mali = cc.find_library(fs.stem(default_lib),
+  dirs : meson.current_source_dir() / fs.parent(default_lib))
+
 # Provide newer GBM version with hook library
-gbm_version = hooks_opts ? '21.2.6' : '10.4.0'
+if hooks_opts
+  gbm_version = '21.2.6'
+elif cc.has_function('gbm_bo_get_fd_for_plane', dependencies : mali)
+  gbm_version = '21.1.0'
+elif cc.has_function('gbm_bo_get_modifier', dependencies : mali)
+  gbm_version = '17.1.0'
+else
+  gbm_version = '10.4.0'
+endif
 
 # Package name : required symbol, wrappers, headers, package version
 map = {
@@ -132,10 +144,6 @@ map = {
   'wayland-egl' : ['wl_egl_window_create', wayland_wrappers, {}, '18.1.0'],
   'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
 }
-
-# Load original mali library for later function checks and linking
-mali = cc.find_library(fs.stem(default_lib),
-  dirs : meson.current_source_dir() / fs.parent(default_lib))
 
 libhook = []
 if hooks_opts
