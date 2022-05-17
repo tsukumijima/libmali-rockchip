@@ -116,6 +116,9 @@ glesv2_headers = {
   'include/GLES2' : 'GLES2',
   'include/GLES3' : 'GLES3',
 }
+wayland_egl_headers = {
+  'include/WAYLAND' : '',
+}
 cl_headers = {
   'include/CL' : 'CL',
 }
@@ -141,7 +144,8 @@ map = {
   'egl' : ['eglCreateContext', egl_wrappers, egl_headers, '7.10'],
   'glesv1_cm' : ['eglCreateContext', glesv1_wrappers, glesv1_headers, '7.10'],
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
-  'wayland-egl' : ['wl_egl_window_create', wayland_wrappers, {}, '18.1.0'],
+  'wayland-egl' : ['wl_egl_window_create', wayland_wrappers,
+    wayland_egl_headers, '18.1.0'],
   'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
 }
 
