@@ -98,6 +98,7 @@ glesv1_wrappers = {'GLESv1_CM' : '1'}
 glesv2_wrappers = {'GLESv2' : '2'}
 wayland_wrappers = {'wayland-egl' : '1'}
 cl_wrappers = opencl_icd ? {'MaliOpenCL' : '1'} : {'OpenCL' : '1'}
+vk_wrappers = {'MaliVulkan' : '1'}
 
 # Source dir : dest dir
 gbm_headers = {
@@ -147,6 +148,7 @@ map = {
   'wayland-egl' : ['wl_egl_window_create', wayland_wrappers,
     wayland_egl_headers, '18.1.0'],
   'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
+  'vulkan' : ['vk_icdGetInstanceProcAddr', vk_wrappers, {}, mali_version],
 }
 
 libhook = []
@@ -196,6 +198,7 @@ foreach name, values : map
   headers = values[2]
   pkg_version = values[3]
   is_opencl_icd = opencl_icd and name == 'OpenCL'
+  is_vulkan_icd = name == 'vulkan'
 
   if not cc.has_function(symbol, dependencies : mali)
     continue
@@ -214,7 +217,7 @@ foreach name, values : map
   # Install ICD OpenCL vendor config
   if is_opencl_icd
     custom_target(
-      'vendor icd',
+      'OpenCL vendor icd',
       output : 'mali.icd',
       command : ['echo', 'libMaliOpenCL.so.1'],
       capture : true,
@@ -222,8 +225,20 @@ foreach name, values : map
       install : true)
   endif
 
-  # No {headers, pkgconfig} for {ICD OpenGL, vendor packages}
-  if is_opencl_icd or vendor_package
+  # Install ICD Vulkan vendor config
+  if is_vulkan_icd
+    custom_target(
+      'Vulkan vendor icd',
+      input : 'data/vulkan/mali.json.in',
+      output : 'mali.json',
+      command : ['sed', 's/@LIB@/libMaliVulkan.so.1/', '@INPUT@'],
+      capture : true,
+      install_dir : get_option('datadir') / 'vulkan' / 'icd.d',
+      install : true)
+  endif
+
+  # No {headers, pkgconfig} for {ICD, vendor packages}
+  if is_opencl_icd or is_vulkan_icd or vendor_package
     continue
   endif
 
