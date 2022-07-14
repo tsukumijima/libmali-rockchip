@@ -482,7 +482,10 @@ fixup_x11_display(Display *display)
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetDisplay (EGLNativeDisplayType display_id)
 {
-   Display *display = fixup_x11_display((void *)display_id);
+   Display *display = (Display *)display_id;
+
+   if (getenv("DISPLAY"))
+      display = fixup_x11_display((void *)display);
 
    return _eglGetDisplay((EGLNativeDisplayType)display);
 }

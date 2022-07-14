@@ -11,3 +11,4 @@
 .libs
 TAGS
 *\.a
+debian/libmali-*

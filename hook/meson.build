@@ -43,7 +43,7 @@ if cc.has_function(gbm_symbol, dependencies : mali)
 endif
 
 egl_symbol = map['egl'][0]
-if cc.has_function(egl_symbol, dependencies : mali) and platform == 'x11'
+if cc.has_function(egl_symbol, dependencies : mali) and has_x11
   # Add hooks to init X11 threads
   libhook_inc += include_directories('../include')
   libhook_dep += dependency('x11')

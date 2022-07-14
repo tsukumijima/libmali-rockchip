@@ -6,8 +6,8 @@ option('version', type: 'string', value: 'r18p0',
        description: 'GPU version (default: r18p0)')
 option('subversion', type: 'string', value: 'none',
        description: 'subversion (default: none)')
-option('platform', type: 'combo', choices: ['x11', 'gbm', 'wayland', 'only-cl', 'dummy'],
-       value: 'x11', description: 'platform (default: x11)')
+option('platform', type: 'string', value: 'gbm',
+       description: 'platform (default: gbm)')
 option('with-overlay', type: 'boolean', value: 'false',
        description: 'Install overlay (default: false)')
 option('opencl-icd', type: 'boolean', value: 'true',

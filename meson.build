@@ -47,17 +47,24 @@ is_rk3288 = gpu == 'midgard-t76x'
 is_utgard = gpu.split('-')[0] == 'utgard'
 is_px3se = gpu == 'utgard-400' and subversion == 'r3p0'
 
+platforms = platform.split('-')
+has_gbm = platforms.contains('gbm')
+has_x11 = platforms.contains('x11')
+has_wayland = platforms.contains('wayland')
+
 # Required packages
 requires = []
-if platform == 'gbm'
+if has_gbm
   requires = ['libdrm']
-elif platform == 'wayland'
+endif
+if has_wayland
   requires = ['libdrm', 'wayland-client', 'wayland-server']
 
   if is_px3se
     requires += ['libffi', 'libcrypto']
   endif
-elif platform == 'x11'
+endif
+if has_x11
   requires = ['libdrm', 'x11', 'xcb']
 
   if is_utgard
@@ -307,7 +314,7 @@ if not wrappers
   meson.add_install_script('scripts/fixup_nowrap.sh', get_option('libdir'))
 endif
 
-if platform != 'x11' and not vendor_package
+if not has_x11 and not vendor_package
   # Disable X11 in EGL header
   meson.add_install_script('scripts/fixup_nox11.sh', get_option('includedir'))
 endif
