@@ -19,6 +19,7 @@ aarch64-linux-gnu/libmali-valhall-g610-g6p0-dummy.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-wayland-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11-wayland-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-only-cl.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-wayland-gbm.so
@@ -50,3 +51,4 @@ arm-linux-gnueabihf/libmali-valhall-g610-g6p0-dummy.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-wayland-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-x11-gbm.so
+arm-linux-gnueabihf/libmali-valhall-g610-g6p0-x11-wayland-gbm.so
