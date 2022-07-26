@@ -20,14 +20,16 @@ for lib in $LIBS; do
 	# 'found local symbol in global part of symbol table'
 	#
 	# depends on lief (pip3 install lief)
-	readelf -s $lib 2>&1 | grep -q Warning && \
+	readelf -s $lib 2>&1 | grep -wq Warning && \
 		scripts/fixup_dynsym.py $lib&
+done
 
+wait
+
+for lib in $LIBS; do
 	# Normalize library name
 	mv $lib "${lib%/*}/$(scripts/parse_name.sh --format $lib)" 2>/dev/null
 done
 
 # Update debian control and rules
 scripts/update_debian.sh
-
-wait
