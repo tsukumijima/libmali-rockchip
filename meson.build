@@ -33,7 +33,7 @@ message('Building for ' + '|'.join([arch, gpu, version, subversion,
 # Grab libraries with specified configs
 cmd = run_command('scripts/grabber.sh',
   arch, gpu, version, subversion, platform, optimize, check : false)
-libs = cmd.stdout().strip().split('\n')
+libs = cmd.stdout().strip().split(' ')
 
 # Use the first one as default library
 default_lib = libs[0]
