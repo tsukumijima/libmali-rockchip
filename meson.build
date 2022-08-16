@@ -215,7 +215,7 @@ foreach name, values : map
     shared_library(
       wrapper,
       dummy_source,
-      link_with : libhook,
+      link_with : [libhook, libmali],
       install : true,
       install_dir : wrapper_libdir,
       version : version)
