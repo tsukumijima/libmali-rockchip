@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# Generate targets and packages
-find lib -type f | sed 's,^lib/,,' | sort > debian/targets
-TARGETS=$(cat debian/targets)
-PACKAGES=$(cat debian/targets | sed "s/.*\(libmali.*\).so/\1/" | sort | uniq)
+
+# Generate targets
+TARGETS=$(echo ${@:-$(find lib -type f)} | xargs -n 1 | sed 's,^lib/,,' | sort)
+echo $TARGETS | xargs -n 1 > debian/targets
 
 rm -f control.*
 
