@@ -6,7 +6,7 @@ PRINT_SUBVERSION=false
 PRINT_PLATFORM=false
 PRINT_FORMAT=false
 
-PLATFORMS="only-cl|without-cl|dummy|x11|wayland|gbm"
+PLATFORMS="only-cl|without-cl|vulkan|dummy|x11|wayland|gbm"
 
 # Normalize platform variable
 normalize_platform() {
