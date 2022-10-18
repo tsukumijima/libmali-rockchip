@@ -26,8 +26,6 @@ libhook_dep += dependency('libdrm', version : '>= 2.4.0')
 
 libhook_inc = []
 
-needs_hook = false
-
 gbm_symbol = map['gbm'][0]
 if cc.has_function(gbm_symbol, dependencies : mali)
   # Add hooks to support new GBM APIs
@@ -38,23 +36,24 @@ if cc.has_function(gbm_symbol, dependencies : mali)
       libhook_cflags += '-DHAS_' + symbol
     endif
   endforeach
-
-  needs_hook = true
 endif
 
 egl_symbol = map['egl'][0]
-if cc.has_function(egl_symbol, dependencies : mali) and has_x11
-  # Add hooks to init X11 threads
+if cc.has_function(egl_symbol, dependencies : mali)
+  # Add hooks to support default winsys
   libhook_inc += include_directories('../include')
-  libhook_dep += dependency('x11')
-  libhook_cflags += '-DHAS_X11_EGL'
+  libhook_cflags += '-DHAS_EGL'
 
-  needs_hook = true
-endif
+  wayland_symbol = map['wayland-egl'][0]
+  if cc.has_function(wayland_symbol, dependencies : mali)
+    libhook_cflags += '-DHAS_WAYLAND'
+  endif
 
-if not needs_hook
-  libhook_ldflags = []
-  subdir_done()
+  if has_x11
+    # Add hooks to init X11 threads
+    libhook_dep += dependency('x11')
+    libhook_cflags += '-DHAS_X11'
+  endif
 endif
 
 libhook = shared_library(
