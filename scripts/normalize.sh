@@ -7,9 +7,9 @@ for lib in $LIBS; do
 	DEPS=$(readelf -d $lib)
 
 	# Hack out-dated deps
-	for dep in libffi.so.6 libcrypto.so.1.0.0; do
-		echo $DEPS | grep -wq $dep &&
-			patchelf $lib --replace-needed $dep ${dep%.so*}.so
+	for dep in libffi.so libcrypto.so; do
+		DEP=$(echo $DEPS | grep -oE "$dep.[0-9]*")
+		[ -z "$DEP" ] || patchelf $lib --replace-needed $DEP $dep
 	done
 
 	# Set a common soname
