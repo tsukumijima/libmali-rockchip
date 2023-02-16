@@ -1,5 +1,10 @@
 #!/bin/sh
 
+cd "$(dirname "$0")/.."
+
+# Check for dependencies
+./scripts/normalize_dependencies.sh || exit 1
+
 SONAME=libmali.so.1
 LIBS=$(find optimize_*/ -name "*.so")
 
