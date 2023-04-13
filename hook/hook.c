@@ -46,6 +46,10 @@
 #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 #endif
 
+#ifndef DRM_FORMAT_MOD_LINEAR
+#define DRM_FORMAT_MOD_LINEAR 0
+#endif
+
 #ifndef DRM_FORMAT_MOD_INVALID
 #define DRM_FORMAT_MOD_INVALID ((1ULL<<56) - 1)
 #endif
@@ -58,6 +62,9 @@ int mali_injected = 0;
 #ifdef HAS_GBM
 static struct gbm_surface * (* _gbm_surface_create)(struct gbm_device *, uint32_t, uint32_t, uint32_t, uint32_t) = NULL;
 static struct gbm_bo * (* _gbm_bo_create) (struct gbm_device *, uint32_t, uint32_t, uint32_t, uint32_t) = NULL;
+#ifdef HAS_gbm_bo_get_modifier
+static uint64_t (* _gbm_bo_get_modifier) (struct gbm_bo *bo) = NULL;
+#endif
 #endif
 
 #ifdef HAS_EGL
@@ -78,6 +85,9 @@ static struct {
 #ifdef HAS_GBM
    MALI_SYMBOL(gbm_surface_create),
    MALI_SYMBOL(gbm_bo_create),
+#ifdef HAS_gbm_bo_get_modifier
+   MALI_SYMBOL(gbm_bo_get_modifier),
+#endif
 #endif
 #ifdef HAS_EGL
    MALI_SYMBOL(eglGetDisplay),
@@ -153,14 +163,6 @@ uint32_t
 gbm_bo_get_offset(struct gbm_bo *bo, int plane)
 {
    return 0;
-}
-#endif
-
-#ifndef HAS_gbm_bo_get_modifier
-uint64_t
-gbm_bo_get_modifier(struct gbm_bo *bo)
-{
-   return DRM_FORMAT_MOD_INVALID;
 }
 #endif
 
@@ -392,6 +394,19 @@ gbm_format_get_name(uint32_t gbm_format, struct gbm_format_name_desc *desc)
 }
 #endif
 
+/* Wrappers for invalid modifier */
+
+uint64_t
+gbm_bo_get_modifier(struct gbm_bo *bo)
+{
+#ifdef HAS_gbm_bo_get_modifier
+   uint64_t modifier = _gbm_bo_get_modifier(bo);
+   if (modifier != DRM_FORMAT_MOD_INVALID)
+      return modifier;
+#endif
+   return DRM_FORMAT_MOD_LINEAR;
+}
+
 /* Wrappers for unsupported flags */
 
 struct gbm_surface *
@@ -487,7 +502,7 @@ fixup_x11_display(Display *display)
    return display;
 }
 
-/* Override libmali symbols */
+/* Override EGL symbols */
 
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *attrib_list)
