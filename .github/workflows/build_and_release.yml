@@ -1,0 +1,64 @@
+name: Build and Release Debian Package
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+
+  build_and_release:
+    name: Build and Release Debian Package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - arm64v8/ubuntu
+    permissions:
+      contents: write
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: linux/arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: docker/build-push-action@v3
+        with:
+          context: .github/workflows/
+          tags: ${{ matrix.image }}:build
+          # meson >= 0.54.0 is not available in Ubuntu 20.04
+          build-args: IMAGE=${{ matrix.image }}:22.04
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,scope=${{ matrix.image }},mode=max
+          load: true
+
+      - name: Build
+        run: |
+          docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'debuild -us -uc -b && cp -a ../*.deb ./'
+
+      - name: Get version
+        id: get_version
+        run: |
+          echo "version=$(docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'dpkg-parsechangelog --show-field Version')" >> $GITHUB_OUTPUT
+
+      - name: Get commit hash
+        id: get_commit_hash
+        uses: pr-mpt/actions-commit-hash@v2
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.short }}
+          tag_name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.short }}
+          generate_release_notes: true
+          files: |
+            ./*.deb
