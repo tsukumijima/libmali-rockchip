@@ -226,7 +226,7 @@ foreach name, values : map
     custom_target(
       'OpenCL vendor icd',
       output : 'mali.icd',
-      command : ['echo', 'libMaliOpenCL.so.1'],
+      command : ['echo', 'libmali.so.1'],
       capture : true,
       install_dir : get_option('sysconfdir') / 'OpenCL' / 'vendors',
       install : true)
