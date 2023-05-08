@@ -35,8 +35,7 @@ jobs:
         with:
           context: .github/workflows/
           tags: ${{ matrix.image }}:build
-          # meson >= 0.54.0 is not available in Ubuntu 20.04
-          build-args: IMAGE=${{ matrix.image }}:22.04
+          build-args: IMAGE=${{ matrix.image }}:20.04
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,scope=${{ matrix.image }},mode=max
           load: true
