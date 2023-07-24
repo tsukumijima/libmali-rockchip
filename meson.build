@@ -132,7 +132,7 @@ cl_headers = {
 }
 
 # Load original mali library for later function checks and linking
-mali = cc.find_library(fs.stem(default_lib),
+mali = cc.find_library(fs.stem(default_lib).replace('lib', ''),
   dirs : meson.current_source_dir() / fs.parent(default_lib))
 
 # Provide newer GBM version with hook library
