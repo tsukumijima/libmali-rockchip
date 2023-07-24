@@ -12,6 +12,9 @@ SOURCE="$(basename $2)"
 cd "$DEST_DIR"
 cp $SOURCE libmali.so
 cp -a libmali.so $SOURCE
-[ -f libMali.so ] && cp -a libmali.so libMali.so
+
+if [ -f libMali.so ]; then
+	cp -a libmali.so libMali.so
+fi
 
 exit 0

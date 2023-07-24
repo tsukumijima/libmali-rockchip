@@ -72,7 +72,7 @@ union gbm_bo_handle {
 /** Format of the allocated buffer */
 enum gbm_bo_format {
    /** RGB with 8 bits per channel in a 32 bit value */
-   GBM_BO_FORMAT_XRGB8888,
+   GBM_BO_FORMAT_XRGB8888, 
    /** ARGB with 8 bits per channel in a 32 bit value */
    GBM_BO_FORMAT_ARGB8888
 };
@@ -94,8 +94,15 @@ enum gbm_bo_format {
 /* 8 bpp Red */
 #define GBM_FORMAT_R8		__gbm_fourcc_code('R', '8', ' ', ' ') /* [7:0] R */
 
+/* 16 bpp Red */
+#define GBM_FORMAT_R16          __gbm_fourcc_code('R', '1', '6', ' ') /* [15:0] R little endian */
+
 /* 16 bpp RG */
 #define GBM_FORMAT_GR88		__gbm_fourcc_code('G', 'R', '8', '8') /* [15:0] G:R 8:8 little endian */
+
+/* 32 bpp RG */
+#define GBM_FORMAT_RG1616	__gbm_fourcc_code('R', 'G', '3', '2') /* [31:0] R:G 16:16 little endian */
+#define GBM_FORMAT_GR1616	__gbm_fourcc_code('G', 'R', '3', '2') /* [31:0] G:R 16:16 little endian */
 
 /* 8 bpp RGB */
 #define GBM_FORMAT_RGB332	__gbm_fourcc_code('R', 'G', 'B', '8') /* [7:0] R:G:B 3:3:2 */
@@ -149,6 +156,11 @@ enum gbm_bo_format {
 #define GBM_FORMAT_ABGR2101010	__gbm_fourcc_code('A', 'B', '3', '0') /* [31:0] A:B:G:R 2:10:10:10 little endian */
 #define GBM_FORMAT_RGBA1010102	__gbm_fourcc_code('R', 'A', '3', '0') /* [31:0] R:G:B:A 10:10:10:2 little endian */
 #define GBM_FORMAT_BGRA1010102	__gbm_fourcc_code('B', 'A', '3', '0') /* [31:0] B:G:R:A 10:10:10:2 little endian */
+
+/* 64 bpp RGB */
+#define GBM_FORMAT_XBGR16161616	__gbm_fourcc_code('X', 'B', '4', '8') /* [63:0] x:B:G:R 16:16:16:16 little endian */
+
+#define GBM_FORMAT_ABGR16161616	__gbm_fourcc_code('A', 'B', '4', '8') /* [63:0] A:B:G:R 16:16:16:16 little endian */
 
 /*
  * Floating point 64bpp RGB
@@ -244,11 +256,15 @@ enum gbm_bo_flags {
     * OpenCL, and Vulkan applications.
     */
    GBM_BO_USE_PROTECTED = (1 << 5),
-};
 
-/* HACK: Mali doesn't support these flag */
-#define GBM_BO_USE_LINEAR 0
-#define GBM_BO_USE_PROTECTED 0
+   /**
+    * The buffer will be used for front buffer rendering.  On some
+    * platforms this may (for example) disable framebuffer compression
+    * to avoid problems with compression flags data being out of sync
+    * with pixel data.
+    */
+   GBM_BO_USE_FRONT_RENDERING = (1 << 6),
+};
 
 int
 gbm_device_get_fd(struct gbm_device *gbm);
@@ -258,7 +274,7 @@ gbm_device_get_backend_name(struct gbm_device *gbm);
 
 int
 gbm_device_is_format_supported(struct gbm_device *gbm,
-                               uint32_t format, uint32_t usage);
+                               uint32_t format, uint32_t flags);
 
 int
 gbm_device_get_format_modifier_plane_count(struct gbm_device *gbm,
@@ -282,6 +298,15 @@ gbm_bo_create_with_modifiers(struct gbm_device *gbm,
                              uint32_t format,
                              const uint64_t *modifiers,
                              const unsigned int count);
+
+struct gbm_bo *
+gbm_bo_create_with_modifiers2(struct gbm_device *gbm,
+                              uint32_t width, uint32_t height,
+                              uint32_t format,
+                              const uint64_t *modifiers,
+                              const unsigned int count,
+                              uint32_t flags);
+
 #define GBM_BO_IMPORT_WL_BUFFER         0x5501
 #define GBM_BO_IMPORT_EGL_IMAGE         0x5502
 #define GBM_BO_IMPORT_FD                0x5503
@@ -310,7 +335,7 @@ struct gbm_import_fd_modifier_data {
 
 struct gbm_bo *
 gbm_bo_import(struct gbm_device *gbm, uint32_t type,
-              void *buffer, uint32_t usage);
+              void *buffer, uint32_t flags);
 
 /**
  * Flags to indicate the type of mapping for the buffer - these are
@@ -392,8 +417,6 @@ gbm_bo_get_fd_for_plane(struct gbm_bo *bo, int plane);
 int
 gbm_bo_write(struct gbm_bo *bo, const void *buf, size_t count);
 
-struct gbm_bo *gbm_bo_ref(struct gbm_bo *);
-void gbm_bo_unref(struct gbm_bo *);
 void
 gbm_bo_set_user_data(struct gbm_bo *bo, void *data,
 		     void (*destroy_user_data)(struct gbm_bo *, void *));
@@ -415,6 +438,14 @@ gbm_surface_create_with_modifiers(struct gbm_device *gbm,
                                   uint32_t format,
                                   const uint64_t *modifiers,
                                   const unsigned int count);
+
+struct gbm_surface *
+gbm_surface_create_with_modifiers2(struct gbm_device *gbm,
+                                   uint32_t width, uint32_t height,
+                                   uint32_t format,
+                                   const uint64_t *modifiers,
+                                   const unsigned int count,
+                                   uint32_t flags);
 
 struct gbm_bo *
 gbm_surface_lock_front_buffer(struct gbm_surface *surface);

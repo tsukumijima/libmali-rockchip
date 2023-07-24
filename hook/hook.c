@@ -149,8 +149,8 @@ can_ignore_modifiers(const uint64_t *modifiers,
                      const unsigned int count)
 {
    for (int i = 0; i < count; i++) {
-      /* linear or invalid */
-      if (!modifiers[i] || modifiers[i] == DRM_FORMAT_MOD_INVALID) {
+      if (modifiers[i] == DRM_FORMAT_MOD_LINEAR ||
+          modifiers[i] == DRM_FORMAT_MOD_INVALID) {
          return true;
       }
    }
@@ -220,6 +220,28 @@ gbm_device_get_format_modifier_plane_count(struct gbm_device *gbm,
 }
 #endif
 
+#ifndef HAS_gbm_bo_create_with_modifiers2
+struct gbm_bo *
+gbm_bo_create_with_modifiers2(struct gbm_device *gbm,
+                              uint32_t width, uint32_t height,
+                              uint32_t format,
+                              const uint64_t *modifiers,
+                              const unsigned int count,
+                              uint32_t flags)
+{
+#ifdef HAS_gbm_bo_create_with_modifiers
+   /* flags ignored */
+   return gbm_bo_create_with_modifiers(gbm, width, height, format,
+                                       modifiers, count);
+#else
+   if (!can_ignore_modifiers(modifiers, count))
+      return NULL;
+
+   return gbm_bo_create(gbm, width, height, format, flags);
+#endif
+}
+#endif
+
 #ifndef HAS_gbm_bo_create_with_modifiers
 struct gbm_bo *
 gbm_bo_create_with_modifiers(struct gbm_device *gbm,
@@ -228,10 +250,30 @@ gbm_bo_create_with_modifiers(struct gbm_device *gbm,
                              const uint64_t *modifiers,
                              const unsigned int count)
 {
+   return gbm_bo_create_with_modifiers2(gbm, width, height, format,
+                                        modifiers, count, GBM_BO_USE_SCANOUT);
+}
+#endif
+
+#ifndef HAS_gbm_surface_create_with_modifiers2
+struct gbm_surface *
+gbm_surface_create_with_modifiers2(struct gbm_device *gbm,
+                                   uint32_t width, uint32_t height,
+                                   uint32_t format,
+                                   const uint64_t *modifiers,
+                                   const unsigned int count,
+                                   uint32_t flags)
+{
+#ifdef HAS_gbm_surface_create_with_modifiers
+   /* flags ignored */
+   return gbm_surface_create_with_modifiers(gbm, width, height, format,
+                                            modifiers, count);
+#else
    if (!can_ignore_modifiers(modifiers, count))
       return NULL;
 
-   return gbm_bo_create(gbm, width, height, format, GBM_BO_USE_LINEAR);
+   return gbm_surface_create(gbm, width, height, format, 0);
+#endif
 }
 #endif
 
@@ -243,10 +285,9 @@ gbm_surface_create_with_modifiers(struct gbm_device *gbm,
                                   const uint64_t *modifiers,
                                   const unsigned int count)
 {
-   if (!can_ignore_modifiers(modifiers, count))
-      return NULL;
-
-   return gbm_surface_create(gbm, width, height, format, 0);
+   return gbm_surface_create_with_modifiers2(gbm, width, height, format,
+                                             modifiers, count,
+                                             GBM_BO_USE_SCANOUT);
 }
 #endif
 
@@ -304,7 +345,7 @@ gbm_bo_unmap(struct gbm_bo *bo, void *map_data)
 }
 #endif
 
-/* From mesa3d 20.1.5 : src/gbm/main/gbm.c */
+/* From mesa3d mesa-23.1.3-1 : src/gbm/main/gbm.c */
 #ifndef HAS_gbm_bo_get_bpp
 uint32_t
 gbm_bo_get_bpp(struct gbm_bo *bo)
@@ -317,6 +358,7 @@ gbm_bo_get_bpp(struct gbm_bo *bo)
    case GBM_FORMAT_RGB332:
    case GBM_FORMAT_BGR233:
       return 8;
+   case GBM_FORMAT_R16:
    case GBM_FORMAT_GR88:
    case GBM_FORMAT_XRGB4444:
    case GBM_FORMAT_XBGR4444:
@@ -340,6 +382,8 @@ gbm_bo_get_bpp(struct gbm_bo *bo)
    case GBM_FORMAT_RGB888:
    case GBM_FORMAT_BGR888:
       return 24;
+   case GBM_FORMAT_RG1616:
+   case GBM_FORMAT_GR1616:
    case GBM_FORMAT_XRGB8888:
    case GBM_FORMAT_XBGR8888:
    case GBM_FORMAT_RGBX8888:
@@ -357,6 +401,8 @@ gbm_bo_get_bpp(struct gbm_bo *bo)
    case GBM_FORMAT_RGBA1010102:
    case GBM_FORMAT_BGRA1010102:
       return 32;
+   case GBM_FORMAT_XBGR16161616:
+   case GBM_FORMAT_ABGR16161616:
    case GBM_FORMAT_XBGR16161616F:
    case GBM_FORMAT_ABGR16161616F:
       return 64;
@@ -364,7 +410,7 @@ gbm_bo_get_bpp(struct gbm_bo *bo)
 }
 #endif
 
-/* From mesa3d 20.1.5 : src/gbm/main/gbm.c */
+/* From mesa3d mesa-23.1.3-1 : src/gbm/main/gbm.c */
 #ifndef HAS_gbm_format_get_name
 static uint32_t
 gbm_format_canonicalize(uint32_t gbm_format)
