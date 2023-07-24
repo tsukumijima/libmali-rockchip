@@ -146,6 +146,23 @@ cl_headers = {
   'include/CL' : 'CL',
 }
 
+if cc.has_function('clCreateBufferWithProperties', dependencies : mali)
+  cl_version = '3.0'
+  cl_target_version = '300'
+elif cc.has_function('clSetProgramReleaseCallback', dependencies : mali)
+  cl_version = '2.2'
+  cl_target_version = '220'
+elif cc.has_function('clCloneKernel', dependencies : mali)
+  cl_version = '2.1'
+  cl_target_version = '210'
+elif cc.has_function('clCreatePipe', dependencies : mali)
+  cl_version = '2.0'
+  cl_target_version = '200'
+else
+  cl_version = '1.2'
+  cl_target_version = '120'
+endif
+
 # Package name : required symbol, wrappers, headers, package version
 map = {
   'gbm' : ['gbm_create_device', gbm_wrappers, gbm_headers, gbm_version],
@@ -154,7 +171,7 @@ map = {
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
   'wayland-egl' : ['wl_egl_window_create', wayland_wrappers,
     wayland_egl_headers, '18.1.0'],
-  'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
+  'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, cl_version],
   'vulkan' : ['vk_icdGetInstanceProcAddr', vk_wrappers, {}, mali_version],
 }
 
@@ -204,6 +221,7 @@ foreach name, values : map
   wrapper_libs = values[1]
   headers = values[2]
   pkg_version = values[3]
+  pkg_cflags = []
   is_opencl_icd = opencl_icd and name == 'OpenCL'
   is_vulkan_icd = name == 'vulkan'
 
@@ -268,8 +286,16 @@ foreach name, values : map
       get_option('includedir'))
   endif
 
+  if name == 'OpenCL'
+    pkg_cflags += ['-DCL_TARGET_OPENCL_VERSION=' + cl_target_version]
+
+    meson.add_install_script('scripts/fixup_cl.sh',
+      get_option('includedir'), cl_version)
+  endif
+
   pkgconfig.generate(
     libraries : mali_ldflags,
+    extra_cflags : pkg_cflags,
     requires : requires,
     version : pkg_version,
     name : name,
