@@ -23,7 +23,7 @@ subversion = get_option('subversion')
 platform = get_option('platform')
 opencl_icd = get_option('opencl-icd')
 vendor_package = get_option('vendor-package')
-hooks_opts = get_option('hooks')
+build_hook = get_option('hooks')
 wrappers_opts = get_option('wrappers')
 optimize = get_option('optimize-level')
 
@@ -43,14 +43,18 @@ endif
 
 message('Source libraries: @0@'.format(libs))
 
+# Load original mali library for later function checks and linking
+mali = cc.find_library(fs.stem(default_lib).replace('lib',''),
+  dirs : meson.current_source_dir() / fs.parent(default_lib))
+
 is_rk3288 = gpu == 'midgard-t76x'
 is_utgard = gpu.split('-')[0] == 'utgard'
 is_px3se = gpu == 'utgard-400' and subversion == 'r3p0'
 
-platforms = platform.split('-')
-has_gbm = platforms.contains('gbm')
-has_x11 = platforms.contains('x11')
-has_wayland = platforms.contains('wayland')
+has_gbm = cc.has_function('gbm_create_device', dependencies : mali)
+has_x11 = run_command('grep', '-wq', 'XSync', default_lib,
+  check : false).returncode() == 0
+has_wayland = cc.has_function('wl_egl_window_create', dependencies : mali)
 
 # Required packages
 requires = []
@@ -107,9 +111,20 @@ wayland_wrappers = {'wayland-egl' : '1'}
 cl_wrappers = opencl_icd ? {'MaliOpenCL' : '1'} : {'OpenCL' : '1'}
 vk_wrappers = {'MaliVulkan' : '1'}
 
+# Provide newer GBM version with hook library
+if build_hook
+  gbm_version = '23.1.3'
+elif cc.has_function('gbm_bo_get_fd_for_plane', dependencies : mali)
+  gbm_version = '21.1.0'
+elif cc.has_function('gbm_bo_get_modifier', dependencies : mali)
+  gbm_version = '17.1.0'
+else
+  gbm_version = '10.4.0'
+endif
+
 # Source dir : dest dir
 gbm_headers = {
-  'include/GBM' : '',
+  'include/GBM' / gbm_version : '',
 }
 egl_headers = {
   'include/KHR' : 'KHR',
@@ -131,19 +146,21 @@ cl_headers = {
   'include/CL' : 'CL',
 }
 
-# Load original mali library for later function checks and linking
-mali = cc.find_library(fs.stem(default_lib),
-  dirs : meson.current_source_dir() / fs.parent(default_lib))
-
-# Provide newer GBM version with hook library
-if hooks_opts
-  gbm_version = '21.2.6'
-elif cc.has_function('gbm_bo_get_fd_for_plane', dependencies : mali)
-  gbm_version = '21.1.0'
-elif cc.has_function('gbm_bo_get_modifier', dependencies : mali)
-  gbm_version = '17.1.0'
+if cc.has_function('clCreateBufferWithProperties', dependencies : mali)
+  cl_version = '3.0'
+  cl_target_version = '300'
+elif cc.has_function('clSetProgramReleaseCallback', dependencies : mali)
+  cl_version = '2.2'
+  cl_target_version = '220'
+elif cc.has_function('clCloneKernel', dependencies : mali)
+  cl_version = '2.1'
+  cl_target_version = '210'
+elif cc.has_function('clCreatePipe', dependencies : mali)
+  cl_version = '2.0'
+  cl_target_version = '200'
 else
-  gbm_version = '10.4.0'
+  cl_version = '1.2'
+  cl_target_version = '120'
 endif
 
 # Package name : required symbol, wrappers, headers, package version
@@ -154,12 +171,12 @@ map = {
   'glesv2' : ['eglCreateContext', glesv2_wrappers, glesv2_headers, '7.10'],
   'wayland-egl' : ['wl_egl_window_create', wayland_wrappers,
     wayland_egl_headers, '18.1.0'],
-  'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, '1.2'],
+  'OpenCL' : ['clCreateContext', cl_wrappers, cl_headers, cl_version],
   'vulkan' : ['vk_icdGetInstanceProcAddr', vk_wrappers, {}, mali_version],
 }
 
 libhook = []
-if hooks_opts
+if build_hook
   # Build hook library
   subdir('hook')
 
@@ -204,6 +221,7 @@ foreach name, values : map
   wrapper_libs = values[1]
   headers = values[2]
   pkg_version = values[3]
+  pkg_cflags = []
   is_opencl_icd = opencl_icd and name == 'OpenCL'
   is_vulkan_icd = name == 'vulkan'
 
@@ -257,8 +275,27 @@ foreach name, values : map
       strip_directory : true)
   endforeach
 
+  if name == 'gbm'
+    # Hack unsupported gbm_bo flags
+    meson.add_install_script('scripts/fixup_gbm.sh', get_option('includedir'))
+  endif
+
+  if name == 'egl' and not has_x11
+    # Disable X11 in EGL header
+    meson.add_install_script('scripts/fixup_egl_nox11.sh',
+      get_option('includedir'))
+  endif
+
+  if name == 'OpenCL'
+    pkg_cflags += ['-DCL_TARGET_OPENCL_VERSION=' + cl_target_version]
+
+    meson.add_install_script('scripts/fixup_cl.sh',
+      get_option('includedir'), cl_version)
+  endif
+
   pkgconfig.generate(
     libraries : mali_ldflags,
+    extra_cflags : pkg_cflags,
     requires : requires,
     version : pkg_version,
     name : name,
@@ -312,9 +349,4 @@ meson.add_install_script('scripts/fixup_dummy.sh',
 if not wrappers
   # Disable wrappers
   meson.add_install_script('scripts/fixup_nowrap.sh', get_option('libdir'))
-endif
-
-if not has_x11 and not vendor_package
-  # Disable X11 in EGL header
-  meson.add_install_script('scripts/fixup_nox11.sh', get_option('includedir'))
 endif
