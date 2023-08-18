@@ -69,10 +69,9 @@ static uint64_t (* _gbm_bo_get_modifier) (struct gbm_bo *bo) = NULL;
 
 #ifdef HAS_EGL
 static PFNEGLGETDISPLAYPROC _eglGetDisplay = NULL;
-
-#ifdef HAS_X11
 static PFNEGLGETPROCADDRESSPROC _eglGetProcAddress = NULL;
 static PFNEGLGETPLATFORMDISPLAYPROC _eglGetPlatformDisplay = NULL;
+#ifdef HAS_X11
 static PFNEGLGETPLATFORMDISPLAYEXTPROC _eglGetPlatformDisplayEXT = NULL;
 #endif
 #endif
@@ -91,9 +90,7 @@ static struct {
 #endif
 #ifdef HAS_EGL
    MALI_SYMBOL(eglGetDisplay),
-#ifdef HAS_X11
    MALI_SYMBOL(eglGetProcAddress),
-#endif
 #endif
 };
 
@@ -131,9 +128,9 @@ load_mali_symbols(void)
    dlclose(handle);
 
 #ifdef HAS_EGL
-#ifdef HAS_X11
    _eglGetPlatformDisplay =
       (PFNEGLGETPLATFORMDISPLAYPROC)_eglGetProcAddress("eglGetPlatformDisplay");
+#ifdef HAS_X11
    _eglGetPlatformDisplayEXT =
       (PFNEGLGETPLATFORMDISPLAYEXTPROC)_eglGetProcAddress("eglGetPlatformDisplayEXT");
 #endif
@@ -551,21 +548,6 @@ fixup_x11_display(Display *display)
 /* Override EGL symbols */
 
 EGLAPI EGLDisplay EGLAPIENTRY
-eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *attrib_list)
-{
-   if (!_eglGetPlatformDisplay)
-      return EGL_NO_DISPLAY;
-
-   if (platform == EGL_PLATFORM_X11_KHR && native_display) {
-      native_display = (void *)fixup_x11_display(native_display);
-      if (!native_display)
-         return EGL_NO_DISPLAY;
-   }
-
-   return _eglGetPlatformDisplay(platform, native_display, attrib_list);
-}
-
-EGLAPI EGLDisplay EGLAPIENTRY
 eglGetPlatformDisplayEXT (EGLenum platform, void *native_display, const EGLint *attrib_list)
 {
    if (!_eglGetPlatformDisplayEXT)
@@ -593,7 +575,7 @@ eglGetProcAddress(const char *procname)
       return (__eglMustCastToProperFunctionPointerType)eglGetDisplay;
 
    if (!strcmp(procname, "eglGetPlatformDisplay")) {
-      if (!_eglGetPlatformDisplay)
+      if (!_eglGetPlatformDisplay && !_eglGetPlatformDisplayEXT)
          return NULL;
       return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplay;
    }
@@ -612,32 +594,131 @@ eglGetProcAddress(const char *procname)
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetDisplay (EGLNativeDisplayType display_id)
 {
-    const char *type = getenv("MALI_DEFAULT_WINSYS");
-
-    static PFNEGLGETPLATFORMDISPLAYEXTPROC get_platform_display = NULL;
-    if (!get_platform_display)
-        get_platform_display = (PFNEGLGETPLATFORMDISPLAYEXTPROC)
-            eglGetProcAddress("eglGetPlatformDisplayEXT");
-    if (!get_platform_display)
-        goto bail;
+   const char *type = getenv("MALI_DEFAULT_WINSYS");
 
 #ifdef HAS_GBM
-    if (type && !strcmp(type, "gbm"))
-        return get_platform_display(EGL_PLATFORM_GBM_KHR, display_id, NULL);
+   if (type && !strcmp(type, "gbm"))
+      return eglGetPlatformDisplay(EGL_PLATFORM_GBM_KHR, display_id, NULL);
 #endif
 
 #ifdef HAS_WAYLAND
-    if (type && !strcmp(type, "wayland"))
-        return get_platform_display(EGL_PLATFORM_WAYLAND_EXT, display_id, NULL);
+   if (type && !strcmp(type, "wayland"))
+      return eglGetPlatformDisplay(EGL_PLATFORM_WAYLAND_EXT, display_id, NULL);
 #endif
 
 #ifdef HAS_X11
-    /* Use X11 by default when avaiable */
-    return get_platform_display(EGL_PLATFORM_X11_KHR, display_id, NULL);
+   /* Use X11 by default when avaiable */
+   return eglGetPlatformDisplay(EGL_PLATFORM_X11_KHR, display_id, NULL);
+#else
+   return _eglGetDisplay(display_id);
+#endif
+}
+
+/* Export for EGL 1.5 */
+
+#define GET_PROC_ADDR(v, n) v = (typeof(v))eglGetProcAddress(n)
+
+/* From mesa3d mesa-23.1.3-1 : src/egl/main/egldisplay.h */
+static inline size_t
+_eglNumAttribs(const EGLAttrib *attribs)
+{
+   size_t len = 0;
+
+   if (attribs) {
+      while (attribs[len] != EGL_NONE)
+         len += 2;
+      len++;
+   }
+   return len;
+}
+
+/* From mesa3d mesa-23.1.3-1 : src/egl/main/eglapi.c */
+static EGLint *
+_eglConvertAttribsToInt(const EGLAttrib *attr_list)
+{
+   size_t size = _eglNumAttribs(attr_list);
+   EGLint *int_attribs = NULL;
+
+   /* Convert attributes from EGLAttrib[] to EGLint[] */
+   if (size) {
+      int_attribs = calloc(size, sizeof(int_attribs[0]));
+      if (!int_attribs)
+         return NULL;
+
+      for (size_t i = 0; i < size; i++)
+         int_attribs[i] = attr_list[i];
+   }
+   return int_attribs;
+}
+
+EGLAPI EGLDisplay EGLAPIENTRY
+eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *attrib_list)
+{
+   PFNEGLGETPLATFORMDISPLAYEXTPROC get_platform_display_ext;
+
+   GET_PROC_ADDR(get_platform_display_ext, "eglGetPlatformDisplayEXT");
+   if (get_platform_display_ext) {
+      EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
+      if (!int_attribs == !attrib_list) {
+         EGLDisplay display =
+            get_platform_display_ext(platform, native_display, int_attribs);
+         free(int_attribs);
+         return display;
+      }
+   }
+
+   if (!_eglGetPlatformDisplay)
+      return EGL_NO_DISPLAY;
+
+#ifdef HAS_X11
+   if (platform == EGL_PLATFORM_X11_KHR && native_display) {
+      native_display = (void *)fixup_x11_display(native_display);
+      if (!native_display)
+         return EGL_NO_DISPLAY;
+   }
 #endif
 
-bail:
-    return _eglGetDisplay(display_id);
+   return _eglGetPlatformDisplay(platform, native_display, attrib_list);
+}
+
+EGLAPI EGLSurface EGLAPIENTRY
+eglCreatePlatformWindowSurface(EGLDisplay dpy, EGLConfig config, void *native_window, const EGLAttrib *attrib_list)
+{
+   PFNEGLCREATEPLATFORMWINDOWSURFACEPROC create_platform_window_surface;
+
+   GET_PROC_ADDR(create_platform_window_surface,
+                 "eglCreatePlatformWindowSurface");
+   if (!create_platform_window_surface) {
+      EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
+      if (!int_attribs == !attrib_list) {
+         EGLSurface surface =
+            eglCreateWindowSurface(dpy, config, native_window, int_attribs);
+         free(int_attribs);
+         return surface;
+      }
+   }
+
+   return create_platform_window_surface(dpy, config, native_window, attrib_list);
+}
+
+EGLAPI EGLSurface EGLAPIENTRY
+eglCreatePlatformPixmapSurface(EGLDisplay dpy, EGLConfig config, void *native_pixmap, const EGLAttrib *attrib_list)
+{
+   PFNEGLCREATEPLATFORMPIXMAPSURFACEPROC create_platform_pixmap_surface;
+
+   GET_PROC_ADDR(create_platform_pixmap_surface,
+                 "eglCreatePlatformPixmapSurface");
+   if (!create_platform_pixmap_surface) {
+      EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
+      if (!int_attribs == !attrib_list) {
+         EGLSurface surface =
+            eglCreatePixmapSurface(dpy, config, native_pixmap, int_attribs);
+         free(int_attribs);
+         return surface;
+      }
+   }
+
+   return create_platform_pixmap_surface(dpy, config, native_pixmap, attrib_list);
 }
 
 #endif // HAS_EGL
