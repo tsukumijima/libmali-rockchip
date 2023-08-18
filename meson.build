@@ -51,25 +51,31 @@ is_rk3288 = gpu == 'midgard-t76x'
 is_utgard = gpu.split('-')[0] == 'utgard'
 is_px3se = gpu == 'utgard-400' and subversion == 'r3p0'
 
-has_gbm = cc.has_function('gbm_create_device', dependencies : mali)
+# Parse platforms
+has_gbm = run_command('grep', '-wq', 'gbm_create_device', default_lib,
+  check : false).returncode() == 0
 has_x11 = run_command('grep', '-wq', 'XSync', default_lib,
   check : false).returncode() == 0
-has_wayland = cc.has_function('wl_egl_window_create', dependencies : mali)
+has_wayland = run_command('grep', '-wq', 'wl_egl_window_create', default_lib,
+  check : false).returncode() == 0
+
+message('Using ' + default_lib + ' with' + (has_x11 ? ' x11' : '') +
+  (has_wayland ? ' wayland' : '') + (has_gbm ? ' gbm' : ''))
 
 # Required packages
 requires = []
-if has_gbm
+if has_gbm or has_wayland or has_x11
   requires = ['libdrm']
 endif
 if has_wayland
-  requires = ['libdrm', 'wayland-client', 'wayland-server']
+  requires += ['wayland-client', 'wayland-server']
 
   if is_px3se
     requires += ['libffi', 'libcrypto']
   endif
 endif
 if has_x11
-  requires = ['libdrm', 'x11', 'xcb']
+  requires += ['x11', 'xcb']
 
   if is_utgard
     requires += ['xfixes', 'xext', 'xau', 'xdmcp', 'xdamage']
@@ -77,6 +83,11 @@ if has_x11
     requires += ['x11-xcb', 'xcb-dri2']
   endif
 endif
+
+# Required dependencies
+foreach require : requires
+  dependency(require)
+endforeach
 
 if wrappers_opts.auto() and is_utgard
   wrappers = false
