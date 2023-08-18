@@ -56,7 +56,7 @@ if cc.has_function('eglCreateContext', dependencies : mali)
 endif
 
 libhook = shared_library(
-  'mali_hook',
+  'mali-hook',
   'hook.c',
   c_args : libhook_cflags,
   include_directories : libhook_inc,
@@ -64,14 +64,14 @@ libhook = shared_library(
   install : true,
   version : mali_version)
 
-libhook_ldflags = ['-L${libdir}', '-lmali_hook']
+libhook_ldflags = ['-L${libdir}', '-lmali-hook']
 
 # A dummy library to ensure that the hook library would not be removed as unused
 libinjector = static_library(
-  'mali_hook_injector',
+  'mali-hook-injector',
   'injector.c',
   install : true)
 
 # Ensure that the hook library would not be removed as unused
 libhook_ldflags += \
-  ['-Wl,--whole-archive', '-lmali_hook_injector', '-Wl,--no-whole-archive']
+  ['-Wl,--whole-archive', '-lmali-hook-injector', '-Wl,--no-whole-archive']

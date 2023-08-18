@@ -1,7 +1,7 @@
 project(
   'libmali', 'c',
   version : '1.9.0',
-  meson_version : '>=0.54.0',
+  meson_version : '>=0.58.0',
   default_options : ['b_asneeded=false'])
 
 mali_version = meson.project_version()
