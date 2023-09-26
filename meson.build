@@ -1,8 +1,7 @@
 project(
   'libmali', 'c',
   version : '1.9.0',
-  meson_version : '>=0.58.0',
-  default_options : ['b_asneeded=false'])
+  meson_version : '>=0.58.0')
 
 mali_version = meson.project_version()
 
@@ -98,6 +97,9 @@ endif
 
 if wrappers
   message('Provide wrappers')
+
+  # Wrappers would link to the real library.
+  add_project_link_arguments('-Wl,--no-as-needed', language : 'c')
 else
   # The vendor package requires soname of wrappers.
   if vendor_package
