@@ -331,7 +331,8 @@ endif
 
 # Install firmwares
 if gpu == 'valhall-g610'
-  install_data('firmware/g610/mali_csffw.bin', install_dir : '/lib/firmware')
+  install_data('firmware/g610/mali_csffw.bin',
+    install_dir : get_option('firmware-dir'))
 endif
 
 if vendor_package

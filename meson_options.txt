@@ -22,3 +22,5 @@ option('wrappers', type: 'feature', value: 'auto',
        description: 'Install with wrappers (default: auto)')
 option('optimize-level', type: 'combo', choices: ['O0', 'O1', 'O2', 'O3', 'Os', 'Ofast', 'Og'], value: 'O3',
        description: 'Optimize level (default: O3)')
+option('firmware-dir', type: 'string', value: '/lib/firmware',
+       description: 'Firmware DIR (default: /lib/firmware)')
