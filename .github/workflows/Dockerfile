@@ -15,11 +15,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libx11-6 \
         libx11-dev \
         libx11-xcb1 \
+        libx11-xcb-dev \
         libxcb-dri2-0 \
+        libxcb-dri2-0-dev \
         libxdamage1 \
+        libxdamage-dev \
         libxext6 \
+        libxext-dev \
         libxfixes3 \
-        libwayland-client0 && \
+        libxfixes-dev \
+        libwayland-client0 \
+        libwayland-dev && \
     rm -rf /var/lib/apt/lists/*
 COPY . /src/
 WORKDIR /src/
