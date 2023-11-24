@@ -250,6 +250,7 @@ foreach name, values : map
       link_with : [libhook, libmali],
       install : true,
       install_dir : wrapper_libdir,
+      install_rpath : '$ORIGIN',
       version : version)
   endforeach
 

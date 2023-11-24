@@ -62,6 +62,7 @@ libhook = shared_library(
   include_directories : libhook_inc,
   dependencies : libhook_dep,
   install : true,
+  install_rpath : '$ORIGIN',
   version : mali_version)
 
 libhook_ldflags = ['-L${libdir}', '-lmali-hook']
@@ -70,7 +71,8 @@ libhook_ldflags = ['-L${libdir}', '-lmali-hook']
 libinjector = static_library(
   'mali-hook-injector',
   'injector.c',
-  install : true)
+  install : true,
+  install_rpath : '$ORIGIN')
 
 # Ensure that the hook library would not be removed as unused
 libhook_ldflags += \
