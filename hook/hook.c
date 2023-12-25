@@ -61,10 +61,17 @@ int mali_injected = 0;
 
 #ifdef HAS_GBM
 static struct gbm_surface * (* _gbm_surface_create)(struct gbm_device *, uint32_t, uint32_t, uint32_t, uint32_t) = NULL;
+#ifdef HAS_gbm_surface_create_with_modifiers
+static struct gbm_surface * (* _gbm_surface_create_with_modifiers) (struct gbm_device *gbm, uint32_t width, uint32_t height, uint32_t format, const uint64_t *modifiers, const unsigned int count);
+#endif
 static struct gbm_bo * (* _gbm_bo_create) (struct gbm_device *, uint32_t, uint32_t, uint32_t, uint32_t) = NULL;
+#ifdef HAS_gbm_bo_create_with_modifiers
+static struct gbm_bo * (* _gbm_bo_create_with_modifiers) (struct gbm_device *gbm, uint32_t width, uint32_t height, uint32_t format, const uint64_t *modifiers, const unsigned int count) = NULL;
+#endif
 #ifdef HAS_gbm_bo_get_modifier
 static uint64_t (* _gbm_bo_get_modifier) (struct gbm_bo *bo) = NULL;
 #endif
+static int (* _gbm_bo_get_fd) (struct gbm_bo *bo) = NULL;
 #endif
 
 #ifdef HAS_EGL
@@ -74,6 +81,8 @@ static PFNEGLGETPLATFORMDISPLAYPROC _eglGetPlatformDisplay = NULL;
 #ifdef HAS_X11
 static PFNEGLGETPLATFORMDISPLAYEXTPROC _eglGetPlatformDisplayEXT = NULL;
 #endif
+static PFNEGLCREATEPIXMAPSURFACEPROC _eglCreatePixmapSurface = NULL;
+static PFNEGLCREATEWINDOWSURFACEPROC _eglCreateWindowSurface = NULL;
 #endif
 
 #define MALI_SYMBOL(func) { #func, (void **)(&_ ## func), }
@@ -83,14 +92,23 @@ static struct {
 } mali_symbols[] = {
 #ifdef HAS_GBM
    MALI_SYMBOL(gbm_surface_create),
+#ifdef HAS_gbm_surface_create_with_modifiers
+   MALI_SYMBOL(gbm_surface_create_with_modifiers),
+#endif
    MALI_SYMBOL(gbm_bo_create),
+#ifdef HAS_gbm_bo_create_with_modifiers
+   MALI_SYMBOL(gbm_bo_create_with_modifiers),
+#endif
 #ifdef HAS_gbm_bo_get_modifier
    MALI_SYMBOL(gbm_bo_get_modifier),
 #endif
+   MALI_SYMBOL(gbm_bo_get_fd),
 #endif
 #ifdef HAS_EGL
    MALI_SYMBOL(eglGetDisplay),
    MALI_SYMBOL(eglGetProcAddress),
+   MALI_SYMBOL(eglCreatePixmapSurface),
+   MALI_SYMBOL(eglCreateWindowSurface),
 #endif
 };
 
@@ -189,7 +207,7 @@ gbm_bo_get_fd_for_plane(struct gbm_bo *bo, int plane)
    if (plane)
       return -1;
 
-   return gbm_bo_get_fd(bo);
+   return _gbm_bo_get_fd(bo);
 }
 #endif
 
@@ -228,8 +246,8 @@ gbm_bo_create_with_modifiers2(struct gbm_device *gbm,
 {
 #ifdef HAS_gbm_bo_create_with_modifiers
    /* flags ignored */
-   return gbm_bo_create_with_modifiers(gbm, width, height, format,
-                                       modifiers, count);
+   return _gbm_bo_create_with_modifiers(gbm, width, height, format,
+                                        modifiers, count);
 #else
    if (!can_ignore_modifiers(modifiers, count))
       return NULL;
@@ -263,8 +281,8 @@ gbm_surface_create_with_modifiers2(struct gbm_device *gbm,
 {
 #ifdef HAS_gbm_surface_create_with_modifiers
    /* flags ignored */
-   return gbm_surface_create_with_modifiers(gbm, width, height, format,
-                                            modifiers, count);
+   return _gbm_surface_create_with_modifiers(gbm, width, height, format,
+                                             modifiers, count);
 #else
    if (!can_ignore_modifiers(modifiers, count))
       return NULL;
@@ -586,6 +604,9 @@ eglGetProcAddress(const char *procname)
       return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplayEXT;
    }
 
+   if (!strcmp(procname, "eglDestroySurface"))
+      return (__eglMustCastToProperFunctionPointerType)eglDestroySurface;
+
    return _eglGetProcAddress(procname);
 }
 
@@ -616,7 +637,7 @@ eglGetDisplay (EGLNativeDisplayType display_id)
 
 /* Export for EGL 1.5 */
 
-#define GET_PROC_ADDR(v, n) v = (typeof(v))eglGetProcAddress(n)
+#define GET_PROC_ADDR(v, n) v = (typeof(v))_eglGetProcAddress(n)
 
 /* From mesa3d mesa-23.1.3-1 : src/egl/main/egldisplay.h */
 static inline size_t
@@ -692,7 +713,7 @@ eglCreatePlatformWindowSurface(EGLDisplay dpy, EGLConfig config, void *native_wi
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
          EGLSurface surface =
-            eglCreateWindowSurface(dpy, config, native_window, int_attribs);
+            _eglCreateWindowSurface(dpy, config, native_window, int_attribs);
          free(int_attribs);
          return surface;
       }
@@ -712,7 +733,7 @@ eglCreatePlatformPixmapSurface(EGLDisplay dpy, EGLConfig config, void *native_pi
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
          EGLSurface surface =
-            eglCreatePixmapSurface(dpy, config, native_pixmap, int_attribs);
+            _eglCreatePixmapSurface(dpy, config, native_pixmap, int_attribs);
          free(int_attribs);
          return surface;
       }
