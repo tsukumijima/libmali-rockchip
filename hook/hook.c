@@ -75,6 +75,7 @@ static int (* _gbm_bo_get_fd) (struct gbm_bo *bo) = NULL;
 #endif
 
 #ifdef HAS_EGL
+static PFNEGLGETCURRENTSURFACEPROC _eglGetCurrentSurface = NULL;
 static PFNEGLGETDISPLAYPROC _eglGetDisplay = NULL;
 static PFNEGLGETPROCADDRESSPROC _eglGetProcAddress = NULL;
 static PFNEGLGETPLATFORMDISPLAYPROC _eglGetPlatformDisplay = NULL;
@@ -83,6 +84,8 @@ static PFNEGLGETPLATFORMDISPLAYEXTPROC _eglGetPlatformDisplayEXT = NULL;
 #endif
 static PFNEGLCREATEPIXMAPSURFACEPROC _eglCreatePixmapSurface = NULL;
 static PFNEGLCREATEWINDOWSURFACEPROC _eglCreateWindowSurface = NULL;
+static EGLBoolean (* _eglDestroySurface) (EGLDisplay dpy, EGLSurface surface) = NULL;
+static PFNEGLMAKECURRENTPROC _eglMakeCurrent = NULL;
 #endif
 
 #define MALI_SYMBOL(func) { #func, (void **)(&_ ## func), }
@@ -105,10 +108,13 @@ static struct {
    MALI_SYMBOL(gbm_bo_get_fd),
 #endif
 #ifdef HAS_EGL
+   MALI_SYMBOL(eglGetCurrentSurface),
    MALI_SYMBOL(eglGetDisplay),
    MALI_SYMBOL(eglGetProcAddress),
    MALI_SYMBOL(eglCreatePixmapSurface),
    MALI_SYMBOL(eglCreateWindowSurface),
+   MALI_SYMBOL(eglDestroySurface),
+   MALI_SYMBOL(eglMakeCurrent),
 #endif
 };
 
@@ -740,6 +746,16 @@ eglCreatePlatformPixmapSurface(EGLDisplay dpy, EGLConfig config, void *native_pi
    }
 
    return create_platform_pixmap_surface(dpy, config, native_pixmap, attrib_list);
+}
+
+/* Unset current surface before destroying it */
+EGLBoolean eglDestroySurface(EGLDisplay dpy, EGLSurface surface)
+{
+   if (_eglGetCurrentSurface(EGL_DRAW) == surface ||
+       _eglGetCurrentSurface(EGL_READ) == surface)
+      _eglMakeCurrent(dpy, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+
+   return _eglDestroySurface(dpy, surface);
 }
 
 #endif // HAS_EGL
