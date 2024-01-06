@@ -8,15 +8,15 @@ option('subversion', type: 'string', value: 'none',
        description: 'subversion (default: none)')
 option('platform', type: 'string', value: 'gbm',
        description: 'platform (default: gbm)')
-option('with-overlay', type: 'boolean', value: 'false',
+option('with-overlay', type: 'boolean', value: false,
        description: 'Install overlay (default: false)')
-option('opencl-icd', type: 'boolean', value: 'true',
+option('opencl-icd', type: 'boolean', value: true,
        description: 'OpenCL Installable Client Driver (ICD) (default: true)')
-option('khr-header', type: 'boolean', value: 'false',
+option('khr-header', type: 'boolean', value: false,
        description: 'Install KHR header (default: false)')
-option('vendor-package', type: 'boolean', value: 'false',
+option('vendor-package', type: 'boolean', value: false,
        description: 'Install as vendor package (default: false)')
-option('hooks', type: 'boolean', value: 'true',
+option('hooks', type: 'boolean', value: true,
        description: 'Enable hook library (default: true)')
 option('wrappers', type: 'feature', value: 'auto',
        description: 'Install with wrappers (default: auto)')

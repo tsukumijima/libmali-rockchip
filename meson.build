@@ -1,7 +1,7 @@
 project(
   'libmali', 'c',
   version : '1.9.0',
-  meson_version : '>=0.58.0')
+  meson_version : '>=0.53.0')
 
 mali_version = meson.project_version()
 
@@ -43,8 +43,9 @@ endif
 message('Source libraries: @0@'.format(libs))
 
 # Load original mali library for later function checks and linking
-mali = cc.find_library(fs.stem(default_lib).replace('lib',''),
-  dirs : meson.current_source_dir() / fs.parent(default_lib))
+run_command('ln', '-rsf', meson.current_source_dir() / default_lib,
+  meson.current_build_dir() / 'libmali-prebuilt.so', check : false)
+mali = cc.find_library('mali-prebuilt', dirs : meson.current_build_dir())
 
 is_rk3288 = gpu == 'midgard-t76x'
 is_utgard = gpu.split('-')[0] == 'utgard'
@@ -249,6 +250,7 @@ foreach name, values : map
       link_with : [libhook, libmali],
       install : true,
       install_dir : wrapper_libdir,
+      install_rpath : '$ORIGIN',
       version : version)
   endforeach
 
