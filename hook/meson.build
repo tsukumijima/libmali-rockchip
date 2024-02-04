@@ -21,10 +21,11 @@ libhook_cflags = [
   '-DLIBMALI_SO="libmali.so.' + mali_version.split('.')[0] + '"',
 ]
 
-libhook_dep = [mali]
-libhook_dep += dependency('threads')
-libhook_dep += cc.find_library('dl', required : false)
-libhook_dep += dependency('libdrm', version : '>= 2.4.0')
+libhook_dep = [
+  dependency('threads'),
+  cc.find_library('dl', required : false),
+  dependency('libdrm', version : '>= 2.4.0'),
+]
 
 libhook_inc = []
 
