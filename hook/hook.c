@@ -104,6 +104,7 @@ static PFNEGLGETCURRENTSURFACEPROC _eglGetCurrentSurface = NULL;
 static PFNEGLGETDISPLAYPROC _eglGetDisplay = NULL;
 static PFNEGLGETPROCADDRESSPROC _eglGetProcAddress = NULL;
 static PFNEGLGETPLATFORMDISPLAYPROC _eglGetPlatformDisplay = NULL;
+static PFNEGLCHOOSECONFIGPROC _eglChooseConfig = NULL;
 static PFNEGLGETPLATFORMDISPLAYEXTPROC _eglGetPlatformDisplayEXT = NULL;
 static PFNEGLCREATEPIXMAPSURFACEPROC _eglCreatePixmapSurface = NULL;
 static PFNEGLCREATEWINDOWSURFACEPROC _eglCreateWindowSurface = NULL;
@@ -159,6 +160,7 @@ static struct {
    MALI_SYMBOL(eglGetCurrentSurface),
    MALI_SYMBOL(eglGetDisplay),
    MALI_SYMBOL(eglGetProcAddress),
+   MALI_SYMBOL(eglChooseConfig),
    MALI_SYMBOL(eglCreatePixmapSurface),
    MALI_SYMBOL(eglCreateWindowSurface),
    MALI_SYMBOL(eglDestroySurface),
@@ -776,6 +778,31 @@ EGLBoolean eglDestroySurface(EGLDisplay dpy, EGLSurface surface)
    return _eglDestroySurface(dpy, surface);
 }
 
+/* HACK: Fixup EGL_OPENGL_BIT */
+
+EGLBoolean eglChooseConfig (EGLDisplay dpy, const EGLint *attrib_list, EGLConfig *configs, EGLint config_size, EGLint *num_config)
+{
+#define MAX_EGL_ATTRS 1024
+   EGLint list[MAX_EGL_ATTRS];
+   int i = 0;
+
+   while (attrib_list[i] != EGL_NONE) {
+      if (i > MAX_EGL_ATTRS - 2)
+         return EGL_FALSE;
+
+      list[i] = attrib_list[i];
+      list[i + 1] = attrib_list[i + 1];
+
+      if (list[i] == EGL_RENDERABLE_TYPE && list[i + 1] == EGL_OPENGL_BIT)
+         list[i + 1] = EGL_OPENGL_ES_BIT;
+
+      i += 2;
+   }
+   list[i] = EGL_NONE;
+
+   return _eglChooseConfig(dpy, list, configs, config_size, num_config);
+}
+
 /* Override proc addesses */
 
 EGLAPI __eglMustCastToProperFunctionPointerType EGLAPIENTRY
@@ -803,6 +830,9 @@ eglGetProcAddress(const char *procname)
       return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplayEXT;
    }
 #endif
+
+   if (!strcmp(procname, "eglChooseConfig"))
+      return (__eglMustCastToProperFunctionPointerType)eglChooseConfig;
 
    if (!strcmp(procname, "eglCreatePlatformWindowSurface"))
       return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformWindowSurface;
