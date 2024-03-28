@@ -53,6 +53,8 @@ if cc.has_function('eglCreateContext', dependencies : mali)
     # Add hooks to init X11 threads
     libhook_dep += dependency('x11')
     libhook_cflags += '-DHAS_X11'
+  else
+    libhook_cflags += '-DEGL_NO_X11'
   endif
 endif
 
