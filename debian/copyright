@@ -2,12 +2,12 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: libmail
 Source: https://github.com/rockchip-linux/libmali
 
-Files: *.sh meson*
-Copyright: 2020 Jeffy Chen <jeffy.chen@rock-chips.com>
+Files: meson* hook/* include/* scripts/* data/*
+Copyright: 2024 Jeffy Chen <jeffy.chen@rock-chips.com>
 License: GPL-2+
 
-Files: lib/* include/*
-Copyright: 2020 Putin Lee <putin.li@rock-chips.com>
+Files: lib/* optimize*/* firmware/* overlay/*
+Copyright: 2024 Zhen Chen <chenzhen@rock-chips.com>
 License: CLOSED
  LES-PRE-20769
  SP-Version: 1.0
