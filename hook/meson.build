@@ -22,6 +22,7 @@ libhook_cflags = [
 ]
 
 libhook_dep = [
+  mali,
   dependency('threads'),
   cc.find_library('dl', required : false),
   dependency('libdrm', version : '>= 2.4.0'),
