@@ -786,6 +786,9 @@ EGLBoolean eglChooseConfig (EGLDisplay dpy, const EGLint *attrib_list, EGLConfig
    EGLint list[MAX_EGL_ATTRS];
    int i = 0;
 
+   if (!attrib_list)
+      return _eglChooseConfig(dpy, attrib_list, configs, config_size, num_config);
+
    while (attrib_list[i] != EGL_NONE) {
       if (i > MAX_EGL_ATTRS - 2)
          return EGL_FALSE;
