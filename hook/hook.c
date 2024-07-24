@@ -178,7 +178,8 @@ load_mali_symbols(void)
    handle = dlopen(LIBMALI_SO, RTLD_LAZY | RTLD_NOLOAD);
    if (!handle) {
       /* Should not reach here */
-      fprintf(stderr, "FATAL: dlopen(" LIBMALI_SO ") failed(%s)\n", dlerror());
+      fprintf(stderr, "[MALI-HOOK] FATAL: dlopen(" LIBMALI_SO ") failed(%s)\n",
+              dlerror());
       exit(-1);
    }
 
@@ -191,8 +192,8 @@ load_mali_symbols(void)
       symbol = dlsym(handle, func);
       if (!symbol) {
          /* Should not reach here */
-         fprintf(stderr, "FATAL: " LIBMALI_SO " dlsym(%s) failed(%s)\n",
-                 func, dlerror());
+         fprintf(stderr, "[MALI-HOOK] FATAL: " LIBMALI_SO
+                 " dlsym(%s) failed(%s)\n", func, dlerror());
          exit(-1);
       }
 
@@ -644,6 +645,13 @@ EGLAPI EGLDisplay EGLAPIENTRY
 eglGetDisplay (EGLNativeDisplayType display_id)
 {
    const char *type = getenv("MALI_DEFAULT_WINSYS");
+
+   // HACK: For chromium angle with in-process-gpu.
+   if (display_id != EGL_DEFAULT_DISPLAY) {
+      fprintf(stderr, "[MALI-HOOK] WARN: Native display(%p) ignored!\n",
+              display_id);
+      display_id = EGL_DEFAULT_DISPLAY;
+   }
 
 #ifdef HAS_GBM
    if (type && !strcmp(type, "gbm"))
