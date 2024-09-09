@@ -31,6 +31,11 @@ aarch64-linux-gnu/libmali-valhall-g610-g13p0-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g13p0-wayland-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g13p0-x11-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g13p0-x11-wayland-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g24p0-dummy.so
+aarch64-linux-gnu/libmali-valhall-g610-g24p0-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g24p0-wayland-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g24p0-x11-gbm.so
+aarch64-linux-gnu/libmali-valhall-g610-g24p0-x11-wayland-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-dummy.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-gbm.so
 aarch64-linux-gnu/libmali-valhall-g610-g6p0-wayland-gbm.so
@@ -79,6 +84,11 @@ arm-linux-gnueabihf/libmali-valhall-g610-g13p0-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g13p0-wayland-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g13p0-x11-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g13p0-x11-wayland-gbm.so
+arm-linux-gnueabihf/libmali-valhall-g610-g24p0-dummy.so
+arm-linux-gnueabihf/libmali-valhall-g610-g24p0-gbm.so
+arm-linux-gnueabihf/libmali-valhall-g610-g24p0-wayland-gbm.so
+arm-linux-gnueabihf/libmali-valhall-g610-g24p0-x11-gbm.so
+arm-linux-gnueabihf/libmali-valhall-g610-g24p0-x11-wayland-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-dummy.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-gbm.so
 arm-linux-gnueabihf/libmali-valhall-g610-g6p0-wayland-gbm.so
