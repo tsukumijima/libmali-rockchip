@@ -647,7 +647,8 @@ eglGetDisplay (EGLNativeDisplayType display_id)
    const char *type = getenv("MALI_DEFAULT_WINSYS");
 
    // HACK: For chromium angle with in-process-gpu.
-   if (display_id != EGL_DEFAULT_DISPLAY) {
+   if (getenv("MALI_FORCE_DEFAULT_DISPLAY") &&
+       display_id != EGL_DEFAULT_DISPLAY) {
       fprintf(stderr, "[MALI-HOOK] WARN: Native display(%p) ignored!\n",
               display_id);
       display_id = EGL_DEFAULT_DISPLAY;
