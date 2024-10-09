@@ -27,7 +27,7 @@ for lib in $LIBS; do
 	# 'invalid local symbol in global part of symbol table'
 	#
 	# depends on lief (pip3 install lief)
-	readelf -s $lib 2>&1 | grep -w LOCAL | grep -wq __end__ && \
+	readelf -s $lib 2>&1 | grep -wq Warning && \
 		scripts/fixup_sym.py $lib&
 done
 

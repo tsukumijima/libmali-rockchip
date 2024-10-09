@@ -13,4 +13,8 @@ for symbol in symbols:
     hidden.visibility = lief.ELF.SYMBOL_VISIBILITY.DEFAULT
     hidden = lib.add_dynamic_symbol(hidden)
 
+# HACK: increase .dynsym's sh_info to workaround local symbol warning:
+# 'found local symbol in global part of symbol table'
+lib.get_section('.dynsym').information = 10
+
 lib.write(libpath)
