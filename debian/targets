@@ -10,7 +10,6 @@ aarch64-linux-gnu/libmali-bifrost-g31-g2p0-without-cl-wayland-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g31-g2p0-x11-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g52-g13p0-dummy-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g52-g13p0-dummy.so
-aarch64-linux-gnu/libmali-bifrost-g52-g13p0-dummy-wayland-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g52-g13p0-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g52-g13p0-wayland-gbm.so
 aarch64-linux-gnu/libmali-bifrost-g52-g13p0-without-cl-dummy-gbm.so
@@ -55,7 +54,6 @@ arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-without-cl-wayland-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g31-g2p0-x11-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-dummy-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-dummy.so
-arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-dummy-wayland-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-wayland-gbm.so
 arm-linux-gnueabihf/libmali-bifrost-g52-g13p0-without-cl-dummy-gbm.so
