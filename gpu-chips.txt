@@ -1,0 +1,7 @@
+utgard-400: px3se rk3036 rk3032 rk312x rk3128h
+utgard-450: rk3328 rk3528
+midgard-t76x: rk3288
+midgard-t86x: rk3399 rk3399pro
+bifrost-g31: px30 rk3326
+bifrost-g52: rk3566_rk3568 rk3562 rk3576
+valhall-g610: rk3588

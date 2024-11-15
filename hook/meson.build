@@ -22,6 +22,7 @@ libhook_cflags = [
 ]
 
 libhook_dep = [
+  mali,
   dependency('threads'),
   cc.find_library('dl', required : false),
   dependency('libdrm', version : '>= 2.4.0'),
@@ -53,6 +54,8 @@ if cc.has_function('eglCreateContext', dependencies : mali)
     # Add hooks to init X11 threads
     libhook_dep += dependency('x11')
     libhook_cflags += '-DHAS_X11'
+  else
+    libhook_cflags += '-DEGL_NO_X11'
   endif
 endif
 

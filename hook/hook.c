@@ -104,9 +104,8 @@ static PFNEGLGETCURRENTSURFACEPROC _eglGetCurrentSurface = NULL;
 static PFNEGLGETDISPLAYPROC _eglGetDisplay = NULL;
 static PFNEGLGETPROCADDRESSPROC _eglGetProcAddress = NULL;
 static PFNEGLGETPLATFORMDISPLAYPROC _eglGetPlatformDisplay = NULL;
-#ifdef HAS_X11
+static PFNEGLCHOOSECONFIGPROC _eglChooseConfig = NULL;
 static PFNEGLGETPLATFORMDISPLAYEXTPROC _eglGetPlatformDisplayEXT = NULL;
-#endif
 static PFNEGLCREATEPIXMAPSURFACEPROC _eglCreatePixmapSurface = NULL;
 static PFNEGLCREATEWINDOWSURFACEPROC _eglCreateWindowSurface = NULL;
 static EGLBoolean (* _eglDestroySurface)(EGLDisplay dpy, EGLSurface surface) = NULL;
@@ -161,6 +160,7 @@ static struct {
    MALI_SYMBOL(eglGetCurrentSurface),
    MALI_SYMBOL(eglGetDisplay),
    MALI_SYMBOL(eglGetProcAddress),
+   MALI_SYMBOL(eglChooseConfig),
    MALI_SYMBOL(eglCreatePixmapSurface),
    MALI_SYMBOL(eglCreateWindowSurface),
    MALI_SYMBOL(eglDestroySurface),
@@ -178,7 +178,8 @@ load_mali_symbols(void)
    handle = dlopen(LIBMALI_SO, RTLD_LAZY | RTLD_NOLOAD);
    if (!handle) {
       /* Should not reach here */
-      fprintf(stderr, "FATAL: dlopen(" LIBMALI_SO ") failed(%s)\n", dlerror());
+      fprintf(stderr, "[MALI-HOOK] FATAL: dlopen(" LIBMALI_SO ") failed(%s)\n",
+              dlerror());
       exit(-1);
    }
 
@@ -191,8 +192,8 @@ load_mali_symbols(void)
       symbol = dlsym(handle, func);
       if (!symbol) {
          /* Should not reach here */
-         fprintf(stderr, "FATAL: " LIBMALI_SO " dlsym(%s) failed(%s)\n",
-                 func, dlerror());
+         fprintf(stderr, "[MALI-HOOK] FATAL: " LIBMALI_SO
+                 " dlsym(%s) failed(%s)\n", func, dlerror());
          exit(-1);
       }
 
@@ -204,10 +205,8 @@ load_mali_symbols(void)
 #ifdef HAS_EGL
    _eglGetPlatformDisplay =
       (PFNEGLGETPLATFORMDISPLAYPROC)_eglGetProcAddress("eglGetPlatformDisplay");
-#ifdef HAS_X11
    _eglGetPlatformDisplayEXT =
       (PFNEGLGETPLATFORMDISPLAYEXTPROC)_eglGetProcAddress("eglGetPlatformDisplayEXT");
-#endif
 #endif
 }
 
@@ -619,7 +618,11 @@ fixup_x11_display(Display *display)
    return display;
 }
 
+#endif // HAS_X11
+
 /* Override EGL symbols */
+
+#ifdef HAS_X11
 
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetPlatformDisplayEXT (EGLenum platform, void *native_display, const EGLint *attrib_list)
@@ -636,42 +639,20 @@ eglGetPlatformDisplayEXT (EGLenum platform, void *native_display, const EGLint *
    return _eglGetPlatformDisplayEXT(platform, native_display, attrib_list);
 }
 
-EGLAPI __eglMustCastToProperFunctionPointerType EGLAPIENTRY
-eglGetProcAddress(const char *procname)
-{
-   if (!procname)
-      return NULL;
-
-   if (!strcmp(procname, __func__))
-      return (__eglMustCastToProperFunctionPointerType)eglGetProcAddress;
-
-   if (!strcmp(procname, "eglGetDisplay"))
-      return (__eglMustCastToProperFunctionPointerType)eglGetDisplay;
-
-   if (!strcmp(procname, "eglGetPlatformDisplay")) {
-      if (!_eglGetPlatformDisplay && !_eglGetPlatformDisplayEXT)
-         return NULL;
-      return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplay;
-   }
-
-   if (!strcmp(procname, "eglGetPlatformDisplayEXT")) {
-      if (!_eglGetPlatformDisplayEXT)
-         return NULL;
-      return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplayEXT;
-   }
-
-   if (!strcmp(procname, "eglDestroySurface"))
-      return (__eglMustCastToProperFunctionPointerType)eglDestroySurface;
-
-   return _eglGetProcAddress(procname);
-}
-
 #endif // HAS_X11
 
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetDisplay (EGLNativeDisplayType display_id)
 {
    const char *type = getenv("MALI_DEFAULT_WINSYS");
+
+   // HACK: For chromium angle with in-process-gpu.
+   if (getenv("MALI_FORCE_DEFAULT_DISPLAY") &&
+       display_id != EGL_DEFAULT_DISPLAY) {
+      fprintf(stderr, "[MALI-HOOK] WARN: Native display(%p) ignored!\n",
+              display_id);
+      display_id = EGL_DEFAULT_DISPLAY;
+   }
 
 #ifdef HAS_GBM
    if (type && !strcmp(type, "gbm"))
@@ -731,14 +712,11 @@ _eglConvertAttribsToInt(const EGLAttrib *attr_list)
 EGLAPI EGLDisplay EGLAPIENTRY
 eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *attrib_list)
 {
-   PFNEGLGETPLATFORMDISPLAYEXTPROC get_platform_display_ext;
-
-   GET_PROC_ADDR(get_platform_display_ext, "eglGetPlatformDisplayEXT");
-   if (get_platform_display_ext) {
+   if (_eglGetPlatformDisplayEXT) {
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
          EGLDisplay display =
-            get_platform_display_ext(platform, native_display, int_attribs);
+            _eglGetPlatformDisplayEXT(platform, native_display, int_attribs);
          free(int_attribs);
          return display;
       }
@@ -798,7 +776,8 @@ eglCreatePlatformPixmapSurface(EGLDisplay dpy, EGLConfig config, void *native_pi
    return create_platform_pixmap_surface(dpy, config, native_pixmap, attrib_list);
 }
 
-/* Unset current surface before destroying it */
+/* HACK: Unset current surface before destroying it */
+
 EGLBoolean eglDestroySurface(EGLDisplay dpy, EGLSurface surface)
 {
    if (_eglGetCurrentSurface(EGL_DRAW) == surface ||
@@ -806,6 +785,77 @@ EGLBoolean eglDestroySurface(EGLDisplay dpy, EGLSurface surface)
       _eglMakeCurrent(dpy, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
    return _eglDestroySurface(dpy, surface);
+}
+
+/* HACK: Fixup EGL_OPENGL_BIT */
+
+EGLBoolean eglChooseConfig (EGLDisplay dpy, const EGLint *attrib_list, EGLConfig *configs, EGLint config_size, EGLint *num_config)
+{
+#define MAX_EGL_ATTRS 1024
+   EGLint list[MAX_EGL_ATTRS];
+   int i = 0;
+
+   if (!attrib_list)
+      return _eglChooseConfig(dpy, attrib_list, configs, config_size, num_config);
+
+   while (attrib_list[i] != EGL_NONE) {
+      if (i > MAX_EGL_ATTRS - 2)
+         return EGL_FALSE;
+
+      list[i] = attrib_list[i];
+      list[i + 1] = attrib_list[i + 1];
+
+      if (list[i] == EGL_RENDERABLE_TYPE && list[i + 1] == EGL_OPENGL_BIT)
+         list[i + 1] = EGL_OPENGL_ES_BIT;
+
+      i += 2;
+   }
+   list[i] = EGL_NONE;
+
+   return _eglChooseConfig(dpy, list, configs, config_size, num_config);
+}
+
+/* Override proc addesses */
+
+EGLAPI __eglMustCastToProperFunctionPointerType EGLAPIENTRY
+eglGetProcAddress(const char *procname)
+{
+   if (!procname)
+      return NULL;
+
+   if (!strcmp(procname, __func__))
+      return (__eglMustCastToProperFunctionPointerType)eglGetProcAddress;
+
+   if (!strcmp(procname, "eglGetDisplay"))
+      return (__eglMustCastToProperFunctionPointerType)eglGetDisplay;
+
+   if (!strcmp(procname, "eglGetPlatformDisplay")) {
+      if (!_eglGetPlatformDisplay && !_eglGetPlatformDisplayEXT)
+         return NULL;
+      return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplay;
+   }
+
+#ifdef HAS_X11
+   if (!strcmp(procname, "eglGetPlatformDisplayEXT")) {
+      if (!_eglGetPlatformDisplayEXT)
+         return NULL;
+      return (__eglMustCastToProperFunctionPointerType)eglGetPlatformDisplayEXT;
+   }
+#endif
+
+   if (!strcmp(procname, "eglChooseConfig"))
+      return (__eglMustCastToProperFunctionPointerType)eglChooseConfig;
+
+   if (!strcmp(procname, "eglCreatePlatformWindowSurface"))
+      return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformWindowSurface;
+
+   if (!strcmp(procname, "eglCreatePlatformPixmapSurface"))
+      return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformPixmapSurface;
+
+   if (!strcmp(procname, "eglDestroySurface"))
+      return (__eglMustCastToProperFunctionPointerType)eglDestroySurface;
+
+   return _eglGetProcAddress(procname);
 }
 
 #endif // HAS_EGL
