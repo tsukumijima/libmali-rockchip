@@ -35,6 +35,7 @@ jobs:
         with:
           context: .github/workflows/
           tags: ${{ matrix.image }}:build
+          platforms: linux/arm64
           build-args: IMAGE=${{ matrix.image }}:20.04
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,scope=${{ matrix.image }},mode=max
