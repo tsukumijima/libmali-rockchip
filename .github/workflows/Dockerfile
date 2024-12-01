@@ -21,6 +21,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libx11-xcb-dev \
     libxcb-dri2-0 \
     libxcb-dri2-0-dev \
+    libxcb-dri3-dev \
+    libxcb-present-dev \
+    libxcb-xfixes0-dev \
     libxdamage1 \
     libxdamage-dev \
     libxext6 \
