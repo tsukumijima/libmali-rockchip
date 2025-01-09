@@ -5,7 +5,6 @@
 *.orig
 *.rej
 *.loT
-*.bin
 *.pc
 .deps
 .libs
