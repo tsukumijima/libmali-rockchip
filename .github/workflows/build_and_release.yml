@@ -15,14 +15,50 @@ jobs:
       contents: write
     steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Fix Git Permissions
+        run: |
+          mkdir -p ~/.config/git
+          chmod -R 700 ~/.config
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential devscripts debhelper meson libgbm-dev libdrm-dev
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository -y ppa:ubuntu-support-team/meson
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            debhelper \
+            devscripts \
+            meson \
+            pkg-config \
+            libstdc++6 \
+            libgbm-dev \
+            libdrm-dev \
+            libx11-6 \
+            libx11-dev \
+            libx11-xcb1 \
+            libx11-xcb-dev \
+            libxcb-dri2-0 \
+            libxcb-dri2-0-dev \
+            libxcb-dri3-dev \
+            libxcb-present-dev \
+            libxcb-xfixes0-dev \
+            libxdamage1 \
+            libxdamage-dev \
+            libxext6 \
+            libxext-dev \
+            libxfixes3 \
+            libxfixes-dev \
+            libwayland-client0 \
+            libwayland-dev
+          sudo apt-get clean autoclean --yes
+          sudo apt-get autoremove --yes
+          sudo rm -rf /var/cache/apt/archives* /var/lib/apt/lists/*
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Build Debian package
         run: |
           debuild -us -uc -b && cp -a ../*.deb ./
