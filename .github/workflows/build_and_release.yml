@@ -10,11 +10,7 @@ jobs:
 
   build_and_release:
     name: Build and Release Debian Package
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image:
-          - arm64v8/ubuntu
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
     steps:
@@ -22,33 +18,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: linux/arm64
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: docker/build-push-action@v5
-        with:
-          context: .github/workflows/
-          tags: ${{ matrix.image }}:build
-          platforms: linux/arm64
-          build-args: IMAGE=${{ matrix.image }}:20.04
-          cache-from: type=gha,scope=${{ matrix.image }}
-          cache-to: type=gha,scope=${{ matrix.image }},mode=max
-          load: true
-
-      - name: Build
+      - name: Install dependencies
         run: |
-          docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'debuild -us -uc -b && cp -a ../*.deb ./'
+          sudo apt-get update
+          sudo apt-get install -y build-essential devscripts
+
+      - name: Build Debian package
+        run: |
+          debuild -us -uc -b && cp -a ../*.deb ./
 
       - name: Get version
         id: get_version
         run: |
-          echo "version=$(docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'dpkg-parsechangelog --show-field Version')" >> $GITHUB_OUTPUT
+          echo "version=$(dpkg-parsechangelog --show-field Version)" >> $GITHUB_OUTPUT
 
       - name: Get commit hash
         id: get_commit_hash
