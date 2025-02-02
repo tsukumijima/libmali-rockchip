@@ -10,45 +10,63 @@ jobs:
 
   build_and_release:
     name: Build and Release Debian Package
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image:
-          - arm64v8/ubuntu
+    runs-on: ubuntu-22.04-arm
     permissions:
       contents: write
     steps:
 
+      - name: Fix Git Permissions
+        run: |
+          mkdir -p ~/.config/git
+          chmod -R 700 ~/.config
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository -y ppa:ubuntu-support-team/meson
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            debhelper \
+            devscripts \
+            meson \
+            pkg-config \
+            libstdc++6 \
+            libgbm-dev \
+            libdrm-dev \
+            libx11-6 \
+            libx11-dev \
+            libx11-xcb1 \
+            libx11-xcb-dev \
+            libxcb-dri2-0 \
+            libxcb-dri2-0-dev \
+            libxcb-dri3-dev \
+            libxcb-present-dev \
+            libxcb-xfixes0-dev \
+            libxdamage1 \
+            libxdamage-dev \
+            libxext6 \
+            libxext-dev \
+            libxfixes3 \
+            libxfixes-dev \
+            libwayland-client0 \
+            libwayland-dev
+          sudo apt-get clean autoclean --yes
+          sudo apt-get autoremove --yes
+          sudo rm -rf /var/cache/apt/archives* /var/lib/apt/lists/*
+
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: linux/arm64
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: docker/build-push-action@v5
-        with:
-          context: .github/workflows/
-          tags: ${{ matrix.image }}:build
-          platforms: linux/arm64
-          build-args: IMAGE=${{ matrix.image }}:20.04
-          cache-from: type=gha,scope=${{ matrix.image }}
-          cache-to: type=gha,scope=${{ matrix.image }},mode=max
-          load: true
-
-      - name: Build
+        
+      - name: Build Debian package
         run: |
-          docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'debuild -us -uc -b && cp -a ../*.deb ./'
+          debuild -us -uc -b && cp -a ../*.deb ./
 
       - name: Get version
         id: get_version
         run: |
-          echo "version=$(docker run --rm -i -v $(pwd):/work -w /work ${{ matrix.image }}:build bash -c 'dpkg-parsechangelog --show-field Version')" >> $GITHUB_OUTPUT
+          echo "version=$(dpkg-parsechangelog --show-field Version)" >> $GITHUB_OUTPUT
 
       - name: Get commit hash
         id: get_commit_hash
