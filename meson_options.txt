@@ -14,6 +14,8 @@ option('opencl-icd', type: 'boolean', value: true,
        description: 'OpenCL Installable Client Driver (ICD) (default: true)')
 option('khr-header', type: 'boolean', value: false,
        description: 'Install KHR header (default: false)')
+option('wayland-egl', type: 'boolean', value: true,
+       description: 'Install wayland egl wrapper when needed (default: true)')
 option('vendor-package', type: 'boolean', value: false,
        description: 'Install as vendor package (default: false)')
 option('hooks', type: 'boolean', value: true,

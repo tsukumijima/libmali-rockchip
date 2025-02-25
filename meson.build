@@ -239,6 +239,12 @@ foreach name, values : map
   is_opencl_icd = opencl_icd and name == 'OpenCL'
   is_vulkan_icd = name == 'vulkan'
 
+  if name == 'wayland-egl'
+    if not get_option('wayland-egl')
+      continue
+    endif
+  endif
+
   if not cc.has_function(symbol, dependencies : mali)
     continue
   endif
