@@ -22,7 +22,6 @@ libhook_cflags = [
 ]
 
 libhook_dep = [
-  mali,
   dependency('threads'),
   cc.find_library('dl', required : false),
   dependency('libdrm', version : '>= 2.4.0'),
@@ -65,8 +64,8 @@ libhook = shared_library(
   c_args : libhook_cflags,
   include_directories : libhook_inc,
   dependencies : libhook_dep,
+  link_with : libmali,
   install : true,
-  install_rpath : '$ORIGIN',
   version : mali_version)
 
 libhook_ldflags = ['-L${libdir}', '-lmali-hook']
