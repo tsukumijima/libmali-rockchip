@@ -29,7 +29,7 @@ libhook_dep = [
 
 libhook_inc = []
 
-if cc.has_function('gbm_create_device', dependencies : mali)
+if has_gbm
   # Add hooks to support new GBM APIs
   libhook_inc += include_directories('..' / gbm_headers.keys()[0])
   libhook_cflags += '-DHAS_GBM'
@@ -40,7 +40,7 @@ if cc.has_function('gbm_create_device', dependencies : mali)
   endforeach
 endif
 
-if cc.has_function('eglCreateContext', dependencies : mali)
+if has_egl
   # Add hooks to support default winsys
   libhook_inc += include_directories('../include')
   libhook_cflags += '-DHAS_EGL'

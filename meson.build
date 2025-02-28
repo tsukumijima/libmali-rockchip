@@ -52,11 +52,10 @@ is_utgard = gpu.split('-')[0] == 'utgard'
 is_px3se = gpu == 'utgard-400' and subversion == 'r3p0'
 
 # Parse platforms
-has_gbm = run_command('grep', '-wq', 'gbm_create_device', default_lib,
+has_gbm = cc.has_function('gbm_create_device', dependencies : mali)
+has_x11 = run_command('grep', '-wq', 'libxcb.so', default_lib,
   check : false).returncode() == 0
-has_x11 = run_command('grep', '-wq', 'XSync', default_lib,
-  check : false).returncode() == 0
-has_wayland = run_command('grep', '-wq', 'wl_egl_window_create', default_lib,
+has_wayland = run_command('grep', '-wq', 'libwayland-client.so', default_lib,
   check : false).returncode() == 0
 
 message('Using ' + default_lib + ' with' + (has_x11 ? ' x11' : '') +
@@ -88,6 +87,12 @@ endif
 foreach require : requires
   dependency(require)
 endforeach
+
+# The hook library is for hacking GBM/EGL/X11 APIs
+has_egl = cc.has_function('eglCreateContext', dependencies : mali)
+if not has_gbm and not has_egl and not has_x11
+  build_hook = false
+endif
 
 if wrappers_opts.auto() and is_utgard
   wrappers = false
