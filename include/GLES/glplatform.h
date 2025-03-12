@@ -19,7 +19,7 @@
 
 /* Platform-specific types and definitions for OpenGL ES 1.X  gl.h
  *
- * Adopters may modify mali_khrplatform.h and this file to suit their platform.
+ * Adopters may modify khrplatform.h and this file to suit their platform.
  * Please contribute modifications back to Khronos as pull requests on the
  * public github repository:
  *      https://github.com/KhronosGroup/OpenGL-Registry
