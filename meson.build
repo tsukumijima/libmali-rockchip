@@ -327,6 +327,15 @@ foreach name, values : map
     description : 'Mali GPU User-Space Binary Driver Wrappers')
 endforeach
 
+# Install RT thread priority config
+custom_target(
+  'RT thread priority config',
+  output : 'mali-priority.sh',
+  command : ['echo', 'export MALI_SCHED_RT_THREAD_PRIORITY=95'],
+  capture : true,
+  install_dir : '/etc/profile.d',
+  install : true)
+
 # Install optional overlay
 if get_option('with-overlay')
   if is_px3se
