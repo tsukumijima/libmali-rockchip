@@ -19,6 +19,14 @@ Homepage: https://github.com/rockchip-linux/libmali
 Vcs-Git: https://github.com/rockchip-linux/libmali
 Vcs-Browser: https://github.com/rockchip-linux/libmali
 
+Package: libmali-bifrost-g31-g13p0-cl
+Architecture: armhf arm64
+Provides: libmali
+Conflicts: libmali
+Replaces: libmali
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Mali GPU User-Space Binary Drivers
+
 Package: libmali-bifrost-g31-g13p0-gbm
 Architecture: armhf arm64
 Provides: libmali
@@ -27,7 +35,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g13p0-only-cl
+Package: libmali-bifrost-g31-g13p0-nocl-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -43,7 +51,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g13p0-without-cl-wayland-gbm
+Package: libmali-bifrost-g31-g13p0-x11-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -51,7 +59,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g13p0-x11-gbm
+Package: libmali-bifrost-g31-g24p0-cl
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -67,7 +75,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g24p0-only-cl
+Package: libmali-bifrost-g31-g24p0-nocl-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -83,7 +91,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g24p0-without-cl-wayland-gbm
+Package: libmali-bifrost-g31-g24p0-x11-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -91,7 +99,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g24p0-x11-gbm
+Package: libmali-bifrost-g31-g2p0-cl
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -107,7 +115,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g31-g2p0-only-cl
+Package: libmali-bifrost-g31-g2p0-nocl-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -116,14 +124,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
 Package: libmali-bifrost-g31-g2p0-wayland-gbm
-Architecture: armhf arm64
-Provides: libmali
-Conflicts: libmali
-Replaces: libmali
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Mali GPU User-Space Binary Drivers
-
-Package: libmali-bifrost-g31-g2p0-without-cl-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -171,7 +171,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g13p0-wayland-gbm
+Package: libmali-bifrost-g52-g13p0-nocl-dummy-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -179,7 +179,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g13p0-without-cl-dummy-gbm
+Package: libmali-bifrost-g52-g13p0-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -235,7 +235,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g24p0-wayland-gbm
+Package: libmali-bifrost-g52-g24p0-nocl-dummy-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -243,7 +243,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g24p0-without-cl-dummy-gbm
+Package: libmali-bifrost-g52-g24p0-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -291,7 +291,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g2p0-wayland-gbm
+Package: libmali-bifrost-g52-g2p0-nocl-dummy-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali
@@ -299,7 +299,7 @@ Replaces: libmali
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Mali GPU User-Space Binary Drivers
 
-Package: libmali-bifrost-g52-g2p0-without-cl-dummy-gbm
+Package: libmali-bifrost-g52-g2p0-wayland-gbm
 Architecture: armhf arm64
 Provides: libmali
 Conflicts: libmali

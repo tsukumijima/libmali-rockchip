@@ -6,11 +6,12 @@ PRINT_SUBVERSION=false
 PRINT_PLATFORM=false
 PRINT_FORMAT=false
 
-PLATFORMS="only-cl|without-cl|vulkan|dummy|x11|wayland|gbm"
+PLATFORMS="cl|nocl|minicl|vulkan|dummy|x11|wayland|gbm"
 
 # Normalize platform variable
 normalize_platform() {
 	PLATFORM="$@"
+
 	for platform in $(echo $PLATFORMS|xargs -d'|'); do
 		echo $PLATFORM|grep -ow $platform|uniq
 	done
@@ -80,6 +81,10 @@ case "$1" in
 esac
 
 for lib in "$@";do
+	# Compat with old CL platform naming.
+	lib="$(echo $lib | \
+		sed -e 's/without-cl/nocl/' -e 's/only-cl/cl/')"
+
 	parse_name $lib
 done
 
