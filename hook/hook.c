@@ -23,8 +23,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <xf86drm.h>
+#include <unistd.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
+
+#include <xf86drm.h>
 
 #ifdef HAS_GBM
 #include <gbm.h>
@@ -53,6 +56,8 @@
 #ifndef DRM_FORMAT_MOD_INVALID
 #define DRM_FORMAT_MOD_INVALID ((1ULL<<56) - 1)
 #endif
+
+#define ROUND_UP_N(num, align) ((((num) + ((align) - 1)) & ~((align) - 1)))
 
 /* A stub symbol to ensure that the hook library would not be removed as unused */
 int mali_injected = 0;
@@ -97,6 +102,7 @@ static union gbm_bo_handle (* _gbm_bo_get_handle)(struct gbm_bo *bo) = NULL;
 #ifndef HAS_gbm_bo_get_fd_for_plane
 static int (* _gbm_bo_get_fd)(struct gbm_bo *bo) = NULL;
 #endif
+static struct gbm_bo *(* _gbm_bo_import)(struct gbm_device *gbm, uint32_t type, void *buffer, uint32_t flags) = NULL;
 #endif
 
 #ifdef HAS_EGL
@@ -155,6 +161,7 @@ static struct {
 #ifndef HAS_gbm_bo_get_fd_for_plane
    MALI_SYMBOL(gbm_bo_get_fd),
 #endif
+   MALI_SYMBOL(gbm_bo_import),
 #endif
 #ifdef HAS_EGL
    MALI_SYMBOL(eglGetCurrentSurface),
@@ -554,6 +561,58 @@ gbm_bo_create(struct gbm_device *gbm,
    flags &= GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING |
       GBM_BO_USE_WRITE | GBM_BO_USE_CURSOR_64X64;
    return _gbm_bo_create(gbm, width, height, format, flags);
+}
+
+/* Wrapper for unsupported GBM_BO_IMPORT_FD_MODIFIER */
+struct gbm_bo *
+gbm_bo_import(struct gbm_device *gbm, uint32_t type,
+              void *buffer, uint32_t flags)
+{
+   struct gbm_import_fd_modifier_data *mod_data;
+   struct gbm_import_fd_data data = {0};
+   struct gbm_bo *bo;
+
+   bo = _gbm_bo_import(gbm, type, buffer, flags);
+   if (bo || type != GBM_BO_IMPORT_FD_MODIFIER)
+      return bo;
+
+   mod_data = buffer;
+   if (!can_ignore_modifiers(&mod_data->modifier, 1) || mod_data->offsets[0])
+      return NULL;
+
+   data.fd = mod_data->fds[0];
+   data.width = mod_data->width;
+   data.height = mod_data->height;
+   data.stride = mod_data->strides[0];
+   data.format = mod_data->format;
+
+   if (mod_data->num_fds > 1) {
+      struct stat stat, tmp_stat;
+      int offset, i;
+
+      /* Ensure the dma-bufs are the same. */
+      if (fstat(data.fd, &stat))
+         return NULL;
+
+      for (i = 1, offset = 0; i < mod_data->num_fds; i++) {
+         if (fstat(mod_data->fds[i], &tmp_stat))
+            return NULL;
+
+         if ((stat.st_dev != tmp_stat.st_dev) ||
+             (stat.st_ino != tmp_stat.st_ino))
+            return NULL;
+
+         if (mod_data->strides[i] != data.stride &&
+             mod_data->strides[i] != data.stride / 2)
+            return NULL;
+
+         offset += mod_data->strides[i - 1] * ROUND_UP_N(mod_data->height, 16);
+         if (mod_data->offsets[i] != offset)
+            return NULL;
+      }
+   }
+
+   return _gbm_bo_import(gbm, GBM_BO_IMPORT_FD, (void *)&data, flags);
 }
 
 #endif // HAS_GBM
