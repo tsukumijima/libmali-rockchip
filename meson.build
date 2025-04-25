@@ -333,7 +333,7 @@ custom_target(
   output : 'mali-priority.sh',
   command : ['echo', 'export MALI_SCHED_RT_THREAD_PRIORITY=95'],
   capture : true,
-  install_dir : '/etc/profile.d',
+  install_dir : get_option('sysconfdir') / 'profile.d',
   install : true)
 
 # Install optional overlay
