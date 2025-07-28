@@ -704,8 +704,9 @@ EGLAPI EGLDisplay EGLAPIENTRY
 eglGetDisplay (EGLNativeDisplayType display_id)
 {
    const char *type = getenv("MALI_DEFAULT_WINSYS");
+   EGLDisplay display;
 
-   // HACK: For chromium angle with in-process-gpu.
+   /* HACK: For chromium angle with in-process-gpu. */
    if (getenv("MALI_FORCE_DEFAULT_DISPLAY") &&
        display_id != EGL_DEFAULT_DISPLAY) {
       fprintf(stderr, "[MALI-HOOK] WARN: Native display(%p) ignored!\n",
@@ -713,22 +714,46 @@ eglGetDisplay (EGLNativeDisplayType display_id)
       display_id = EGL_DEFAULT_DISPLAY;
    }
 
+   /* Honor the native display. */
+   if (display_id != EGL_DEFAULT_DISPLAY)
+      return _eglGetDisplay(display_id);
+
+   /* Honor the default winsys config. */
 #ifdef HAS_GBM
    if (type && !strcmp(type, "gbm"))
-      return eglGetPlatformDisplay(EGL_PLATFORM_GBM_KHR, display_id, NULL);
+      return eglGetPlatformDisplay(EGL_PLATFORM_GBM_KHR,
+                                   EGL_DEFAULT_DISPLAY, NULL);
 #endif
-
 #ifdef HAS_WAYLAND
    if (type && !strcmp(type, "wayland"))
-      return eglGetPlatformDisplay(EGL_PLATFORM_WAYLAND_EXT, display_id, NULL);
+      return eglGetPlatformDisplay(EGL_PLATFORM_WAYLAND_EXT,
+                                   EGL_DEFAULT_DISPLAY, NULL);
+#endif
+#ifdef HAS_X11
+   if (type && !strcmp(type, "x11"))
+      return eglGetPlatformDisplay(EGL_PLATFORM_X11_KHR,
+                                   EGL_DEFAULT_DISPLAY, NULL);
 #endif
 
-#ifdef HAS_X11
-   /* Use X11 by default when avaiable */
-   return eglGetPlatformDisplay(EGL_PLATFORM_X11_KHR, display_id, NULL);
-#else
-   return _eglGetDisplay(display_id);
+   display = _eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+   /* Fallback to eglGetPlatformDisplay(). */
+#ifdef HAS_GBM
+   if (!display)
+      display = eglGetPlatformDisplay(EGL_PLATFORM_GBM_KHR,
+                                      EGL_DEFAULT_DISPLAY, NULL);
 #endif
+#ifdef HAS_WAYLAND
+   if (!display)
+      display = eglGetPlatformDisplay(EGL_PLATFORM_WAYLAND_EXT,
+                                      EGL_DEFAULT_DISPLAY, NULL);
+#endif
+#ifdef HAS_X11
+   if (!display)
+      display = eglGetPlatformDisplay(EGL_PLATFORM_X11_KHR,
+                                      EGL_DEFAULT_DISPLAY, NULL);
+#endif
+   return display;
 }
 
 /* Export for EGL 1.5 */
