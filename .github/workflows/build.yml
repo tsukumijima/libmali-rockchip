@@ -11,6 +11,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+
 jobs:
 
   build-and-release:
@@ -84,8 +87,20 @@ jobs:
           echo "short=$(git rev-parse --short=7 HEAD)" >> $GITHUB_OUTPUT
 
       - name: Release
+        if: github.event_name != 'workflow_dispatch'
         uses: softprops/action-gh-release@v1
         with:
+          name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
+          tag_name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
+          generate_release_notes: true
+          files: |
+            ./*.deb
+
+      - name: Release (workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.RELEASE_PAT }}
           name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
           tag_name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
           target_commitish: ${{ steps.get_commit_hash.outputs.full }}
