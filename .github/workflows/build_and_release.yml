@@ -5,15 +5,26 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Target commit SHA to build (full SHA recommended).'
+        required: true
+        type: string
 
 jobs:
 
-  build_and_release:
+  build-and-release:
     name: Build and Release Debian Package
+    # Run on arm64 hosted runner to avoid QEMU emulation slowness.
     runs-on: ubuntu-22.04-arm
     permissions:
       contents: write
     steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.commit_sha || github.sha }}
 
       - name: Fix Git Permissions
         run: |
@@ -56,9 +67,6 @@ jobs:
           sudo apt-get autoremove --yes
           sudo rm -rf /var/cache/apt/archives* /var/lib/apt/lists/*
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
       - name: Build Debian package
         run: |
           debuild -us -uc -b && cp -a ../*.deb ./
@@ -68,15 +76,19 @@ jobs:
         run: |
           echo "version=$(dpkg-parsechangelog --show-field Version)" >> $GITHUB_OUTPUT
 
-      - name: Get commit hash
+      - name: Get commit metadata
         id: get_commit_hash
-        uses: prompt/actions-commit-hash@v3
+        run: |
+          echo "date=$(git show -s --format=%cd --date=format:%Y%m%d HEAD)" >> $GITHUB_OUTPUT
+          echo "full=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "short=$(git rev-parse --short=7 HEAD)" >> $GITHUB_OUTPUT
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.short }}
-          tag_name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.short }}
+          name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
+          tag_name: v${{ steps.get_version.outputs.version }}-${{ steps.get_commit_hash.outputs.date }}-${{ steps.get_commit_hash.outputs.short }}
+          target_commitish: ${{ steps.get_commit_hash.outputs.full }}
           generate_release_notes: true
           files: |
             ./*.deb
