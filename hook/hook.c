@@ -116,6 +116,13 @@ static PFNEGLCREATEPIXMAPSURFACEPROC _eglCreatePixmapSurface = NULL;
 static PFNEGLCREATEWINDOWSURFACEPROC _eglCreateWindowSurface = NULL;
 static EGLBoolean (* _eglDestroySurface)(EGLDisplay dpy, EGLSurface surface) = NULL;
 static PFNEGLMAKECURRENTPROC _eglMakeCurrent = NULL;
+static PFNEGLCREATEPLATFORMWINDOWSURFACEPROC _eglCreatePlatformWindowSurface = NULL;
+static PFNEGLCREATEPLATFORMPIXMAPSURFACEPROC _eglCreatePlatformPixmapSurface = NULL;
+
+#ifdef HAS_X11
+static PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC _eglCreatePlatformWindowSurfaceEXT = NULL;
+static PFNEGLCREATEPLATFORMPIXMAPSURFACEEXTPROC _eglCreatePlatformPixmapSurfaceEXT = NULL;
+#endif
 #endif
 
 #define MALI_SYMBOL(func) { #func, (void **)(&_ ## func), }
@@ -175,6 +182,23 @@ static struct {
 #endif
 };
 
+#ifdef HAS_EGL
+#define MALI_LOAD_SYMBOL(func) { #func, (void **)(&_ ## func), }
+static struct {
+   const char *func;
+   void **symbol;
+} mali_load_symbols[] = {
+   MALI_LOAD_SYMBOL(eglGetPlatformDisplay),
+   MALI_LOAD_SYMBOL(eglGetPlatformDisplayEXT),
+   MALI_LOAD_SYMBOL(eglCreatePlatformWindowSurface),
+   MALI_LOAD_SYMBOL(eglCreatePlatformPixmapSurface),
+#ifdef HAS_X11
+   MALI_LOAD_SYMBOL(eglCreatePlatformWindowSurfaceEXT),
+   MALI_LOAD_SYMBOL(eglCreatePlatformPixmapSurfaceEXT),
+#endif
+};
+#endif
+
 __attribute__((constructor)) static void
 load_mali_symbols(void)
 {
@@ -210,10 +234,9 @@ load_mali_symbols(void)
    dlclose(handle);
 
 #ifdef HAS_EGL
-   _eglGetPlatformDisplay =
-      (PFNEGLGETPLATFORMDISPLAYPROC)_eglGetProcAddress("eglGetPlatformDisplay");
-   _eglGetPlatformDisplayEXT =
-      (PFNEGLGETPLATFORMDISPLAYEXTPROC)_eglGetProcAddress("eglGetPlatformDisplayEXT");
+#define GET_PROC_ADDR(v, n) v = (typeof(v))_eglGetProcAddress(n)
+   for (i = 0; i < ARRAY_SIZE(mali_load_symbols); i++)
+      GET_PROC_ADDR(*mali_load_symbols[i].symbol, mali_load_symbols[i].func);
 #endif
 }
 
@@ -684,7 +707,7 @@ fixup_x11_display(Display *display)
 #ifdef HAS_X11
 
 EGLAPI EGLDisplay EGLAPIENTRY
-eglGetPlatformDisplayEXT (EGLenum platform, void *native_display, const EGLint *attrib_list)
+eglGetPlatformDisplayEXT(EGLenum platform, void *native_display, const EGLint *attrib_list)
 {
    if (!_eglGetPlatformDisplayEXT)
       return EGL_NO_DISPLAY;
@@ -701,7 +724,7 @@ eglGetPlatformDisplayEXT (EGLenum platform, void *native_display, const EGLint *
 #endif // HAS_X11
 
 EGLAPI EGLDisplay EGLAPIENTRY
-eglGetDisplay (EGLNativeDisplayType display_id)
+eglGetDisplay(EGLNativeDisplayType display_id)
 {
    const char *type = getenv("MALI_DEFAULT_WINSYS");
    EGLDisplay display;
@@ -758,8 +781,6 @@ eglGetDisplay (EGLNativeDisplayType display_id)
 
 /* Export for EGL 1.5 */
 
-#define GET_PROC_ADDR(v, n) v = (typeof(v))_eglGetProcAddress(n)
-
 /* From mesa3d mesa-23.1.3-1 : src/egl/main/egldisplay.h */
 static inline size_t
 _eglNumAttribs(const EGLAttrib *attribs)
@@ -799,8 +820,13 @@ eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *a
    if (_eglGetPlatformDisplayEXT) {
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
+#ifdef HAS_X11
+         EGLDisplay display =
+            eglGetPlatformDisplayEXT(platform, native_display, int_attribs);
+#else
          EGLDisplay display =
             _eglGetPlatformDisplayEXT(platform, native_display, int_attribs);
+#endif
          free(int_attribs);
          return display;
       }
@@ -823,42 +849,123 @@ eglGetPlatformDisplay(EGLenum platform, void *native_display, const EGLAttrib *a
 EGLAPI EGLSurface EGLAPIENTRY
 eglCreatePlatformWindowSurface(EGLDisplay dpy, EGLConfig config, void *native_window, const EGLAttrib *attrib_list)
 {
-   PFNEGLCREATEPLATFORMWINDOWSURFACEPROC create_platform_window_surface;
+   EGLSurface surface = EGL_NO_SURFACE;
 
-   GET_PROC_ADDR(create_platform_window_surface,
-                 "eglCreatePlatformWindowSurface");
-   if (!create_platform_window_surface) {
+   if (!_eglCreatePlatformWindowSurface) {
+      /* HACK: For older Mali (e.g., Utgard). */
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
-         EGLSurface surface =
+         surface =
             _eglCreateWindowSurface(dpy, config, native_window, int_attribs);
-         free(int_attribs);
-         return surface;
+#ifdef HAS_X11
+         if (surface == EGL_NO_SURFACE)
+            surface = _eglCreateWindowSurface(dpy, config,
+                                              *(void **)(native_window),
+                                              int_attribs);
+#endif
       }
+
+      free(int_attribs);
+      return surface;
    }
 
-   return create_platform_window_surface(dpy, config, native_window, attrib_list);
+   surface = _eglCreatePlatformWindowSurface(dpy, config,
+                                             native_window, attrib_list);
+
+#ifdef HAS_X11
+   /* HACK: Workaround for Mali interface incompatibility. */
+   if (surface == EGL_NO_SURFACE)
+      surface = _eglCreatePlatformWindowSurface(dpy, config,
+                                                *(void **)(native_window),
+                                                attrib_list);
+#endif
+
+   return surface;
 }
 
 EGLAPI EGLSurface EGLAPIENTRY
 eglCreatePlatformPixmapSurface(EGLDisplay dpy, EGLConfig config, void *native_pixmap, const EGLAttrib *attrib_list)
 {
-   PFNEGLCREATEPLATFORMPIXMAPSURFACEPROC create_platform_pixmap_surface;
+   EGLSurface surface = EGL_NO_SURFACE;
 
-   GET_PROC_ADDR(create_platform_pixmap_surface,
-                 "eglCreatePlatformPixmapSurface");
-   if (!create_platform_pixmap_surface) {
+   if (!_eglCreatePlatformPixmapSurface) {
+      /* HACK: For older Mali (e.g., Utgard). */
       EGLint *int_attribs = _eglConvertAttribsToInt(attrib_list);
       if (!int_attribs == !attrib_list) {
-         EGLSurface surface =
+         surface =
             _eglCreatePixmapSurface(dpy, config, native_pixmap, int_attribs);
-         free(int_attribs);
-         return surface;
+#ifdef HAS_X11
+         if (surface == EGL_NO_SURFACE)
+            surface = _eglCreatePixmapSurface(dpy, config,
+                                              *(void **)(native_pixmap),
+                                              int_attribs);
+#endif
       }
+      free(int_attribs);
+      return surface;
    }
 
-   return create_platform_pixmap_surface(dpy, config, native_pixmap, attrib_list);
+   surface = _eglCreatePlatformPixmapSurface(dpy, config,
+                                             native_pixmap, attrib_list);
+
+#ifdef HAS_X11
+   /* HACK: Workaround for Mali interface incompatibility. */
+   if (surface == EGL_NO_SURFACE)
+      surface = _eglCreatePlatformPixmapSurface(dpy, config,
+                                                *(void **)(native_pixmap),
+                                                attrib_list);
+#endif
+
+   return surface;
 }
+
+#ifdef HAS_X11
+
+EGLAPI EGLSurface EGLAPIENTRY
+eglCreatePlatformWindowSurfaceEXT(EGLDisplay dpy, EGLConfig config, void *native_window, const EGLint *attrib_list)
+{
+   EGLSurface surface = EGL_NO_SURFACE;
+
+   if (!_eglCreatePlatformWindowSurfaceEXT)
+      return EGL_NO_SURFACE;
+
+   surface = _eglCreatePlatformWindowSurfaceEXT(dpy, config,
+                                                native_window, attrib_list);
+
+#ifdef HAS_X11
+   /* HACK: Workaround for Mali interface incompatibility. */
+   if (surface == EGL_NO_SURFACE)
+      surface = _eglCreatePlatformWindowSurfaceEXT(dpy, config,
+                                                   *(void **)(native_window),
+                                                   attrib_list);
+#endif
+
+   return surface;
+}
+
+EGLAPI EGLSurface EGLAPIENTRY
+eglCreatePlatformPixmapSurfaceEXT(EGLDisplay dpy, EGLConfig config, void *native_pixmap, const EGLint *attrib_list)
+{
+   EGLSurface surface;
+
+   if (!_eglCreatePlatformPixmapSurfaceEXT)
+      return EGL_NO_SURFACE;
+
+   surface = _eglCreatePlatformPixmapSurfaceEXT(dpy, config,
+                                                native_pixmap, attrib_list);
+
+#ifdef HAS_X11
+   /* HACK: Workaround for Mali interface incompatibility. */
+   if (surface == EGL_NO_SURFACE)
+      surface = _eglCreatePlatformPixmapSurfaceEXT(dpy, config,
+                                                   *(void **)(native_pixmap),
+                                                   attrib_list);
+#endif
+
+   return surface;
+}
+
+#endif
 
 /* HACK: Unset current surface before destroying it */
 
@@ -935,6 +1042,14 @@ eglGetProcAddress(const char *procname)
 
    if (!strcmp(procname, "eglCreatePlatformPixmapSurface"))
       return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformPixmapSurface;
+
+#ifdef HAS_X11
+   if (!strcmp(procname, "eglCreatePlatformWindowSurfaceEXT"))
+      return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformWindowSurfaceEXT;
+
+   if (!strcmp(procname, "eglCreatePlatformPixmapSurfaceEXT"))
+      return (__eglMustCastToProperFunctionPointerType)eglCreatePlatformPixmapSurfaceEXT;
+#endif
 
    if (!strcmp(procname, "eglDestroySurface"))
       return (__eglMustCastToProperFunctionPointerType)eglDestroySurface;
